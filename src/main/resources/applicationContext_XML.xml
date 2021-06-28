@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+http://www.springframework.org/schema/aop
+http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+  http://www.springframework.org/schema/context
+   http://www.springframework.org/schema/context/spring-context-2.5.xsd
+http://www.springframework.org/schema/tx
+http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!--基础bean-->
+    <bean id="dog_xml" class="com.liangzc.example.spring_demo.aop.xml_way.basic.service.impl.Dog"></bean>
+
+    <!--切面bean-->
+    <bean id="aspectXmlTest" class="com.liangzc.example.spring_demo.aop.xml_way.aspect.aspectXmlTest"></bean>
+
+
+    <aop:config>
+        <!--定义切入点-->
+        <aop:pointcut id="myPointcut" expression="execution(* com.liangzc.example.spring_demo.aop.xml_way.basic.service.impl.*.*(..))"/>
+        <!--申明为一个切面bean，引用一个普通的bean-->
+        <aop:aspect id="aspectXmlDemo" ref="aspectXmlTest">
+            <!--定义增强处理，并引入切入点-->
+            <aop:before method="start" pointcut-ref="myPointcut"/>
+            <aop:after method="end" pointcut-ref="myPointcut"/>
+        </aop:aspect>
+    </aop:config>
+
+    <!--配置数据库连接池，使用阿里巴巴的Druid连接池-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>
+        <property name="username" value="root"></property>
+        <property name="password" value="lzc123456"></property>
+        <property name="url" value="jdbc:mysql://119.23.189.136:3306/own?characterEncoding=utf-8"></property>
+        <!-- 配置初始化大小、最小、最大 -->
+        <property name="initialSize" value="1" />
+        <property name="minIdle" value="10" />
+        <property name="maxActive" value="20" />
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="60000" />
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="30000" />
+    </bean>
+
+    <!--声明spring事物管理器-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+
+    <!---->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="save*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+            <tx:method name="insert*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <aop:config>
+        <aop:pointcut id="transactionPointcut" expression="execution(* com.liangzc.example.spring_demo.aop.xml_way.basic.service.impl.*.*(..))"/>
+        <!--将切入点和txAdvice织入-->
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="transactionPointcut"/>
+    </aop:config>
+
+
+    <!--定义基础操作bean，用于测试事物配置-->
+    <bean id="commonService" class="com.liangzc.example.spring_demo.aop.xml_way.basic.service.impl.CommonServiceImpl"></bean>
+
+</beans>
