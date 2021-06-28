@@ -35,5 +35,7 @@ public class ProduceTest {
 
             channel.close();
             connection.close();
+
+            //看下改变使用git
     }
 }
