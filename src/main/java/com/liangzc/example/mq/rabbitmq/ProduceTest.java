@@ -9,7 +9,9 @@ import java.util.concurrent.TimeoutException;
 
 public class ProduceTest {
 
-    private static final String EXCHANGE_NAME = "exchange-direct";
+    private static final String EXCHANGE_DIRECT = "exchange-direct";
+    private static final String EXCHANGE_TOPIC = "exchange-topic";
+    private static final String EXCHANGE_FANOUT = "exchange-fanout";
     public static void main(String[] args) throws Exception {
         Connection connection = null;
         Channel channel = null;
@@ -26,10 +28,11 @@ public class ProduceTest {
             channel = connection.createChannel();
 
             // 发送消息
-            String msg = "恭喜中签！！！";
+            String msg = "GG,没中签！！！";
 
             // String exchange, String routingKey, BasicProperties props, byte[] body
-            channel.basicPublish(EXCHANGE_NAME, "nai_xue", null, msg.getBytes());
+//            channel.basicPublish(EXCHANGE_DIRECT, "", null, msg.getBytes());
+        channel.basicPublish(EXCHANGE_FANOUT, "", null, msg.getBytes());
 
             System.out.println("消息已发送："+msg);
 
