@@ -1,4 +1,4 @@
-package com.liangzc.example.kafka;
+package com.liangzc.example.mq.kafka;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
