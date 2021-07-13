@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 实现线程间的通信，wait/notify
- * 典型的例子就是：生产者和消费者模型，关键在于使用了共享的队列实现了线程的通信
+ * 典型的例子就是：生产者和消费者模型，关键在于使用了共享的队列实现了线程的通信，通过共享队列加锁实现锁的抢占
  */
 public class Produce implements Runnable{
 
