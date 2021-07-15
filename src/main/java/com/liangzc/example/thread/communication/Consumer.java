@@ -21,7 +21,7 @@ public class Consumer implements Runnable{
             synchronized (queueMsg){
                 while (queueMsg.isEmpty()){
                     try {
-                        queueMsg.wait();
+                        queueMsg.wait();//一定会释放锁。sleep并不会释放锁，只是释放cpu资源
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -32,7 +32,7 @@ public class Consumer implements Runnable{
                     e.printStackTrace();
                 }
                 System.out.println("消费者消费消息："+queueMsg.remove());
-                queueMsg.notify();//唤醒被阻塞的生产者去生产
+                queueMsg.notify();//唤醒被阻塞的生产者去生产。唤醒的是基于当前锁等待下的线程，其他的线程并不会管
             }
 
         }
