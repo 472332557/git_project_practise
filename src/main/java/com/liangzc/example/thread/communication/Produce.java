@@ -29,7 +29,7 @@ public class Produce implements Runnable{
                 i ++;
                 while (queueMsg.size() == maxSize){
                     try {
-                        queueMsg.wait();
+                        queueMsg.wait();//一定会释放锁。sleep并不会释放锁，只是释放cpu资源
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -41,7 +41,7 @@ public class Produce implements Runnable{
                 }
                 System.out.println("生产消息："+i);
                 queueMsg.add("生产消息："+i);
-                queueMsg.notify();//唤醒被阻塞的消费者去消费
+                queueMsg.notify();//唤醒被阻塞的消费者去消费。唤醒的是基于当前锁等待下的线程，其他的线程并不会管
             }
 
         }
