@@ -5,7 +5,7 @@ import java.net.Socket;
 
 public class BIOServerSocketThreand implements Runnable{
 
-    private Socket socket = null;
+    private Socket socket;
 
     public BIOServerSocketThreand(Socket socket) {
         this.socket = socket;

@@ -55,8 +55,16 @@ public class NIOSelectorServerSocket implements Runnable{
         }else if (selectionKey.isReadable()){//读事件
             read(selectionKey);
         }else if (selectionKey.isWritable()){//写事件
-
+//            write(selectionKey);
         }
+    }
+
+    private void write(SelectionKey selectionKey) throws IOException {
+        SocketChannel socketChannel = (SocketChannel) selectionKey.channel();
+        ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
+        byteBuffer.put("dddddddd".getBytes());
+        socketChannel.write(byteBuffer);
+        System.out.println("server send a message："+new String(byteBuffer.array()));
     }
 
     private void read(SelectionKey selectionKey) throws IOException {
@@ -69,6 +77,9 @@ public class NIOSelectorServerSocket implements Runnable{
 
         System.out.println("server receive a message："+new String(byteBuffer.array()));
 
+        byteBuffer.flip();
+        socketChannel.write(byteBuffer);
+//        socketChannel.register(selector, SelectionKey.OP_WRITE);//注册为写事件
     }
 
     private void register(SelectionKey selectionKey) throws IOException {
