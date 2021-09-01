@@ -1,19 +1,19 @@
 package com.liangzc.example.thread;
 
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ThreadPoolExecutorExample {
 
 
     public static void main(String[] args) {
 
-        System.out.println(Runtime.getRuntime().availableProcessors());
-        ExecutorService executorService = new ThreadPoolExecutor(4,
-                Runtime.getRuntime().availableProcessors() * 2, 1000, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(50), Executors.defaultThreadFactory(), new ThreadPoolExecutor.DiscardOldestPolicy());
+        ExecutorService executorService = new ThreadPoolExecutor(1, 2, 10, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(), Executors.defaultThreadFactory(), new ThreadPoolExecutor.DiscardOldestPolicy());
 
         for (int i = 0; i < 1000; i++) {
 
-            executorService.execute(new Task());
+            System.out.println(i);
+            executorService.execute(new Task(i));
         }
         executorService.shutdown();
     }
@@ -23,9 +23,15 @@ public class ThreadPoolExecutorExample {
 
     static class Task implements Runnable{
 
+        private Integer count;
+
+        public Task(Integer count) {
+            this.count = count;
+        }
+
         @Override
         public void run() {
-            System.out.println(Thread.currentThread().getName()+":开始执行了！");
+            System.out.println(Thread.currentThread().getName()+":开始执行了！" +count);
         }
     }
 }

@@ -7,7 +7,7 @@ public class SocketClient {
 
     public static void main(String[] args) throws IOException {
 
-        Socket socket = new Socket("192.168.1.70",8888);
+        Socket socket = new Socket("192.168.4.48",8888);
 
         //给服务端发送消息
         BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
