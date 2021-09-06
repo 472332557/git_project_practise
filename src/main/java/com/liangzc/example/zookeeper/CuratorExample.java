@@ -14,7 +14,7 @@ public class CuratorExample {
 
         curatorFramework = CuratorFrameworkFactory.builder().
                 connectionTimeoutMs(20000)//连接超时时间
-                .connectString("172.20.10.10:2181")
+                .connectString("49.234.229.49:2181")
                 //重试次数
                 .retryPolicy(new ExponentialBackoffRetry(1000, 3))
                 .sessionTimeoutMs(15000)//会话过期时间
@@ -28,7 +28,7 @@ public class CuratorExample {
 
         String value = "hello zk";
 
-        //creatingParentContainersIfNeeded:可以创建子节点
+        //creatingParentContainersIfNeeded:可以同时创建父节点、子节点
         String node1 = curatorFramework.create()
                 .creatingParentsIfNeeded()
                 .withMode(CreateMode.CONTAINER)

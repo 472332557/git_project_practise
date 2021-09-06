@@ -10,8 +10,8 @@ public class CuratorMain {
     public static void main(String[] args) throws Exception {
 
         CuratorFramework curatorFramework = CuratorFrameworkFactory.builder().
-                connectionTimeoutMs(10000)//连接超时时间
-                .connectString("172.20.10.10:2181")
+                connectionTimeoutMs(20000)//连接超时时间
+                .connectString("49.234.229.49:2181")
                 //重试次数
                 .retryPolicy(new ExponentialBackoffRetry(1000, 3))
                 .sessionTimeoutMs(15000)//会话过期时间
@@ -19,8 +19,8 @@ public class CuratorMain {
 
         curatorFramework.start();//启动
 
-        //获取节点lzc下的值
-        byte[] bytes = curatorFramework.getData().forPath("/lzc");
+        //获取节点test下的值
+        byte[] bytes = curatorFramework.getData().forPath("/test");
         System.out.println(new String(bytes));
     }
 }
