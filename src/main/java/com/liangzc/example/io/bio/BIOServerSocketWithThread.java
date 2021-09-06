@@ -14,8 +14,8 @@ public class BIOServerSocketWithThread {
         ExecutorService executorService = Executors.newFixedThreadPool(10);
 
         try {
-            serverSocket = new ServerSocket(9999);
-            System.out.println("启动服务：监听端口：9999");
+            serverSocket = new ServerSocket(8888);
+            System.out.println("启动服务：监听端口：8888");
             while (true) {
                 //表示阻塞等待一个客户端连接，返回的socket表示连接的客户端信息
                 Socket socket = serverSocket.accept();
