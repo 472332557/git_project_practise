@@ -3,13 +3,15 @@ package com.liangzc.example.io.bio;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-public class BIOServerSocket {
+public class BIOServerSocketWithThread {
 
     public static void main(String[] args) {
 
-
         ServerSocket serverSocket =null;
+        ExecutorService executorService = Executors.newFixedThreadPool(10);
 
         try {
             serverSocket = new ServerSocket(9999);
@@ -18,15 +20,8 @@ public class BIOServerSocket {
                 //表示阻塞等待一个客户端连接，返回的socket表示连接的客户端信息
                 Socket socket = serverSocket.accept();
                 System.out.println("客户端：" + socket.getPort());
-                //表示获得客户端发送的消息，InputStream是阻塞的
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                String data = bufferedReader.readLine();
-                System.out.println("接收到了客户端发送的一条信息:" + data);
-
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-                bufferedWriter.write("receive a message:" + data);
-                bufferedWriter.newLine();//换行，表示写完了，否则一直处于阻塞
-                bufferedWriter.flush();
+                //IO变成了异步，就不会被阻塞了
+                executorService.execute(new SocketThread(socket));
             }
         } catch (IOException e) {
             e.printStackTrace();
