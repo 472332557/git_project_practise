@@ -79,6 +79,7 @@ public class NIOSelectorServerSocket implements Runnable{
 
         byteBuffer.flip();
         socketChannel.write(byteBuffer);
+
 //        socketChannel.register(selector, SelectionKey.OP_WRITE);//注册为写事件
     }
 
