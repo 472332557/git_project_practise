@@ -1,8 +1,10 @@
 package com.liangzc.example.mybatis;
 
+import com.github.pagehelper.PageHelper;
 import com.liangzc.example.mybatis.mapper.PersonMapper;
 import com.liangzc.example.mybatis.model.Person;
 import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
@@ -26,6 +28,7 @@ public class Test1 {
         //获取session对象，并且初始化了Execute对象
         SqlSession sqlSession = sessionFactory.openSession();
 
+        PageHelper.offsetPage(0,2);
         List<Person> personList = sqlSession.selectList("com.liangzc.example.mybatis.mapper.PersonMapper.selectPersonList");
 
         for (Person person : personList) {
@@ -58,6 +61,28 @@ public class Test1 {
             System.out.println(person);
         }
         sqlSession.close();
+    }
+
+    @Test
+    public void queryWithPage() throws IOException {
+        InputStream inputStream = Resources.getResourceAsStream("mybatis-config.xml");
+        //获取defaultSqlSessionFactory对象，并且解析配置文件、映射文件和statement
+        SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+
+        //获取session对象defaultSqlSession，并且初始化了Execute对象
+        SqlSession sqlSession = sessionFactory.openSession();
+
+        PersonMapper personMapper = sqlSession.getMapper(PersonMapper.class);
+
+        RowBounds rowBounds = new RowBounds(0,2);
+
+        List<Person> personList = personMapper.selectPersonByGender(rowBounds);
+
+        for (Person person : personList) {
+            System.out.println(person);
+        }
+        sqlSession.close();
+
     }
 
 

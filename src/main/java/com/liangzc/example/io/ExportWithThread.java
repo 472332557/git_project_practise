@@ -21,11 +21,8 @@ public class ExportWithThread {
         System.out.println((int) Math.ceil((double) 45620 / (double) 10000));
 
         List<String> lists = Arrays.asList("1","2","3","4","5","6","7","8","9","10");
-        List<String> collect = lists.stream().limit(2).collect(Collectors.toList());
-        List<String> collect1 = lists.stream().limit(4).collect(Collectors.toList());
-
-        System.out.println(collect);
-        System.out.println(collect1);
+        List<String> strings = lists.subList(0, 3);
+        System.out.println(strings);
     }
 
     public static String exportWithThread() throws IOException {

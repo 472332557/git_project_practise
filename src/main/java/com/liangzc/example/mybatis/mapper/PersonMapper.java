@@ -27,4 +27,6 @@ public interface PersonMapper{
     int updateByExample(@Param("record") Person record, @Param("example") PersonCriteria example);
 
     List<Person> selectPersonList(@Param("name") String name, @Param("id") Integer id);
+
+    List<Person> selectPersonByGender(RowBounds rowBounds);
 }
