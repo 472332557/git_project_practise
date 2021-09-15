@@ -5,10 +5,11 @@ import com.liangzc.example.mybatis.model.PersonCriteria;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 import org.omg.PortableInterceptor.Interceptor;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-
+@Repository
 public interface PersonMapper{
     int countByExample(PersonCriteria example);
 
