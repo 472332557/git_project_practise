@@ -21,6 +21,7 @@ public class Test {
         IPerson iPerson = dynamichouseAgent.getInstance(new ZhangSan());
         System.out.println(iPerson.getClass().getName());
         iPerson.findHouse();
+        iPerson.hobbies();
     }
 
 
