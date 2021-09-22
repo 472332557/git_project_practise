@@ -5,7 +5,6 @@ import com.liangzc.example.netty.protocol.MessageRecord;
 import com.liangzc.example.netty.protocol.ReqTypeE;
 import com.liangzc.example.netty.protocol.codec.RecoedDecoder;
 import com.liangzc.example.netty.protocol.codec.RecordEncoder;
-import com.sun.xml.internal.ws.handler.ClientLogicalHandlerTube;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -13,7 +12,6 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
-import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 
@@ -30,11 +28,11 @@ public class ProtocolClient {
                     @Override
                     protected void initChannel(SocketChannel socketChannel) throws Exception {
                         socketChannel.pipeline()
-                                /*.addLast(new LengthFieldBasedFrameDecoder(1024 * 1024,
+                                .addLast(new LengthFieldBasedFrameDecoder(1024 * 1024,
                                         9,
                                         4,
                                         0,
-                                        0))*/
+                                        0))
                                 .addLast(new RecordEncoder())
                                 .addLast(new RecoedDecoder())
                                 .addLast(new ClientHandler());

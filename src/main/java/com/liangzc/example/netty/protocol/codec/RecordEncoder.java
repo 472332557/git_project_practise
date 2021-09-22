@@ -25,7 +25,7 @@ public class RecordEncoder extends MessageToByteEncoder<MessageRecord> {
             ObjectOutputStream oos = new ObjectOutputStream(bos);
             oos.writeObject(content);
             byte[] bytes = bos.toByteArray();
-            out.writeInt(bytes.length);//写消息的长度
+            out.writeInt(bytes.length);//4个字节的写消息长度
             out.writeBytes(bytes);//消息内容
         }else {
             out.writeInt(0);

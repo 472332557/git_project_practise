@@ -9,6 +9,19 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ServerHandler extends ChannelInboundHandlerAdapter {
 
+
+    @Override
+    public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
+        log.info("===================触发了注册事件======================");
+        super.channelRegistered(ctx);
+    }
+
+    @Override
+    public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
+        log.info("===================触发了取消注册事件======================");
+        super.channelUnregistered(ctx);
+    }
+
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         //ServerHandler， 应该是SocketChannel触发的。

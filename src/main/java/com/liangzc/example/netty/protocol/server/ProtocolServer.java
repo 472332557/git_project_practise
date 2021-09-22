@@ -28,11 +28,11 @@ public class ProtocolServer {
                     @Override
                     protected void initChannel(SocketChannel socketChannel) throws Exception {
                         socketChannel.pipeline()
-                                /*.addLast(new LengthFieldBasedFrameDecoder(1024 * 1024,
+                                .addLast(new LengthFieldBasedFrameDecoder(1024 * 1024,
                                         9,
                                         4,
                                         0,
-                                        0))*/
+                                        0))
                                 .addLast(new RecordEncoder())
                                 .addLast(new RecoedDecoder())
                                 .addLast(new ServerHandler());
