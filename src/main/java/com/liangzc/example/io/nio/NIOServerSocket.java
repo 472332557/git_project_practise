@@ -15,6 +15,7 @@ public class NIOServerSocket {
          * channel
          * buffer
          * selector
+         * IO是同步阻塞的，线程不断的轮训去获取客户端信息，这样很浪费cpu资源个无效的轮训
          */
         try {
             ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
