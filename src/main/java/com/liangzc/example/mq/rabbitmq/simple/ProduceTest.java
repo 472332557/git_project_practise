@@ -92,7 +92,7 @@ public class ProduceTest {
         // 发送消息
         String msg = "GG,没中签！！！";
         // String exchange, String routingKey, BasicProperties props, byte[] body
-        channel.basicPublish(EXCHANGE_TOPIC, "com.11.22", null, msg.getBytes());
+        channel.basicPublish(EXCHANGE_TOPIC, "com.aa.bb", null, msg.getBytes());
 //            channel.basicPublish(EXCHANGE_FANOUT, "", null, msg.getBytes());
         System.out.println("消息已发送："+msg);
         channel.close();

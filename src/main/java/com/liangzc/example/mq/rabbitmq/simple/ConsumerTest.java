@@ -138,7 +138,7 @@ public class ConsumerTest {
         //绑定交换机和队列
 //        channel.queueBind(QUEUE_NAME_1, EXCHANGE_TOPIC, "nai_xue");
         channel.queueBind(QUEUE_NAME_5, EXCHANGE_TOPIC, "com.#");
-        channel.queueBind(QUEUE_NAME_6, EXCHANGE_TOPIC, "com.*.*");
+        channel.queueBind(QUEUE_NAME_6, EXCHANGE_TOPIC, "com.*");
 
         //创建消费者
         Consumer consumer = new DefaultConsumer(channel){
@@ -149,6 +149,10 @@ public class ConsumerTest {
                 System.out.println("Received message :" + msg);
                 System.out.println("consumerTag :" + consumerTag);
                 System.out.println("deliveryTag :" +envelope.getDeliveryTag());
+                System.out.println("交换机是："+envelope.getExchange());
+                System.out.println("消费的路由键是："+envelope.getRoutingKey());
+                System.out.println("消费内容类型："+properties.getContentType());
+                System.out.println("=============================================================================");
             }
         };
         channel.basicConsume(QUEUE_NAME_5, true, consumer);
