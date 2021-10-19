@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.concurrent.TimeoutException;
 
 /**
+ * 实现订单的延迟关闭：使用插件机制，完成延迟投递
  * 延迟投递，通过插件实现，插件交换机类型：x-delayed-message
  * 使用该插件时，必须要安装延迟投递插件：rabbitmq_delayed_message_exchange-3.8.0.ez，需要和rabbitmq版本相对应
  */
