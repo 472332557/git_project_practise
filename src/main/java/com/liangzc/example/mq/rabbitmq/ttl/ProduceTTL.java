@@ -11,12 +11,12 @@ import java.util.concurrent.TimeoutException;
 
 public class ProduceTTL {
 
-    private static final String EXCHANGE_NAME = "exchange-ttl";
+    private static final String EXCHANGE_NAME = "ttl-exchange";
 
     public static void main(String[] args) throws IOException, TimeoutException {
 
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("119.23.189.136");
+        factory.setHost("121.37.249.94");
         factory.setPort(5672);
         factory.setUsername("admin");
         factory.setPassword("admin");
@@ -29,11 +29,11 @@ public class ProduceTTL {
         AMQP.BasicProperties properties = new AMQP.BasicProperties().builder()
                 .deliveryMode(2)//持久化消息
                 .contentEncoding("UTF-8")
-                .expiration("10000")
+                .expiration("20000")
                 .build();
 
         String msg =  "消息过期消息！！！";
-        channel.basicPublish("","queue-ttl",properties,msg.getBytes());
+        channel.basicPublish("ttl-exchange","ttl",properties,msg.getBytes());
 
         System.out.println("消息已发送。。。。。。");
         channel.close();

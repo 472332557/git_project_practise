@@ -17,12 +17,12 @@ import java.util.concurrent.TimeoutException;
  */
 public class DeadLetterConsumer {
 
-    private static final String EXCHANGE_NAME = "exchange-fanout";
+    private static final String EXCHANGE_NAME = "ttl-exchange";
 
     public static void main(String[] args) throws IOException, TimeoutException {
 
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("119.23.189.136");
+        factory.setHost("121.37.249.94");
         factory.setPort(5672);
         factory.setUsername("admin");
         factory.setPassword("admin");
@@ -33,19 +33,21 @@ public class DeadLetterConsumer {
         //创建一个信道
         Channel channel = connection.createChannel();
 
-        //指定死信队列交换机
+        //指定死信交换机
         Map<String, Object> arguments = new HashMap<>();
-        arguments.put("x-dead-letter-exchange", "20210703-dead-letter-exchange");
+        arguments.put("x-dead-letter-exchange", "20211019-dead-letter-exchange");
 
-        //声明队列，同时指定死信队列
-        channel.queueDeclare("queue-ttl", false, false, false,arguments);
+        //声明队列，同时指定死信队列(如果不声明交换机的话，使用默认的交换机：AMQP_default)
+        channel.queueDeclare("ttl-queue", false, false, false,arguments);
+        channel.exchangeDeclare("ttl-exchange", "direct",false, false, false,null);
+        channel.queueBind("ttl-queue", "ttl-exchange", "ttl");
 
         //声明死信交换机
-        channel.exchangeDeclare("20210703-dead-letter-exchange", "fanout", false, false, false,null);
+        channel.exchangeDeclare("20211019-dead-letter-exchange", "fanout", false, false, false,null);
         //声明死信队列
-        channel.queueDeclare("20210703-dead-letter-queue", false, false, false, null);
+        channel.queueDeclare("20211019-dead-letter-queue", false, false, false, null);
         //绑定死信交换机和队列
-        channel.queueBind("20210703-dead-letter-queue", "20210703-dead-letter-exchange", "");
+        channel.queueBind("20211019-dead-letter-queue", "20211019-dead-letter-exchange", "");
 
         System.out.println("Waiting for message.........");
 
@@ -56,10 +58,13 @@ public class DeadLetterConsumer {
                 System.out.println("Received message :" + msg);
                 System.out.println("consumerTag :" + consumerTag);
                 System.out.println("deliveryTag :" +envelope.getDeliveryTag());
+                System.out.println("交换机是："+envelope.getExchange());
+                System.out.println("消费的路由键是："+envelope.getRoutingKey());
+                System.out.println("消费内容类型："+properties.getContentType());
             }
         };
 
-        channel.basicConsume("20210703-dead-letter-queue", true, consumer);
+        channel.basicConsume("20211019-dead-letter-queue", true, consumer);
 
     }
 }
