@@ -21,6 +21,7 @@ public class ReadTest {
         String pfxPath = "";
         String crtPath = "";
         String iniPath = "";
+        String pfxPass = "";
 
         for (File listFile : file.listFiles()) {
             System.out.println(listFile.isFile());
@@ -52,8 +53,8 @@ public class ReadTest {
         while ((read = inputStream.read(bytes)) != -1){
             sb.append(new String(bytes, 0, read));
         }
-
-        System.out.println(sb);
+        pfxPass = sb.toString();
+        System.out.println(pfxPass);
 
 
 

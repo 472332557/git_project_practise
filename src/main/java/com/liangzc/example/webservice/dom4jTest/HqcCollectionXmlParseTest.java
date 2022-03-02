@@ -47,5 +47,13 @@ public class HqcCollectionXmlParseTest {
         Element outid = bizresult.element("outid");
         System.out.println(outid.getText());
 
+        Element state = rootElement.element("state");
+        if(state != null){
+            String text = state.getText();
+            System.out.println(text);
+        }
+
+
+
     }
 }
