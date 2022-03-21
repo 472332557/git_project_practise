@@ -1,5 +1,7 @@
 package com.liangzc.example.othertest;
 
+import java.util.Random;
+
 public class StringIntegerTest {
 
 
@@ -9,6 +11,8 @@ public class StringIntegerTest {
         String a = "01";
         Integer b = Integer.valueOf(a);
         System.out.println(b);
+
+        System.out.println(System.currentTimeMillis());
 
     }
 

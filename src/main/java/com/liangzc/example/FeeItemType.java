@@ -8,6 +8,8 @@ public class FeeItemType {
 
     private String Type;
 
+    public FeeItemType() {
+    }
 
     public FeeItemType(String feeItemTypeId, String feeItemTypeName, String type) {
         this.feeItemTypeId = feeItemTypeId;
