@@ -18,6 +18,8 @@ public class MsgProducer {
         RingBuffer<MsgResult> ringBuffer = this.disruptor.getRingBuffer();
         //获取下一个放置数据的位置
         long next = ringBuffer.next();
+        long ringBufferSise = ringBuffer.remainingCapacity();
+        System.out.println("ringBuffer 大小："+ringBufferSise);
 
         MsgResult msgResult1 = null;
         try {

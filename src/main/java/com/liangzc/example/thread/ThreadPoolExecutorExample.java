@@ -8,7 +8,7 @@ public class ThreadPoolExecutorExample {
 
     public static void main(String[] args) {
 
-        ExecutorService executorService = new ThreadPoolExecutor(1, 2, 10, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(), Executors.defaultThreadFactory(), new ThreadPoolExecutor.DiscardOldestPolicy());
+        ExecutorService executorService = new ThreadPoolExecutor(1, Runtime.getRuntime().availableProcessors(), 10, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(100), Executors.defaultThreadFactory(), new ThreadPoolExecutor.DiscardOldestPolicy());
 
         for (int i = 0; i < 1000; i++) {
 
@@ -23,7 +23,7 @@ public class ThreadPoolExecutorExample {
 
     static class Task implements Runnable{
 
-        private Integer count;
+        private volatile Integer count;
 
         public Task(Integer count) {
             this.count = count;
