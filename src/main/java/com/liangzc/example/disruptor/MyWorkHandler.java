@@ -2,6 +2,8 @@ package com.liangzc.example.disruptor;
 
 import com.lmax.disruptor.WorkHandler;
 
+import java.util.concurrent.TimeUnit;
+
 public class MyWorkHandler implements WorkHandler<MsgResult> {
 
     private String name;
@@ -12,6 +14,8 @@ public class MyWorkHandler implements WorkHandler<MsgResult> {
 
     @Override
     public void onEvent(MsgResult msgResult) throws Exception {
+        TimeUnit.SECONDS.sleep(61);
+        System.out.println(1 / 0);
         System.out.println(this.name +"------接受到信息:"+msgResult);
     }
 }
