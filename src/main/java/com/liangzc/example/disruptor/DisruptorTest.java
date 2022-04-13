@@ -14,8 +14,8 @@ public class DisruptorTest {
     public static void main(String[] args) {
 
 
-        test2();
-//        test1();
+//        test2();
+        test1();
     }
 
     /**
