@@ -14,8 +14,8 @@ public class DisruptorTest {
     public static void main(String[] args) {
 
 
-//        test2();
-        test1();
+        test2();
+//        test1();
     }
 
     /**
@@ -54,11 +54,19 @@ public class DisruptorTest {
      * 分组消费：每个生产者生产的数据只被消费一次
      */
     public static void test2(){
-        Disruptor<MsgResult> disruptor = new Disruptor<MsgResult>(MsgResult::new,4, Executors.defaultThreadFactory());
+        Disruptor<MsgResult> disruptor = new Disruptor<MsgResult>(MsgResult::new,8, Executors.defaultThreadFactory());
 
         disruptor.setDefaultExceptionHandler(new CustomerException());
 
-        disruptor.handleEventsWithWorkerPool(new MyWorkHandler("work1"),new MyWorkHandler("work2"));
+        //I/O密集型线程数建议给到cpu核心数的2倍
+        int threadCount = Runtime.getRuntime().availableProcessors() * 2;
+        System.out.println("cpu核心数："+threadCount);
+        MyWorkHandler[] myWorkHandlers = new MyWorkHandler[threadCount];
+        for (int i = 0; i < threadCount; i++) {
+            myWorkHandlers[i] = new MyWorkHandler("worker"+i);
+        }
+//        disruptor.handleEventsWithWorkerPool(new MyWorkHandler("work1"),new MyWorkHandler("work2"));
+        disruptor.handleEventsWithWorkerPool(myWorkHandlers);
 
         disruptor.start();
 
