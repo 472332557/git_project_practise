@@ -22,6 +22,9 @@ public class CompartorTest {
         list.add(stu1);
         list.add(stu2);
         list.add(stu3);
+
+        //list进行升序
+
         Collections.sort(list, new Comparator<Student>() {
             @Override
             //第一个参数.compareTo(第二个参数) 升序排列  o1.getAge().compareTo(o2.getAge()) 升序

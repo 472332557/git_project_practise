@@ -266,6 +266,18 @@
     </dependency>
 
 
+    <!--rocketMQ-->
+    <dependency>
+      <groupId>org.apache.rocketmq</groupId>
+      <artifactId>rocketmq-client</artifactId>
+      <version>4.7.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.rocketmq</groupId>
+      <artifactId>rocketmq-broker</artifactId>
+      <version>4.7.1</version>
+    </dependency>
+
   </dependencies>
 
   <build>
