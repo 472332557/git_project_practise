@@ -15,6 +15,9 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>lzcmvc</servlet-name>
-    <url-pattern>/*</url-pattern>
+  <!-- 请求该url时（/demo/*），则会交由该servlet处理，相当于指定了该servlet处理的url。
+      可以明确指定，也可以模糊指定，/*代表任何的请求，该servlet都会进行处理
+   -->
+    <url-pattern>/demo/*</url-pattern>
   </servlet-mapping>
 </web-app>

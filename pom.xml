@@ -258,11 +258,17 @@
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/com.lmax/disruptor -->
-    <!-- https://mvnrepository.com/artifact/com.lmax/disruptor -->
     <dependency>
       <groupId>com.lmax</groupId>
       <artifactId>disruptor</artifactId>
       <version>3.4.2</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/joda-time/joda-time -->
+    <dependency>
+      <groupId>joda-time</groupId>
+      <artifactId>joda-time</artifactId>
+      <version>2.10.10</version>
     </dependency>
 
 

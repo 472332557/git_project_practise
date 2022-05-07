@@ -7,6 +7,7 @@ import com.liangzc.example.spring_demo.annotation.LzcService;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -52,6 +53,20 @@ public class DispatchServlet extends HttpServlet {
         String contextPath = req.getContextPath();
         requestURI = requestURI.replaceAll("/+", "/");
 
+        //cookie练习，cookie和session不同，cookie可以长期存在于客户端（浏览器）。只要不超过设定的时间，而session会随着浏览器的关闭而关闭。
+        String name = req.getParameter("name");
+        if ("111".equals(name)){
+            Cookie cookie = new Cookie("name", name);
+            cookie.setMaxAge(300);
+            resp.addCookie(cookie);
+        }else {
+            Cookie[] cookies = req.getCookies();
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("name")){
+                    System.out.println("第一次设置的cookie为："+cookie.getName() +"=" +cookie.getValue());
+                }
+            }
+        }
         if(!handlerMapping.containsKey(requestURI)){
             resp.getWriter().write("404 Not found");
             return;
