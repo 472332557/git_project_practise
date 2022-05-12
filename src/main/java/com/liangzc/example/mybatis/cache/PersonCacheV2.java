@@ -1,6 +1,6 @@
 package com.liangzc.example.mybatis.cache;
 
-import com.liangzc.example.SpringConfig;
+import com.liangzc.example.mybatis.config.JDBCTemplateConfig;
 import com.liangzc.example.mybatis.model.PersonCache;
 import org.apache.ibatis.cache.Cache;
 import org.springframework.context.ApplicationContext;
@@ -15,7 +15,7 @@ public class PersonCacheV2 implements Cache {
     static JdbcTemplate jdbcTemplate;
 
     static {
-        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(SpringConfig.class);
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(JDBCTemplateConfig.class);
         jdbcTemplate = applicationContext.getBean(JdbcTemplate.class);
     }
 

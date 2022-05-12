@@ -29,6 +29,10 @@ public class HashMapTest {
         int a = 8 >> 1;
         System.out.println(a);
 
+        Map<String, Object> map = new HashMap<>();
+        Object put = map.put("111", 1111);
+        System.out.println(put);
+
 
     }
 }

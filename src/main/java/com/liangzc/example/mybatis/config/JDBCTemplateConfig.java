@@ -1,4 +1,4 @@
-package com.liangzc.example;
+package com.liangzc.example.mybatis.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import org.springframework.context.annotation.Bean;
@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import javax.sql.DataSource;
 
 @Configuration
-public class SpringConfig {
+public class JDBCTemplateConfig {
 
 
     @Bean
