@@ -17,4 +17,9 @@ http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
 
     <context:component-scan  base-package="com.liangzc.example.spring_demo.aop.annotation_way"/>
 
+    <!--事件监听器-->
+    <bean class="com.liangzc.example.spring_demo.event.PersonApplicationListen"/>
+
+    <!-- 获得容器本身 -->
+    <bean id="application" class="com.liangzc.example.spring_demo.applicationAware.ApplicationAwareDemo" />
 </beans>

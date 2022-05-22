@@ -28,6 +28,8 @@ public class Test1 {
         //获取session对象，并且初始化了Execute对象
         SqlSession sqlSession = sessionFactory.openSession();
 
+        sqlSession.update("");
+
         PageHelper.offsetPage(0,2);
         List<Person> personList = sqlSession.selectList("com.liangzc.example.mybatis.mapper.PersonMapper.selectPersonList");
 
