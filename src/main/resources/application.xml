@@ -22,4 +22,9 @@ http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
 
     <!-- 获得容器本身 -->
     <bean id="application" class="com.liangzc.example.spring_demo.applicationAware.ApplicationAwareDemo" />
+
+    <!--factoryBean -->
+    <bean id="petFactory" class="com.liangzc.example.spring_demo.factorybean.PetFactory"/>
+
+    <bean id="personBeanNameAware" class="com.liangzc.example.spring_demo.beanAware.PersonBeanAware"/>
 </beans>

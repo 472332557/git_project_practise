@@ -22,7 +22,7 @@ public class DisruptorTest {
      * 统一消费，定义多个消费者，每个消费者都消费一份生产者生产的数据
      */
     public static void test1(){
-        Disruptor<MsgResult> disruptor = new Disruptor<MsgResult>(MsgResult::new,4, Executors.defaultThreadFactory(), ProducerType.SINGLE,new BlockingWaitStrategy());
+        Disruptor<MsgResult> disruptor = new Disruptor<MsgResult>(MsgResult::new,128, Executors.defaultThreadFactory(), ProducerType.SINGLE,new BlockingWaitStrategy());
 
         //设置自定义异常处理器，不设置会使用默认的异常处理器：FatalExceptionHandler，该处理器会直接抛出异常，导致程序终止，后续任务也不会执行
         disruptor.setDefaultExceptionHandler(new CustomerException());

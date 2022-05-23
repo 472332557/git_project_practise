@@ -10,9 +10,9 @@ public class DateTest {
 
 
     public static void main(String[] args) {
-//        DateTest.OwesCycleAge("2022-03");
+        DateTest.OwesCycleAge("2022-05");
 //        System.out.println(lastDayOfMonth(new Date()));
-        getDateStr();
+//        getDateStr();
     }
 
 

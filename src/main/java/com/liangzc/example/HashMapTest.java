@@ -33,6 +33,11 @@ public class HashMapTest {
         Object put = map.put("111", 1111);
         System.out.println(put);
 
+        Map<String, Object> map1 = new HashMap<>();
+        map1.put("1", 1);
+
+        System.out.println("hash码为："+("1".hashCode()));
+
 
     }
 }
