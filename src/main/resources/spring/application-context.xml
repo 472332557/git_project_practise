@@ -14,7 +14,7 @@ http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
     <context:property-placeholder location="db.properties"/>
 
     <!--自动扫描com.liangzc.example.mybatis下的注释的@component、@serivce-->
-    <context:component-scan base-package="com.liangzc.example.mybatis"/>
+    <context:component-scan base-package="com.liangzc.example.mybatis,com.liangzc.example.web_start"/>
 
 
     <!--配置数据库连接池，使用阿里巴巴的Druid连接池,参数取自db.properties文件配置-->
