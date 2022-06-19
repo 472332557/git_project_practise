@@ -9,13 +9,17 @@ public class Test {
 
         ApplicationContext context = new ClassPathXmlApplicationContext("application.xml");
 
-        PetFactory petFactory = context.getBean(PetFactory.class);
+        Pet cat = context.getBean("cat", Pet.class);
 
-        System.out.println(petFactory);
+        System.out.println(cat.getName());
 
-        Pet object = petFactory.getObject();
+        Pet cat1 = context.getBean("cat", Pet.class);
 
-        object.getName();
+        System.out.println(cat == cat1);
+
+        //获得FactoryBean本身,在bean id前加&
+        System.out.println(context.getBean("&cat"));
+
 
     }
 }
