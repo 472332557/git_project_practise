@@ -12,7 +12,8 @@ public class HqcCollectionXmlParseTest {
 
     public static void main(String[] args) throws DocumentException {
 
-        parse();
+//        parse();
+        parseCMBNotify();
 
     }
 
@@ -52,8 +53,37 @@ public class HqcCollectionXmlParseTest {
             String text = state.getText();
             System.out.println(text);
         }
+    }
 
 
+    public static void parseCMBNotify() throws DocumentException {
+        String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
+                "<SzfsTwsCallback>\n" +
+                "  <omsgtype>CONTRACTCHANGE</omsgtype>\n" +
+                "  <oversion>2.0</oversion>\n" +
+                "  <osubnode>C00000000X91</osubnode>\n" +
+                "  <omsgno>16555194811070</omsgno>\n" +
+                "  <osubdate>20220618</osubdate>\n" +
+                "  <oseqid>bd618e1beeae11ec8ba7c9bdf684ce62</oseqid>\n" +
+                "  <otransno>7375195</otransno>\n" +
+                "  <status>00</status>\n" +
+                "  <procode>FSCI0000</procode>\n" +
+                "  <remark>授权成功</remark>\n" +
+                "  <bizresult>\n" +
+                "    <orequestid>bd618e1beeae11ec8ba7c9bdf684ce62</orequestid>\n" +
+                "    <contractno>bd618e1ceeae11ec8ba7c9bdf684ce62</contractno>\n" +
+                "    <authchl>01</authchl>\n" +
+                "    <authurl>https://www.baidu.com/s?wd=12&amp;rsv_spt=1</authurl>\n" +
+                "  </bizresult>\n" +
+                "</SzfsTwsCallback>";
 
+        Document document = DocumentHelper.parseText(xml);
+        Element rootElement = document.getRootElement();
+
+        String status = rootElement.element("status").getText();
+        String contractno = rootElement.element("bizresult").element("contractno").getText();
+
+        System.out.println(status);
+        System.out.println(contractno);
     }
 }
