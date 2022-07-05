@@ -27,11 +27,17 @@ public class ByteBufDemo {
 
     private static void logByteBuf(ByteBuf byteBuf) {
 
-        System.out.println("读数据之前："+byteBuf.readerIndex());
+        StringBuilder stringBuilder = new StringBuilder();
 
-        System.out.println("写数据之后："+byteBuf.writerIndex());
+        stringBuilder.append("读数据索引：").append(byteBuf.readerIndex()).append(";");
 
-        System.out.println("ByteBuf容量："+byteBuf.capacity());
+        stringBuilder.append("写数据索引：").append(byteBuf.writerIndex()).append(";");
+
+        stringBuilder.append("ByteBuf容量：").append(byteBuf.capacity()).append(";");
+
+        ByteBufUtil.appendPrettyHexDump(stringBuilder,byteBuf);
+
+        System.out.println(stringBuilder.toString());
 
     }
 }
