@@ -1,5 +1,7 @@
 package com.liangzc.example.lambda;
 
+import java.util.Date;
+
 public class Student {
 
     private String name;
@@ -8,12 +10,17 @@ public class Student {
 
     private Integer grade;
 
-    public Student(String name, Integer age, Integer grade) {
+    private Date createDate;
+
+    public Student(String name, Integer age, Integer grade, Date createDate) {
         this.name = name;
         this.age = age;
         this.grade = grade;
+        this.createDate = createDate;
     }
 
+    public Student() {
+    }
 
     public String getName() {
         return name;
@@ -39,12 +46,21 @@ public class Student {
         this.grade = grade;
     }
 
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
     @Override
     public String toString() {
         return "Student{" +
                 "name='" + name + '\'' +
                 ", age=" + age +
                 ", grade=" + grade +
+                ", createDate=" + createDate +
                 '}';
     }
 }

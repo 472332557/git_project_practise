@@ -1,5 +1,6 @@
 package com.liangzc.example;
 
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,6 +17,10 @@ public class Test {
 
 
         List list = new LinkedList();
+
+        System.out.println("--------------------------------------");
+        Calendar calendar = Calendar.getInstance();
+        System.out.println(calendar.get(Calendar.HOUR_OF_DAY));
 
     }
 }
