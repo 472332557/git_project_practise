@@ -4,10 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class toListTest {
@@ -56,6 +53,8 @@ public class toListTest {
         //取最大值
         Date maxDate = list.stream().map(c -> c.getCreateDate()).max(Comparator.comparing(Date::getTime)).get();
         System.out.println(format.format(maxDate));
+
+        System.out.println("====================================求和过滤===========================================");
 
     }
 }
