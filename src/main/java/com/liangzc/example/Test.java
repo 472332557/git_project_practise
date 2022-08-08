@@ -22,5 +22,14 @@ public class Test {
         Calendar calendar = Calendar.getInstance();
         System.out.println(calendar.get(Calendar.HOUR_OF_DAY));
 
+
+        String temp = "dsfdsfds#{organName},都是佛挡杀佛的#{resInstName}";
+        System.out.println(tempReplace(temp));
+
     }
+
+    public static String tempReplace(String temp){
+        return temp.replaceAll("#\\{organName}", "优家园").replaceAll("#\\{resInstName}", "lllll");
+    }
+
 }
