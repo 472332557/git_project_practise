@@ -14,7 +14,7 @@ public class ConsumerSimpleKafka {
 
         Properties properties = new Properties();
         //Broker地址
-        properties.put("bootstrap.servers","119.23.189.136:9092");
+        properties.put("bootstrap.servers","http://121.37.249.94:9092");
         //消费者组
         properties.put("group.id", "lzc-test-group");
         /**
@@ -35,7 +35,7 @@ public class ConsumerSimpleKafka {
         properties.put("value.deserializer","org.apache.kafka.common.serialization.StringDeserializer");
         KafkaConsumer<String, String> consumer = new KafkaConsumer<String, String>(properties);
         //订阅topic
-        consumer.subscribe(Arrays.asList("lzc-test-topic"));
+        consumer.subscribe(Arrays.asList("canal-topic"));
 
         try {
             while (true){

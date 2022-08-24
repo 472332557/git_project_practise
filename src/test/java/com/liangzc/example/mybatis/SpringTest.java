@@ -1,5 +1,6 @@
 package com.liangzc.example.mybatis;
 
+import com.github.pagehelper.PageHelper;
 import com.liangzc.example.mybatis.model.Person;
 import com.liangzc.example.mybatis.service.PersonService;
 import com.liangzc.example.web_start.WebController;
@@ -28,8 +29,9 @@ public class SpringTest {
     @Test
     public void test1(){
 
-        RowBounds rowBounds = new RowBounds(0, 2);
-        List<Person> people = personService.selectPersonByGender(rowBounds);
+//        RowBounds rowBounds = new RowBounds(2, 2);
+        PageHelper.offsetPage(4, 2);
+        List<Person> people = personService.selectPersonByGender(null);
         System.out.println(people);
     }
 
