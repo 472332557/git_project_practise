@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -47,6 +48,7 @@ public class DemoTest {
         EasyExcel.write(fileName1,DemoData.class).includeColumnFieldNames(excludeColumnFiledNames).sheet("指定包含").doWrite(data());
     }
 
+    //多次写入到同一个sheet
     @Test
     public void duplicationExportSheet(){
         /**
@@ -63,11 +65,60 @@ public class DemoTest {
                 excelWriter.write(data, writeSheet);
             }
         }
+    }
 
-
+    /**
+     * 动态头、动态列写入
+     * @return
+     */
+    @Test
+    public void dynamicHeadExport(){
+        String fileName = filePath + "/easyExcel_" +LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + ".xlsx";
+        // 根据用户传入字段 假设我们只要导出 DemoData中对应的date列,项目中汇总列的，可以使用这种方式
+        Set<String> includeColumnFiledNames = new HashSet<String>();
+        includeColumnFiledNames.add("date");
+        EasyExcel.write(fileName).head(head()).sheet("动态头sheet").doWrite(dynamicData());
 
     }
 
+    private List<List<String>> head() {
+        List<List<String>> list = new ArrayList<List<String>>();
+        List<String> head0 = new ArrayList<String>();
+        head0.add("字符串" + System.currentTimeMillis());
+        List<String> head1 = new ArrayList<String>();
+        head1.add("数字" + System.currentTimeMillis());
+        List<String> head2 = new ArrayList<String>();
+        head2.add("日期" + System.currentTimeMillis());
+        list.add(head0);
+        list.add(head1);
+        list.add(head2);
+        return list;
+    }
+
+    private List<List<String>> dynamicData() {
+        List<List<String>> list = new ArrayList<List<String>>();
+
+        for (int i = 0; i < 100; i++) {
+            List<String> head0 = new ArrayList<String>();
+            head0.add("动态列1_"+i);
+            head0.add("动态列2_"+i);
+            head0.add("动态列3_"+i);
+            list.add(head0);
+        }
+
+//        List<String> head1 = new ArrayList<String>();
+//        head1.add("动态列2" + System.currentTimeMillis());
+//        head1.add("动态列2" + System.currentTimeMillis());
+//        head1.add("动态列2" + System.currentTimeMillis());
+//        List<String> head2 = new ArrayList<String>();
+//        head2.add("动态列3" + System.currentTimeMillis());
+//        head2.add("动态列3" + System.currentTimeMillis());
+//        head2.add("动态列3" + System.currentTimeMillis());
+
+//        list.add(head1);
+//        list.add(head2);
+        return list;
+    }
 
 
     private List<DemoData> data() {
