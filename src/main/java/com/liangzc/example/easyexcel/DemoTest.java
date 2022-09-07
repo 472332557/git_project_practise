@@ -3,6 +3,7 @@ package com.liangzc.example.easyexcel;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.util.ListUtils;
+import com.alibaba.excel.write.merge.LoopMergeStrategy;
 import com.alibaba.excel.write.metadata.WriteSheet;
 import org.junit.Test;
 
@@ -68,17 +69,26 @@ public class DemoTest {
     }
 
     /**
-     * 动态头、动态列写入
+     * 动态头、动态列写入，不创建对象的写
      * @return
      */
     @Test
     public void dynamicHeadExport(){
         String fileName = filePath + "/easyExcel_" +LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + ".xlsx";
-        // 根据用户传入字段 假设我们只要导出 DemoData中对应的date列,项目中汇总列的，可以使用这种方式
-        Set<String> includeColumnFiledNames = new HashSet<String>();
-        includeColumnFiledNames.add("date");
         EasyExcel.write(fileName).head(head()).sheet("动态头sheet").doWrite(dynamicData());
+    }
 
+
+    /**
+     * 合并单元格
+     * @return
+     */
+    @Test
+    public void mergExport(){
+        String fileName = filePath + "/easyExcel_" +LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + ".xlsx";
+        //第2列，每隔2行进行汇总
+        LoopMergeStrategy loopMergeStrategy = new LoopMergeStrategy(2, 1);
+        EasyExcel.write(fileName).head(head()).registerWriteHandler(loopMergeStrategy).sheet("合并sheet").doWrite(dynamicData());
     }
 
     private List<List<String>> head() {
@@ -105,18 +115,6 @@ public class DemoTest {
             head0.add("动态列3_"+i);
             list.add(head0);
         }
-
-//        List<String> head1 = new ArrayList<String>();
-//        head1.add("动态列2" + System.currentTimeMillis());
-//        head1.add("动态列2" + System.currentTimeMillis());
-//        head1.add("动态列2" + System.currentTimeMillis());
-//        List<String> head2 = new ArrayList<String>();
-//        head2.add("动态列3" + System.currentTimeMillis());
-//        head2.add("动态列3" + System.currentTimeMillis());
-//        head2.add("动态列3" + System.currentTimeMillis());
-
-//        list.add(head1);
-//        list.add(head2);
         return list;
     }
 
