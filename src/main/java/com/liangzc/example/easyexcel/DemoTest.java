@@ -12,10 +12,7 @@ import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
 import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
 import com.alibaba.excel.write.style.row.SimpleRowHeightStyleStrategy;
 import com.google.common.collect.Lists;
-import org.apache.poi.ss.usermodel.BorderStyle;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
-import org.apache.poi.ss.usermodel.IndexedColors;
-import org.apache.poi.ss.usermodel.VerticalAlignment;
+import org.apache.poi.ss.usermodel.*;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
@@ -91,6 +88,7 @@ public class DemoTest {
 
         //设置样式
 
+        List<WriteCellStyle> writeCellStyleList = Lists.newArrayList();
         //设置头样式
         WriteCellStyle headWriteCellStyle = new WriteCellStyle();
         //背景设置为蓝色
@@ -104,14 +102,40 @@ public class DemoTest {
         WriteCellStyle contentWriteCellStyle = new WriteCellStyle();
         contentWriteCellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
         contentWriteCellStyle.setHorizontalAlignment(HorizontalAlignment.CENTER);
+        contentWriteCellStyle.setBorderLeft(BorderStyle.THIN);
+        contentWriteCellStyle.setBorderRight(BorderStyle.THIN);
+        contentWriteCellStyle.setBorderTop(BorderStyle.THIN);
+        contentWriteCellStyle.setBorderBottom(BorderStyle.THIN);
         WriteFont contentWriteFont = new WriteFont();
         // 字体大小
         contentWriteFont.setFontHeightInPoints((short)11);
         contentWriteFont.setFontName("宋体");
         contentWriteCellStyle.setWriteFont(contentWriteFont);
 
+        WriteCellStyle lastRowWriteCellStyle = new WriteCellStyle();
+        lastRowWriteCellStyle.setFillPatternType(FillPatternType.SOLID_FOREGROUND);
+        //背景设置为蓝色
+        lastRowWriteCellStyle.setFillForegroundColor(IndexedColors.PALE_BLUE.index);
+        lastRowWriteCellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+        lastRowWriteCellStyle.setHorizontalAlignment(HorizontalAlignment.CENTER);
+        lastRowWriteCellStyle.setBorderLeft(BorderStyle.THIN);
+        lastRowWriteCellStyle.setBorderRight(BorderStyle.THIN);
+        lastRowWriteCellStyle.setBorderTop(BorderStyle.THIN);
+        lastRowWriteCellStyle.setBorderBottom(BorderStyle.THIN);
+        WriteFont lastWriteFont = new WriteFont();
+        lastWriteFont.setBold(true);
+        lastWriteFont.setFontHeightInPoints((short) 13);
+        lastWriteFont.setFontName("宋体");
+        lastRowWriteCellStyle.setWriteFont(lastWriteFont);
+        for (int i = 0; i < lists.size()-1; i++) {
+            writeCellStyleList.add(contentWriteCellStyle);
+        }
+        //添加最后一行样式
+        writeCellStyleList.add(lastRowWriteCellStyle);
+
         //头和内容的策略
-        HorizontalCellStyleStrategy horizontalCellStyleStrategy = new HorizontalCellStyleStrategy(headWriteCellStyle,contentWriteCellStyle);
+//        HorizontalCellStyleStrategy horizontalCellStyleStrategy = new HorizontalCellStyleStrategy(headWriteCellStyle,contentWriteCellStyle);
+        HorizontalCellStyleStrategy horizontalCellStyleStrategy = new HorizontalCellStyleStrategy(headWriteCellStyle, writeCellStyleList);
         //合并单元格，最后一行，第1 - 3列合并
         OnceAbsoluteMergeStrategy onceAbsoluteMergeStrategy = new OnceAbsoluteMergeStrategy(lists.size()+1,lists.size()+1,0,2);
         EasyExcel.write(fileName).head(head())
