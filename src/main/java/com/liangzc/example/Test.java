@@ -32,4 +32,10 @@ public class Test {
         return temp.replaceAll("#\\{organName}", "优家园").replaceAll("#\\{resInstName}", "lllll");
     }
 
+    @org.junit.Test
+    public void subStringTest(){
+        String date = "20220908000000";
+        System.out.println(date.substring(0,8));
+    }
+
 }
