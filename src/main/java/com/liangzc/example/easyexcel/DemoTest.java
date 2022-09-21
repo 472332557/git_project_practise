@@ -94,28 +94,45 @@ public class DemoTest {
         boolean isEnter = false;
         ExcelWriter excelWriter = null;
         WriteSheet writeSheet = null;
+        OnceAbsoluteMergeStrategy mergeStrategy;
+        int count = 50;
+        int headRows = 2;
+        int mergerColumnIndex = 2;
         try{
-            for (int i = 0; i < 5; i++) {
-                if(excelWriter == null){
+            for (int i = 1; i <= 5; i++) {
+                if(!isEnter){
+                    mergeStrategy = new OnceAbsoluteMergeStrategy(count + headRows, count + headRows, 0, mergerColumnIndex-1);
                     excelWriter = EasyExcel.write(fileName).head(head())
                             .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())//自动列宽
-                            .registerWriteHandler(new SimpleRowHeightStyleStrategy((short) 35, (short) 25)).build();
-                }
-
-                // 这里注意 如果同一个sheet只要创建一次
-                if (writeSheet == null) {
+                            .registerWriteHandler(new SimpleRowHeightStyleStrategy((short) 35, (short) 25))
+                            .registerWriteHandler(mergeStrategy).build();
+                    // 这里注意 如果同一个sheet只要创建一次
                     writeSheet = EasyExcel.writerSheet("重复写入sheet模板").build();
+                    isEnter = true;
                 }
                 // 去调用写入,这里我调用了五次，实际使用时根据数据库分页的总的页数来
                 // 分页去数据库查询数据 这里可以去数据库查询每一页的数据
                 //                List<DemoData> data = data();
                 try {
-                    TimeUnit.SECONDS.sleep(10);
+                    TimeUnit.SECONDS.sleep(1);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                excelWriter.write(dynamicData(), writeSheet);
 
+                if(i == 5){
+                    List<String> lits = new ArrayList();
+                    lits.add("合计_"+i);
+                    lits.add("合计_"+i);
+                    lits.add("最后一行_"+i);
+                    lits.add("最后一行"+i);
+                    lits.add("最后一行"+i);
+                    List<List<String>> resultList = dynamicData();
+                    resultList.add(lits);
+                    excelWriter.write(resultList, writeSheet);
+                    return;
+                }
+
+                excelWriter.write(dynamicData(), writeSheet);
             }
         }finally {
             if(excelWriter != null){
@@ -222,7 +239,7 @@ public class DemoTest {
 
     private List<List<String>> dynamicData() {
         List<List<String>> list = new ArrayList<List<String>>();
-        for (int i = 0; i < 10000; i++) {
+        for (int i = 0; i < 10; i++) {
             List<String> head0 = new ArrayList<String>();
             head0.add("动态列1_"+i);
             head0.add("动态列2_"+i);
