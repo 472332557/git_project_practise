@@ -18,6 +18,7 @@ import org.junit.Test;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 阿里巴巴easyExcel文档参考：https://easyexcel.opensource.alibaba.com/
@@ -61,16 +62,64 @@ public class DemoTest {
          *  1、写到同一个sheet
          */
         String fileName = filePath + "/easyExcel_" +LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + ".xlsx";
-        Set<String> includeColumnFiledNames = new HashSet<String>();
-        includeColumnFiledNames.add("date");
-        try(ExcelWriter excelWriter = EasyExcel.write(fileName, DemoData.class).includeColumnFieldNames(includeColumnFiledNames).build()) {
+        try(ExcelWriter excelWriter = EasyExcel.write(fileName).head(head())
+                .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())//自动列宽
+                .registerWriteHandler(new SimpleRowHeightStyleStrategy((short)35,(short)25)).build()) {
             // 这里注意 如果同一个sheet只要创建一次
             WriteSheet writeSheet = EasyExcel.writerSheet("重复写入sheet模板").build();
             // 去调用写入,这里我调用了五次，实际使用时根据数据库分页的总的页数来
             for (int i = 0; i < 5; i++) {
                 // 分页去数据库查询数据 这里可以去数据库查询每一页的数据
-                List<DemoData> data = data();
-                excelWriter.write(data, writeSheet);
+//                List<DemoData> data = data();
+                try {
+                    TimeUnit.SECONDS.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                excelWriter.write(dynamicData(), writeSheet);
+            }
+        }
+    }
+
+    /**
+     * 多次写入到同一个sheet页的其他写法，像上面的带自动关闭流的try块写法，在实际项目中，设置表头数据及样式时，需要先去获取分页返回的数据，基于这个才能设置
+     * 但上面的写法没办法满足，所以只好按下面的写法，try-finally，每次手动去关闭写入的IO流。
+     */
+    @Test
+    public void duplicationExportSheetV2(){
+        /**
+         *  1、写到同一个sheet
+         */
+        String fileName = filePath + "/easyExcel_" +LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + ".xlsx";
+        boolean isEnter = false;
+        ExcelWriter excelWriter = null;
+        WriteSheet writeSheet = null;
+        try{
+            for (int i = 0; i < 5; i++) {
+                if(excelWriter == null){
+                    excelWriter = EasyExcel.write(fileName).head(head())
+                            .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())//自动列宽
+                            .registerWriteHandler(new SimpleRowHeightStyleStrategy((short) 35, (short) 25)).build();
+                }
+
+                // 这里注意 如果同一个sheet只要创建一次
+                if (writeSheet == null) {
+                    writeSheet = EasyExcel.writerSheet("重复写入sheet模板").build();
+                }
+                // 去调用写入,这里我调用了五次，实际使用时根据数据库分页的总的页数来
+                // 分页去数据库查询数据 这里可以去数据库查询每一页的数据
+                //                List<DemoData> data = data();
+                try {
+                    TimeUnit.SECONDS.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                excelWriter.write(dynamicData(), writeSheet);
+
+            }
+        }finally {
+            if(excelWriter != null){
+                excelWriter.close();
             }
         }
     }
@@ -173,7 +222,7 @@ public class DemoTest {
 
     private List<List<String>> dynamicData() {
         List<List<String>> list = new ArrayList<List<String>>();
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 10000; i++) {
             List<String> head0 = new ArrayList<String>();
             head0.add("动态列1_"+i);
             head0.add("动态列2_"+i);
