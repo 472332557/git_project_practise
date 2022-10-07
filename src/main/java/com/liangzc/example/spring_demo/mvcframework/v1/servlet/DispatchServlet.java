@@ -88,7 +88,7 @@ public class DispatchServlet extends HttpServlet {
                 }
             }
         }
-        //②、没有加注解的参数，也要缓存下来,这是总的参数列表
+        //②、没有加注解的参数，也要缓存下来,参数类型列表
         Class<?>[] parameterTypes = method.getParameterTypes();
         for (int i = 0; i < parameterTypes.length; i++) {
             Class<?> parameterType = parameterTypes[i];
