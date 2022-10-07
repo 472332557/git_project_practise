@@ -1,9 +1,6 @@
 package com.liangzc.example.spring_demo.mvcframework.v1.servlet;
 
-import com.liangzc.example.spring_demo.annotation.LzcAutowired;
-import com.liangzc.example.spring_demo.annotation.LzcController;
-import com.liangzc.example.spring_demo.annotation.LzcRequestMapping;
-import com.liangzc.example.spring_demo.annotation.LzcService;
+import com.liangzc.example.spring_demo.annotation.*;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -14,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -72,8 +70,57 @@ public class DispatchServlet extends HttpServlet {
             return;
         }
         Method method = handlerMapping.get(requestURI);
+
         String beanName = toLowerNameFirst(method.getDeclaringClass().getSimpleName());
+
+
+        //1、先把形参的参数名和位置建立映射关系，并且缓存下来
+        Map<String, Integer> paramIndexMapping = new HashMap<>();
+        //①、加注解的参数
+        Annotation[][] pa = method.getParameterAnnotations();
+        for (int i = 0; i < pa.length; i++) {
+            for (Annotation annotation : pa[i]) {
+                if(annotation instanceof LzcRequestParam){
+                    String paramName = ((LzcRequestParam) annotation).value();
+                    if(!"".equals(paramName.trim())){
+                        paramIndexMapping.put(paramName, i);
+                    }
+                }
+            }
+        }
+        //②、没有加注解的参数，也要缓存下来,这是总的参数列表
+        Class<?>[] parameterTypes = method.getParameterTypes();
+        for (int i = 0; i < parameterTypes.length; i++) {
+            Class<?> parameterType = parameterTypes[i];
+            if(parameterType == HttpServletRequest.class || parameterType == HttpServletResponse.class){
+                paramIndexMapping.put(parameterType.getName(), i);
+            }
+        }
+        //2、根据参数位置匹配参数名字，从url中取到参数名字对应的值
+        //实际参数数组,组成动态参数列表，实参
+        Object[] paramsValues = new Object[parameterTypes.length];
+
         Map<String, String[]> parameterMap = req.getParameterMap();
+        for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
+            String value = Arrays.toString(entry.getValue())
+                    .replaceAll("\\[|\\]", "")
+                    .replaceAll("\\s", "");//去除空格
+            if(!paramIndexMapping.containsKey(entry.getKey())){continue;}
+            Integer index = paramIndexMapping.get(entry.getKey());
+            //涉及到类型强制转换
+            paramsValues[index] = value;
+        }
+
+        if (paramIndexMapping.containsKey(HttpServletRequest.class.getName())){
+            Integer index = paramIndexMapping.get(HttpServletRequest.class.getName());
+            paramsValues[index] = req;
+        }
+
+        if (paramIndexMapping.containsKey(HttpServletResponse.class.getName())){
+            Integer index = paramIndexMapping.get(HttpServletResponse.class.getName());
+            paramsValues[index] = resp;
+        }
+        //此时是硬编码的方式处理的方法传参，需要修改为动态去匹配请求参数
         method.invoke(ioc.get(beanName),new Object[]{req,resp,parameterMap.get("name")[0]});
     }
 

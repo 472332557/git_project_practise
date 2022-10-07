@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class HashMapTest {
 
@@ -37,6 +38,9 @@ public class HashMapTest {
         map1.put("1", 1);
 
         System.out.println("hash码为："+("1".hashCode()));
+
+        ConcurrentHashMap concurrentHashMap = new ConcurrentHashMap();
+        concurrentHashMap.put("1", 1);
 
 
     }

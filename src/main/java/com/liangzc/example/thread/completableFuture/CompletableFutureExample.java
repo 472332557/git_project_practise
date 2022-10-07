@@ -1,12 +1,35 @@
 package com.liangzc.example.thread.completableFuture;
 
+import lombok.SneakyThrows;
+
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 public class CompletableFutureExample {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
 
+        runAsyncTest();
+
+    }
+
+
+    public static void  runAsyncTest(){
+
+        CompletableFuture.runAsync(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                System.out.println("线程执行");
+            }
+        });
+
+        System.out.println("main 线程运行！");
+
+    }
+
+    public static void test() throws ExecutionException, InterruptedException {
         //构建CompletableFuture的两种方式：supplyAsync（） 和 runAsync（）
         //supplyAsync（）带返回值
         CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> "dddddd");
@@ -31,6 +54,8 @@ public class CompletableFutureExample {
 
         CompletableFuture<Void> thenRun = CompletableFuture.supplyAsync(() -> "aaaa").thenRun(() -> System.out.println("dsdsdsa"));
         System.out.println(thenRun.get());
-
     }
+
+
+
 }
