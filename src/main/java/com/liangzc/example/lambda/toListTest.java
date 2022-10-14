@@ -33,10 +33,10 @@ public class toListTest {
 
         //倒叙
         List<Student> collect = list.stream().filter(e -> e.getGrade() == 2).sorted((x,z)-> z.getAge().compareTo(x.getAge())).collect(Collectors.toList());
-        List<String> collect1 = list.stream().map(Student::getName).collect(Collectors.toList());
+        List<String> collect1 = list.stream().map(Student::getName).distinct().collect(Collectors.toList());
 
         System.out.println(collect);
-        System.out.println(collect1);
+        System.out.println("collect1=============:"+collect1);
 
 
         System.out.println(list.stream().map(v -> v.getAge()).max(Comparator.comparing(Integer::intValue)).get());

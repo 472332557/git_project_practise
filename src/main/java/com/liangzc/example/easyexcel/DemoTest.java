@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class DemoTest {
 
-    public static String filePath = "D:/receive-file/DOWNLOAD_PATH";
+    public static String filePath = "J:/receive-file/DOWNLOAD_PATH";
 
 
     //简单导出
@@ -95,17 +95,21 @@ public class DemoTest {
         ExcelWriter excelWriter = null;
         WriteSheet writeSheet = null;
         OnceAbsoluteMergeStrategy mergeStrategy;
-        int count = 50;
+        int count = 91;
         int headRows = 2;
         int mergerColumnIndex = 2;
+        HorizontalCellStyleStrategy horizontalCellStyleStrategy = buildHorizontalCellStyleStrategy();
         try{
-            for (int i = 1; i <= 5; i++) {
+            for (int i = 1; i <= 10; i++) {
                 if(!isEnter){
                     mergeStrategy = new OnceAbsoluteMergeStrategy(count + headRows, count + headRows, 0, mergerColumnIndex-1);
                     excelWriter = EasyExcel.write(fileName).head(head())
                             .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())//自动列宽
                             .registerWriteHandler(new SimpleRowHeightStyleStrategy((short) 35, (short) 25))
-                            .registerWriteHandler(mergeStrategy).build();
+                            .registerWriteHandler(mergeStrategy)
+                            .registerWriteHandler(horizontalCellStyleStrategy)//样式
+                            .registerWriteHandler(new CustomCellWriteHandler(count + headRows))//自定义处理器去处理最后一行样式
+                            .build();
                     // 这里注意 如果同一个sheet只要创建一次
                     writeSheet = EasyExcel.writerSheet("重复写入sheet模板").build();
                     isEnter = true;
@@ -119,14 +123,22 @@ public class DemoTest {
                     e.printStackTrace();
                 }
 
-                if(i == 5){
+                if(i == 10){
+//                    List<List<String>> resultList = dynamicData();
+                    List<List<String>> resultList = new ArrayList<>();
+                    List<String> list1 = new ArrayList();
+                    list1.add("合计111"+i);
+                    list1.add("合计111"+i);
+                    list1.add("最后一行111"+i);
+                    list1.add("最后一行111"+i);
+                    list1.add("最后一行111"+i);
+                    resultList.add(list1);
                     List<String> lits = new ArrayList();
                     lits.add("合计_"+i);
                     lits.add("合计_"+i);
                     lits.add("最后一行_"+i);
                     lits.add("最后一行"+i);
                     lits.add("最后一行"+i);
-                    List<List<String>> resultList = dynamicData();
                     resultList.add(lits);
                     excelWriter.write(resultList, writeSheet);
                     return;
@@ -151,10 +163,25 @@ public class DemoTest {
         List<List<String>> lists = dynamicData();
         lists.add(Lists.newArrayList("合计", "合计", "合计", "ddd", "111"));
         System.out.println("lists size:"+lists.size());
+        //头和内容的策略
+//        HorizontalCellStyleStrategy horizontalCellStyleStrategy = new HorizontalCellStyleStrategy(headWriteCellStyle,contentWriteCellStyle);
+//        HorizontalCellStyleStrategy horizontalCellStyleStrategy = new HorizontalCellStyleStrategy(headWriteCellStyle, writeCellStyleList);
+        HorizontalCellStyleStrategy horizontalCellStyleStrategy = buildHorizontalCellStyleStrategy();
 
+        //合并单元格，最后一行，第1 - 3列合并
+        OnceAbsoluteMergeStrategy onceAbsoluteMergeStrategy = new OnceAbsoluteMergeStrategy(lists.size()+1,lists.size()+1,0,2);
+        EasyExcel.write(fileName).head(head())
+                .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())//自动列宽
+                .registerWriteHandler(horizontalCellStyleStrategy)//样式
+                .registerWriteHandler(onceAbsoluteMergeStrategy)//合并单元格
+                .registerWriteHandler(new SimpleRowHeightStyleStrategy((short)35,(short)25))//头行高：40 内容行高：25
+                .registerWriteHandler(new CustomCellWriteHandler(lists.size()+1))//自定义策略
+                .sheet("动态头sheet")
+                .doWrite(lists);
+    }
+
+    private HorizontalCellStyleStrategy buildHorizontalCellStyleStrategy() {
         //设置样式
-
-        List<WriteCellStyle> writeCellStyleList = Lists.newArrayList();
         //设置头样式
         WriteCellStyle headWriteCellStyle = new WriteCellStyle();
         //背景设置为蓝色
@@ -177,42 +204,11 @@ public class DemoTest {
         contentWriteFont.setFontHeightInPoints((short)11);
         contentWriteFont.setFontName("宋体");
         contentWriteCellStyle.setWriteFont(contentWriteFont);
-
-        WriteCellStyle lastRowWriteCellStyle = new WriteCellStyle();
-        lastRowWriteCellStyle.setFillPatternType(FillPatternType.SOLID_FOREGROUND);
-        //背景设置为蓝色
-        lastRowWriteCellStyle.setFillForegroundColor(IndexedColors.PALE_BLUE.index);
-        lastRowWriteCellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
-        lastRowWriteCellStyle.setHorizontalAlignment(HorizontalAlignment.CENTER);
-        lastRowWriteCellStyle.setBorderLeft(BorderStyle.THIN);
-        lastRowWriteCellStyle.setBorderRight(BorderStyle.THIN);
-        lastRowWriteCellStyle.setBorderTop(BorderStyle.THIN);
-        lastRowWriteCellStyle.setBorderBottom(BorderStyle.THIN);
-        WriteFont lastWriteFont = new WriteFont();
-        lastWriteFont.setBold(true);
-        lastWriteFont.setFontHeightInPoints((short) 13);
-        lastWriteFont.setFontName("宋体");
-        lastRowWriteCellStyle.setWriteFont(lastWriteFont);
-        for (int i = 0; i < lists.size()-1; i++) {
-            writeCellStyleList.add(contentWriteCellStyle);
-        }
-        //添加最后一行样式
-        writeCellStyleList.add(lastRowWriteCellStyle);
-
-        //头和内容的策略
-//        HorizontalCellStyleStrategy horizontalCellStyleStrategy = new HorizontalCellStyleStrategy(headWriteCellStyle,contentWriteCellStyle);
-        HorizontalCellStyleStrategy horizontalCellStyleStrategy = new HorizontalCellStyleStrategy(headWriteCellStyle, writeCellStyleList);
-        //合并单元格，最后一行，第1 - 3列合并
-        OnceAbsoluteMergeStrategy onceAbsoluteMergeStrategy = new OnceAbsoluteMergeStrategy(lists.size()+1,lists.size()+1,0,2);
-        EasyExcel.write(fileName).head(head())
-                .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())//自动列宽
-                .registerWriteHandler(horizontalCellStyleStrategy)//样式
-                .registerWriteHandler(onceAbsoluteMergeStrategy)//合并单元格
-                .registerWriteHandler(new SimpleRowHeightStyleStrategy((short)35,(short)25))//头行高：40 内容行高：25
-                .registerWriteHandler(new CustomCellWriteHandler())//自定义策略
-                .sheet("动态头sheet")
-                .doWrite(lists);
+        // 这个策略是 头是头的样式 内容是内容的样式 其他的策略可以自己实现
+        return new HorizontalCellStyleStrategy(headWriteCellStyle, contentWriteCellStyle);
     }
+
+    //样式
 
 
     /**
