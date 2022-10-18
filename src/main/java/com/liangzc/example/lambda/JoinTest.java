@@ -34,7 +34,7 @@ public class JoinTest {
     }
 
     public static void joinTest(List<Student> list){
-        String names = list.stream().map(Student::getName).collect(Collectors.joining(","));
+        String names = list.stream().map(Student::getName).distinct().collect(Collectors.joining(","));
         System.out.println(names);
     }
 }

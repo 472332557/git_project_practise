@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class DemoTest {
 
-    public static String filePath = "J:/receive-file/DOWNLOAD_PATH";
+    public static String filePath = "D:/receive-file/DOWNLOAD_PATH";
 
 
     //简单导出
@@ -94,22 +94,34 @@ public class DemoTest {
         boolean isEnter = false;
         ExcelWriter excelWriter = null;
         WriteSheet writeSheet = null;
-        OnceAbsoluteMergeStrategy mergeStrategy;
+
         int count = 91;
         int headRows = 2;
-        int mergerColumnIndex = 2;
+        int mergerColumnIndex = 1;
         HorizontalCellStyleStrategy horizontalCellStyleStrategy = buildHorizontalCellStyleStrategy();
         try{
             for (int i = 1; i <= 10; i++) {
                 if(!isEnter){
-                    mergeStrategy = new OnceAbsoluteMergeStrategy(count + headRows, count + headRows, 0, mergerColumnIndex-1);
-                    excelWriter = EasyExcel.write(fileName).head(head())
-                            .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())//自动列宽
-                            .registerWriteHandler(new SimpleRowHeightStyleStrategy((short) 35, (short) 25))
-                            .registerWriteHandler(mergeStrategy)
-                            .registerWriteHandler(horizontalCellStyleStrategy)//样式
-                            .registerWriteHandler(new CustomCellWriteHandler(count + headRows))//自定义处理器去处理最后一行样式
-                            .build();
+                    //只有超过两个单元格才合并
+                    if(mergerColumnIndex > 1){
+                        //合并单元格：合计
+                        OnceAbsoluteMergeStrategy mergeStrategy = new OnceAbsoluteMergeStrategy(count + headRows, count + headRows, 0, mergerColumnIndex-1);
+                        excelWriter = EasyExcel.write(fileName).head(head())
+                                .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())//自动列宽
+                                .registerWriteHandler(new SimpleRowHeightStyleStrategy((short) 35, (short) 25))
+                                .registerWriteHandler(mergeStrategy)
+                                .registerWriteHandler(horizontalCellStyleStrategy)//样式
+                                .registerWriteHandler(new CustomCellWriteHandler(count + headRows))//自定义处理器去处理最后一行样式
+                                .build();
+                    }else {
+                        excelWriter = EasyExcel.write(fileName).head(head())
+                                .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())//自动列宽
+                                .registerWriteHandler(new SimpleRowHeightStyleStrategy((short) 35, (short) 25))
+                                .registerWriteHandler(horizontalCellStyleStrategy)//样式
+                                .registerWriteHandler(new CustomCellWriteHandler(count + headRows))//自定义处理器去处理最后一行样式
+                                .build();
+                    }
+
                     // 这里注意 如果同一个sheet只要创建一次
                     writeSheet = EasyExcel.writerSheet("重复写入sheet模板").build();
                     isEnter = true;

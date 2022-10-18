@@ -1,5 +1,7 @@
 package com.liangzc.example.demo;
 
+import org.junit.Test;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -18,5 +20,19 @@ public class RandomTest {
 
         System.out.println(list.stream().collect(Collectors.joining(",")));
 
+
+        System.out.println(forTest());
+
+    }
+
+
+    public static String forTest(){
+        for (int i = 0; i < 100; i++) {
+            System.out.println("当前是："+i);
+            if(i == 50){
+                return "SUCCESS";
+            }
+        }
+        return "END";
     }
 }
