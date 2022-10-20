@@ -1,6 +1,5 @@
 package com.liangzc.example.easyexcel;
 
-import com.alibaba.excel.context.WriteContext;
 import com.alibaba.excel.metadata.data.WriteCellData;
 import com.alibaba.excel.util.BooleanUtils;
 import com.alibaba.excel.write.handler.CellWriteHandler;
@@ -22,6 +21,12 @@ public class CustomCellWriteHandler implements CellWriteHandler {
     @Override
     public void afterCellDispose(CellWriteHandlerContext context) {
         Cell cell = context.getCell();
+        log.info("CellDataList:{}",context.getCellDataList().size());
+
+        log.info("===========FirstCellNum:{}",cell.getRow().getRowNum());
+        log.info("===========LastCellNum:{}",cell.getRow().getLastCellNum());
+        log.info("===========rowNum:{}",cell.getRow().getRowNum());
+
         // 这里可以对cell进行任何操作
         log.info("第{}行，第{}列写入完成。", cell.getRowIndex(), cell.getColumnIndex());
 
