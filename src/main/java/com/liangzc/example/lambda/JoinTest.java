@@ -36,5 +36,7 @@ public class JoinTest {
     public static void joinTest(List<Student> list){
         String names = list.stream().map(Student::getName).distinct().collect(Collectors.joining(","));
         System.out.println(names);
+
+        System.out.println(list.stream().map(e -> e.getAge().toString()).distinct().collect(Collectors.joining(",")));
     }
 }

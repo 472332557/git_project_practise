@@ -38,4 +38,18 @@ public class Test {
         System.out.println(date.substring(0,8));
     }
 
+    @org.junit.Test
+    public void forTest(){
+
+        for (int i = 0; i < 10; i++) {
+            System.out.println("当前数："+i);
+
+            if (i == 5){
+                System.out.println("=====跳出======："+i);
+                return;
+            }
+            System.out.println("-----------------结束："+i);
+        }
+    }
+
 }
