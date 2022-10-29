@@ -105,11 +105,11 @@ public class DemoTest {
                     //只有超过两个单元格才合并
                     if(mergerColumnIndex > 1){
                         //合并单元格：合计
-//                        OnceAbsoluteMergeStrategy mergeStrategy = new OnceAbsoluteMergeStrategy(count + headRows, count + headRows, 0, mergerColumnIndex-1);
+                        OnceAbsoluteMergeStrategy mergeStrategy = new OnceAbsoluteMergeStrategy(count + headRows, count + headRows, 0, mergerColumnIndex-1);
                         excelWriter = EasyExcel.write(fileName).head(head())
                                 .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())//自动列宽
                                 .registerWriteHandler(new SimpleRowHeightStyleStrategy((short) 35, (short) 25))
-//                                .registerWriteHandler(mergeStrategy)
+                                .registerWriteHandler(mergeStrategy)
                                 .registerWriteHandler(horizontalCellStyleStrategy)//样式
                                 .registerWriteHandler(new CustomCellWriteHandler(count + headRows))//自定义处理器去处理最后一行样式
                                 .build();
