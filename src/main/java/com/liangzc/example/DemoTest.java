@@ -1,10 +1,12 @@
 package com.liangzc.example;
 
+import org.junit.Test;
+
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Test {
+public class DemoTest {
 
     public static void main(String[] args) {
 
@@ -32,13 +34,13 @@ public class Test {
         return temp.replaceAll("#\\{organName}", "优家园").replaceAll("#\\{resInstName}", "lllll");
     }
 
-    @org.junit.Test
+    @Test
     public void subStringTest(){
         String date = "20220908000000";
         System.out.println(date.substring(0,8));
     }
 
-    @org.junit.Test
+    @Test
     public void forTest(){
 
         for (int i = 0; i < 10; i++) {
@@ -51,5 +53,14 @@ public class Test {
             System.out.println("-----------------结束："+i);
         }
     }
+
+
+    @Test
+    public void replaceTest(){
+        String temp = "dsfdsfds#{organName},都是佛挡杀佛的#{resInstName}";
+        System.out.println(tempReplace(temp));
+    }
+
+
 
 }
