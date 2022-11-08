@@ -1,9 +1,10 @@
 package com.liangzc.example;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import org.junit.Test;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class HashMapTest {
@@ -43,5 +44,26 @@ public class HashMapTest {
         concurrentHashMap.put("1", 1);
 
 
+    }
+
+    @Test
+    public void multiValueMapTest(){
+        MultiValueMap<String, Object> multiValueMap = new LinkedMultiValueMap<>();
+        multiValueMap.add("1", 111);
+        multiValueMap.add("1", 222);
+        multiValueMap.add("1", 333);
+        System.out.println(multiValueMap);
+        System.out.println("--------------------------------------------------------------------");
+        Map<String, Object> linkedMap = new LinkedHashMap<>();
+        linkedMap.put("1", 111);
+        linkedMap.put("1", 222);
+        linkedMap.put("1", 333);
+        System.out.println(linkedMap);
+        System.out.println("--------------------------------------------------------------------");
+        Map<String, Object> map = new HashMap<>();
+        map.put("1", 111);
+        map.put("1", 222);
+        map.put("1", 333);
+        System.out.println(map);
     }
 }
