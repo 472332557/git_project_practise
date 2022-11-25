@@ -1,12 +1,16 @@
 package com.liangzc.example;
 
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
 public class DemoTest {
+
+    private static final Logger logger = LoggerFactory.getLogger(DemoTest.class);
 
     public static void main(String[] args) {
 
@@ -61,6 +65,29 @@ public class DemoTest {
         System.out.println(tempReplace(temp));
     }
 
+    @Test
+    public void StingConcatTest(){
+        String rootPath = "";
+        String rootPath2 = null;
+        System.out.println(rootPath.concat("fileName").concat(".xlsx"));
+        System.out.println(rootPath2.concat("fileName").concat(".xlsx"));
+    }
+
+    @Test
+    public void logErrorTest(){
+        for (int i = 10; i >= 0; i--) {
+            try {
+                if(i == 6){
+                    throw new Exception("111111");
+                }
+                System.out.println(i);
+            }catch (Exception e){
+                logger.error("处理数据出错,值为：{}",i,e);
+//                continue;
+            }
+        }
+
+    }
 
 
 }
