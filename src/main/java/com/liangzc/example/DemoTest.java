@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
@@ -71,6 +72,7 @@ public class DemoTest {
         String rootPath2 = null;
         System.out.println(rootPath.concat("fileName").concat(".xlsx"));
         System.out.println(rootPath2.concat("fileName").concat(".xlsx"));
+
     }
 
     @Test
@@ -86,6 +88,31 @@ public class DemoTest {
 //                continue;
             }
         }
+
+    }
+
+    @Test
+    public void sizeTest(){
+        System.out.println(Integer.SIZE);
+    }
+
+    @Test
+    public void fileTest(){
+
+        String fileName = "D:/receive-file/DOWNLOAD_PATH/在线支付查询_20221121155215693199.xlsx";
+        File file = new File(fileName);
+
+        System.out.println("文件名："+fileName);
+        System.out.println("后缀下标位置："+fileName.indexOf("."));
+        System.out.println("文件名长度："+fileName.length());
+        System.out.println("文件是否存在:"+file.exists());
+        if(!file.exists()){
+            fileName = fileName.substring(0, fileName.indexOf(".")).concat(".xls");
+            System.out.println("新文件名："+fileName);
+            file = new File(fileName);
+            System.out.println("文件是否存在"+file.exists());
+        }
+
 
     }
 
