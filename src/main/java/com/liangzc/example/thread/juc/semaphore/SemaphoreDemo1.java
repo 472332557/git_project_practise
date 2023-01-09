@@ -19,6 +19,7 @@ public class SemaphoreDemo1 implements Runnable {
     public void run() {
 
         try {
+            Thread.sleep(10);
             semaphore.acquire();
             System.out.println(name + "获得线程执行权");
 
