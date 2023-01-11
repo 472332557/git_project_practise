@@ -51,6 +51,7 @@ public class ReadTest {
         }*/
         byte[] bytes = new byte[1024];
         while ((read = inputStream.read(bytes)) != -1){
+            System.out.println("bytes："+new String(bytes, 0, read));
             sb.append(new String(bytes, 0, read));
         }
         pfxPass = sb.toString();

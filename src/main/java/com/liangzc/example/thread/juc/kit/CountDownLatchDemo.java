@@ -27,7 +27,7 @@ public class CountDownLatchDemo {
                 e.printStackTrace();
             }
             System.out.println("thread2开始执行---------");
-//            countDownLatch.countDown();
+            countDownLatch.countDown();
 
         },"thread-2");
 
