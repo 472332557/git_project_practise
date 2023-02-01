@@ -60,7 +60,7 @@ public class HashMapTest {
         linkedMap.put("1", 333);
         System.out.println(linkedMap);
         System.out.println("--------------------------------------------------------------------");
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>(30);
         map.put("1", 111);
         map.put("1", 222);
         map.put("1", 333);
