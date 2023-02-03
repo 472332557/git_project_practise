@@ -53,19 +53,19 @@ public class FutureTestDemo {
         CompletableFuture<String> stringCompletableFuture = CompletableFuture.supplyAsync(() -> "带返回值的异步执行");
         System.out.println(stringCompletableFuture.get());
 
-        System.out.println("----------------------------------------------------------------------------------");
+        System.out.println("---------------------------------thenAccept-------------------------------------------------");
         //thenAccept:纯消费，并无返回值
         CompletableFuture<Void> thenAccept = CompletableFuture.supplyAsync(() -> "带返回值的异步执行,并消费：accept").thenAccept(r -> System.out.println(r));
         System.out.println("thenAccept返回信息:"+thenAccept.get());
 
-        System.out.println("----------------------------------------------------------------------------------");
+        System.out.println("------------------------------------thenApply----------------------------------------------");
         //thenApply:消费并返回
         CompletableFuture<String> thenApply = CompletableFuture.supplyAsync(() -> "带返回值的异步执行,消费并返回：thenApply").thenApply(r -> {
             return r;
         });
         System.out.println("thenApply返回信息:"+thenApply.get());
 
-        System.out.println("----------------------------------------------------------------------------------");
+        System.out.println("-----------------------------------thenRun-----------------------------------------------");
         //thenRun:既不消费，也不返回
         CompletableFuture<Void> thenRunAsync = CompletableFuture.supplyAsync(() -> "带返回值的异步执行,不消费也不返回：thenRun").thenRunAsync(()-> System.out.println("既不消费，也不返回"));
         System.out.println("thenRunAsync返回信息："+thenRunAsync.get());
