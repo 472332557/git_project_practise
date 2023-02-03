@@ -65,8 +65,10 @@ public class FutureTestDemo {
         });
         System.out.println("thenApply返回信息:"+thenApply.get());
 
-
-
+        System.out.println("----------------------------------------------------------------------------------");
+        //thenRun:既不消费，也不返回
+        CompletableFuture<Void> thenRunAsync = CompletableFuture.supplyAsync(() -> "带返回值的异步执行,不消费也不返回：thenRun").thenRunAsync(()-> System.out.println("既不消费，也不返回"));
+        System.out.println("thenRunAsync返回信息"+thenRunAsync.get());
     }
 
 
