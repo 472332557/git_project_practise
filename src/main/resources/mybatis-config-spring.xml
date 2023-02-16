@@ -5,7 +5,7 @@
 <configuration>
     <!-- 参数设置 -->
 
-    <properties resource="db.properties"></properties>
+  <!--  <properties resource="db.properties"></properties>-->
     <settings>
         <!-- 打印查询语句 -->
         <setting name="logImpl" value="STDOUT_LOGGING" />
@@ -18,9 +18,8 @@
         <!-- 当开启时，任何方法的调用都会加载该对象的所有属性。默认 false，可通过select标签 的 fetchType来覆盖-->
         <setting name="aggressiveLazyLoading" value="true"/>
 
-
-        <!--一级缓存 默认是开启的：SESSION ，   STATEMENT：表示关闭一级缓存-->
-        <setting name="localCacheScope" value="SESSION"/>
+        <!--一级缓存-->
+        <setting name="localCacheScope" value="STATEMENT"/>
     </settings>
 
     <!--类型别名，xml配置中可直接使用别名，而不需要写全路径-->
@@ -37,7 +36,6 @@
 
     <plugins>
         <!--<plugin interceptor="com.liangzc.example.mybatis.interceptor.TableHeadInterceptor"/>-->
-        <plugin interceptor="com.liangzc.example.mybatis.interceptor.TestInterceptorDemo"></plugin>
         <plugin interceptor="com.github.pagehelper.PageHelper">
             <property name="dialect" value="mysql" />
             <!-- 该参数默认为false -->
@@ -65,7 +63,7 @@
     </plugins>
 
     <!--配置环境，数据源-->
-    <environments default="development">
+<!--    <environments default="development">
         <environment id="development">
             <transactionManager type="JDBC"></transactionManager>
             <dataSource type="POOLED">
@@ -75,10 +73,10 @@
                 <property name="password" value="${jdbc.password}"/>
             </dataSource>
         </environment>
-    </environments>
+    </environments>-->
 
     <!--配置相应解析的映射文件-->
-    <mappers>
+<!--    <mappers>
         <mapper resource="com/liangzc/example/mybatis/mapper/PersonMapper.xml"/>
-    </mappers>
+    </mappers>-->
 </configuration>

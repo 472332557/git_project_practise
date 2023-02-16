@@ -28,17 +28,15 @@ public class Test1 {
         //获取session对象，并且初始化了Execute对象
         SqlSession sqlSession = sessionFactory.openSession();
 
-        sqlSession.update("");
-
-        PageHelper.offsetPage(0,2);
-        List<Person> personList = sqlSession.selectList("com.liangzc.example.mybatis.mapper.PersonMapper.selectPersonList");
+//        PageHelper.offsetPage(0,2);
+        List<Person> personList = sqlSession.selectList("com.liangzc.example.mybatis.mapper.PersonMapper.selectPersonByGender");
 
         for (Person person : personList) {
             System.out.println(person);
         }
 
         System.out.println("========================再次查询=============================");
-        personList = sqlSession.selectList("com.liangzc.example.mybatis.mapper.PersonMapper.selectPersonList");
+        personList = sqlSession.selectList("com.liangzc.example.mybatis.mapper.PersonMapper.selectPersonByGender");
         for (Person person : personList) {
             System.out.println(person);
         }
