@@ -3,11 +3,11 @@
 <mapper namespace="com.liangzc.example.mybatis.mapper.PersonMapper" >
 
  <!-- <cache type="com.liangzc.example.mybatis.cache.PersonCacheV2"/>-->
-<!--  <cache type="org.mybatis.caches.redis.RedisCache"
+  <cache type="org.mybatis.caches.redis.RedisCache"
   eviction="FIFO"
   flushInterval="60000"
   size="512"
-  readOnly="true"/>-->
+  readOnly="true"/>
 
   <resultMap id="BaseResultMap" type="person" >
     <result column="id" property="id" jdbcType="INTEGER" />
@@ -185,7 +185,7 @@
   </select>
 
   <select id="selectPersonList" resultType="com.liangzc.example.mybatis.model.Person">
-    select id as id, name as name, age as age, gender as gender from person where name = #{name}
+    select id as id, name as name, age as age, gender as gender from person_test where name = #{name}
   </select>
 
   <select id="selectPersonByGender" resultType="com.liangzc.example.mybatis.model.Person">
