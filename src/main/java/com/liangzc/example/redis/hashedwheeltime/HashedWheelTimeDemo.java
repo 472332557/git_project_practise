@@ -2,6 +2,7 @@ package com.liangzc.example.redis.hashedwheeltime;
 
 import io.netty.util.HashedWheelTimer;
 import io.netty.util.Timeout;
+import io.netty.util.Timer;
 import io.netty.util.TimerTask;
 import org.junit.Test;
 
@@ -22,6 +23,9 @@ public class HashedWheelTimeDemo {
             @Override
             public void run(Timeout timeout) throws Exception {
                 System.out.println("延迟5秒后执行beginExecute:"+new Date());
+                timeout.timer().newTimeout(timeout1 -> {
+                    System.out.println("再延迟5秒后执行againExecute:"+new Date());
+                },5000,TimeUnit.MILLISECONDS);
             }
         }, 5000, TimeUnit.MILLISECONDS);
 
