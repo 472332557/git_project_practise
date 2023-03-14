@@ -191,4 +191,17 @@
   <select id="selectPersonByGender" resultType="com.liangzc.example.mybatis.model.Person">
      select id as id, name as name, age as age, gender as gender from person_test
   </select>
+
+
+  <select id="selectByPersonObj" resultType="com.liangzc.example.mybatis.model.Person">
+    select * from person_test
+    <where>
+      <if test="name != null and name.size() > 0">
+        and name = #{name}
+      </if>
+      <if test="gender != null and gender != ''">
+        and gender = #{gender}
+      </if>
+    </where>
+  </select>
 </mapper>

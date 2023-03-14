@@ -1,6 +1,7 @@
 package com.liangzc.example.mybatis;
 
 import com.github.pagehelper.PageHelper;
+import com.google.common.collect.Lists;
 import com.liangzc.example.mybatis.mapper.PersonMapper;
 import com.liangzc.example.mybatis.model.Person;
 import org.apache.ibatis.io.Resources;
@@ -106,6 +107,28 @@ public class Test1 {
         personModel.setGender("女");
         int insert = mapper.insert(personModel);
         sqlSession.commit();
+        sqlSession.close();
+    }
+
+
+    @Test
+    public void testDynamic() throws IOException {
+
+        InputStream inputStream = Resources.getResourceAsStream("mybatis-config.xml");
+        //获取defaultSqlSessionFactory对象，并且解析配置文件、映射文件和statement
+        SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+
+        //获取session对象defaultSqlSession，并且初始化了Execute对象
+        SqlSession sqlSession = sessionFactory.openSession();
+
+        PersonMapper mapper = sqlSession.getMapper(PersonMapper.class);
+        Person personDto = new Person();
+        personDto.setName(Lists.newArrayList("丽丽"));
+        personDto.setGender("1");
+        List<Person> personList = mapper.selectByPersonObj(personDto);
+        for (Person person : personList) {
+            System.out.println(person);
+        }
         sqlSession.close();
     }
 
