@@ -8,6 +8,8 @@ import java.io.File;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 
 public class DemoTest {
 
@@ -125,6 +127,49 @@ public class DemoTest {
             sum += i;
         }
         System.out.println(sum);
+    }
+
+    @Test
+    public void mathTest(){
+
+        //Math.ceil:向上取整
+        System.out.println((int)Math.ceil((double) 10 / (double) 3));
+
+        //向下取整
+        System.out.println(Math.floor((double) 10 / (double) 3));
+
+    }
+
+    @Test
+    public void futureTest() throws InterruptedException {
+
+            CompletableFuture.runAsync(() -> {
+                try {
+                    calcTest();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+            });
+        TimeUnit.SECONDS.sleep(1);
+
+    }
+
+    private void calcTest() {
+
+        for (int i = 0; i < 10; i++) {
+            try {
+                int i2 = i % 2;
+                System.out.println(i+"对2取模后的值："+i2);
+                if(i2 == 0){
+                    throw new RuntimeException("错误："+i);
+                }
+                System.out.println(i);
+            }catch (Exception e){
+                logger.error("错误呀！",e);
+//                System.out.println("错误呀！,"+e.getMessage());
+            }
+        }
     }
 
 

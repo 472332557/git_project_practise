@@ -278,5 +278,11 @@ public class DemoTest {
         String[] titles = {"1","2","3","4","5"};
         ArrayList<String> strings = Lists.newArrayList(titles);
         System.out.println(strings);
+
+        ArrayList<String> strings1 = Lists.newArrayList("复杂头", "复杂头1");
+        ArrayList<String> strings2 = Lists.newArrayList("复杂头", "复杂头2");
+        System.out.println(strings1);
+        System.out.println(strings2);
+
     }
 }

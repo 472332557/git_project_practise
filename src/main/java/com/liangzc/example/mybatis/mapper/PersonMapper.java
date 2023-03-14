@@ -30,4 +30,6 @@ public interface PersonMapper{
     List<Person> selectPersonList(@Param("name") String name, @Param("id") Integer id);
 
     List<Person> selectPersonByGender(RowBounds rowBounds);
+
+    List<Person> selectByPersonObj(Person personDto);
 }
