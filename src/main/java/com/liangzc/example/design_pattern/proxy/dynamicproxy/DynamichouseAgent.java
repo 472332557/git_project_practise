@@ -19,7 +19,9 @@ public class DynamichouseAgent implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-
-        return method.invoke(iPerson,args);
+        System.out.println("begin------------------------------------");
+        Object invoke = method.invoke(iPerson, args);
+        System.out.println("end------------------------------------");
+        return invoke;
     }
 }
