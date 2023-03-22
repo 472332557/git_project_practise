@@ -5,7 +5,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -170,6 +172,15 @@ public class DemoTest {
 //                System.out.println("错误呀！,"+e.getMessage());
             }
         }
+    }
+
+    @Test
+    public void randomTest(){
+
+        System.out.println((int)((Math.random()*9+1)*100000));
+
+
+        System.out.println(new SimpleDateFormat("yyyyMMddHHmmssSSS") .format(new Date()));
     }
 
 
