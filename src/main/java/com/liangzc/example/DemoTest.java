@@ -1,10 +1,12 @@
 package com.liangzc.example;
 
+import org.checkerframework.checker.units.qual.C;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -181,6 +183,44 @@ public class DemoTest {
 
 
         System.out.println(new SimpleDateFormat("yyyyMMddHHmmssSSS") .format(new Date()));
+    }
+
+    @Test
+    public void qumo(){
+
+        System.out.println(800 % 500);
+
+    }
+
+    @Test
+    public void dateTest() throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+        String date = "20230330";
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(dateFormat.parse(date));
+//        calendar.add(Calendar.DATE,1);
+//        Date time = calendar.getTime();
+
+        calendar.add(Calendar.MONTH, 0);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+
+        System.out.println(dateFormat.format(calendar.getTime()));
+
+        calendar.add(Calendar.MONTH, 1);
+        calendar.set(Calendar.DAY_OF_MONTH, 0);
+        System.out.println(dateFormat.format(calendar.getTime()));
+
+
+//        System.out.println(calendar.get(Calendar.YEAR));
+//        System.out.println(calendar.get(Calendar.MONTH)+1);
+//        System.out.println(calendar.get(Calendar.DATE));
+
+        System.out.println("---------------------------------------------------");
+        System.out.println(calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+
+        System.out.println(calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
+
+
     }
 
 
