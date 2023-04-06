@@ -1,5 +1,7 @@
 package com.liangzc.example.collection;
 
+import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -29,7 +31,8 @@ public class ListTest {
 
 
     //arrayList中使用到的api
-    public static void listAddSummary(){
+    @Test
+    public void listAddSummary(){
         //返回两个数中的最大值
         System.out.println("最大值："+Math.max(1, 2));
         Object[] obgArray = {1,2,3,4,5};

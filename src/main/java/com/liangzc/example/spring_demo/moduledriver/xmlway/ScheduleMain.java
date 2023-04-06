@@ -8,5 +8,6 @@ public class ScheduleMain {
     public static void main(String[] args) {
 
         ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext-moduledriver.xml");
+        context.getBean("");
     }
 }
