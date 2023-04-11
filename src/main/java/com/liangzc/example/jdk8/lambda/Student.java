@@ -1,5 +1,7 @@
 package com.liangzc.example.jdk8.lambda;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class Student {
@@ -10,6 +12,7 @@ public class Student {
 
     private Integer grade;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createDate;
 
     public Student(String name, Integer age, Integer grade, Date createDate) {
