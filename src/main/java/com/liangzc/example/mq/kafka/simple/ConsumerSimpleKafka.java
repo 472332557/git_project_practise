@@ -3,6 +3,7 @@ package com.liangzc.example.mq.kafka.simple;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.apache.kafka.common.TopicPartition;
 
 import java.time.Duration;
 import java.util.Arrays;
@@ -14,7 +15,7 @@ public class ConsumerSimpleKafka {
 
         Properties properties = new Properties();
         //Broker地址
-        properties.put("bootstrap.servers","http://121.37.249.94:9092");
+        properties.put("bootstrap.servers","106.55.227.209:9092");
         //消费者组
         properties.put("group.id", "lzc-test-group");
         /**
@@ -35,13 +36,16 @@ public class ConsumerSimpleKafka {
         properties.put("value.deserializer","org.apache.kafka.common.serialization.StringDeserializer");
         KafkaConsumer<String, String> consumer = new KafkaConsumer<String, String>(properties);
         //订阅topic
-        consumer.subscribe(Arrays.asList("canal-topic"));
+//        consumer.subscribe(Arrays.asList("lzc-test-topic"));
+        //指定分区（partition）去消费
+        consumer.assign(Arrays.asList(new TopicPartition("lzc-test-topic",0)));
 
         try {
             while (true){
                 ConsumerRecords<String,String> records=consumer.poll(Duration.ofMillis(1000));
                 for (ConsumerRecord<String,String> record:records){
-                    System.out.printf("offset = %d ,key =%s, value= %s, partition= %s%n" ,record.offset(),record.key(),record.value(),record.partition());
+                    record.timestampType();
+                    System.out.printf("offset = %d ,key =%s, value= %s, partition= %s,timestamp=%s,%n" ,record.offset(),record.key(),record.value(),record.partition(),record.timestamp());
                 }
             }
         }finally {
