@@ -2,6 +2,7 @@ package com.liangzc.example.jdk8.lambda;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class Student {
@@ -15,11 +16,21 @@ public class Student {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createDate;
 
+    private BigDecimal money;
+
     public Student(String name, Integer age, Integer grade, Date createDate) {
         this.name = name;
         this.age = age;
         this.grade = grade;
         this.createDate = createDate;
+    }
+
+    public Student(String name, Integer age, Integer grade, Date createDate, BigDecimal money) {
+        this.name = name;
+        this.age = age;
+        this.grade = grade;
+        this.createDate = createDate;
+        this.money = money;
     }
 
     public Student() {
@@ -55,6 +66,14 @@ public class Student {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    public BigDecimal getMoney() {
+        return money;
+    }
+
+    public void setMoney(BigDecimal money) {
+        this.money = money;
     }
 
     @Override
