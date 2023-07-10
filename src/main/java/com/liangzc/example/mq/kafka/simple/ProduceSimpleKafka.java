@@ -11,7 +11,7 @@ public class ProduceSimpleKafka {
 
         Properties properties = new Properties();
         //Broker地址
-        properties.put("bootstrap.servers","119.23.189.136:9092");
+        properties.put("bootstrap.servers","106.55.227.209:9092");
         //key 和 value的序列化方式
         properties.put("key.serializer","org.apache.kafka.common.serialization.StringSerializer");
         properties.put("value.serializer","org.apache.kafka.common.serialization.StringSerializer");
