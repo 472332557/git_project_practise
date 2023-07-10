@@ -21,8 +21,8 @@ public class SortedTest {
         //自定义排序 倒叙排序
         list.stream().sorted(((s, t1) -> t1.compareTo(s))).filter(s -> s.startsWith("a")).forEach(System.out::println);
 
-/*        System.out.println("- - - - - - - - -");
+        System.out.println("- - - - - - - - -");
         //顺序排
-        list.stream().sorted(((s, t1) -> s.compareTo(t1))).filter(s -> s.startsWith("a")).forEach(System.out::println);*/
+        list.stream().sorted(((s, t1) -> s.compareTo(t1))).filter(s -> s.startsWith("a")).forEach(System.out::println);
     }
 }

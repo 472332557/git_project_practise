@@ -19,10 +19,8 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
+import org.springframework.http.*;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.LinkedMultiValueMap;
@@ -32,6 +30,7 @@ import org.springframework.web.client.RestTemplate;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -111,6 +110,22 @@ public class ConnectionDemo {
         RestTemplate restTemplate = new RestTemplate();
         String url = "http://localhost:8081/start?id="+1;
         String result = restTemplate.getForObject(getUrl, String.class);
+        System.out.println("返回结果："+result);
+    }
+
+
+    @Test
+    public void RestTemplateGetForCookie(){
+        RestTemplate restTemplate = new RestTemplate();
+        String cookie = "JSESSIONID=A8E097EAE0B37DCC6F0DD4C79A5C5DAE; _segiupt_ts=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJleHBpcmVzX2luIjoyNDE5MjAwLCJpYXQiOjE2ODE3MTQ0NzYsInNhbHQiOiIhbWokVkNVXVZpRGhzUVJRIiwidHlwZSI6InNlc3Npb25fdG9rZW4iLCJ1c2VybmFtZSI6IlNFR0lfQl9BRE1JTjAwNSJ9.iazJzCydUSFcq6kFIkCuuYUrVPRvcP1icgUdQLdIRxnPvfrtaefK-nRW9imnP0x0VHZ4zRuR6R-G4U9huHq57w; _segiupt_as=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJjbGllbnRfaWQiOiJzZWdpIiwiZXhwaXJlc19pbiI6ODY0MDAsImlhdCI6MTY4MTcxNDQ3Niwic2FsdCI6IkhUeDJjazFOUStSVWFRQSEiLCJzY29wZSI6InNfYWRtaW4iLCJ0eXBlIjoiYWNjZXNzX3Rva2VuIiwidXNlcl9pZCI6IlNFR0lfQl8yNDI3OTM4IiwidXNlcm5hbWUiOiJTRUdJX0JfQURNSU4wMDUifQ._sHevIUgP8ken4BgUJMOyffrbc8oXSoessux6RYauiRT7FzETNUrd_hKTXFFWh1foGwPgdKYCEqnpnI2lYhcXg; _segiupt_ci=segi; _segiupt_ty=SEGI_B_; aid=2427938; oid=1000";
+        String url = "https://leasewx.cmsk1979.com/uhomecp-lease/admin/contract/settle/queryContractDetailForCommission?contractNo=ZGDX-2018-08-0013";
+        HttpHeaders httpHeaders = new HttpHeaders();
+        List<String> cookies = new ArrayList<>();
+        cookies.add(cookie);
+        httpHeaders.put(HttpHeaders.COOKIE, cookies);
+        HttpEntity httpEntity = new HttpEntity(httpHeaders);
+
+        ResponseEntity<String> result = restTemplate.exchange(url, HttpMethod.GET,httpEntity, String.class);
         System.out.println("返回结果："+result);
     }
 
