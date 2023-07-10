@@ -332,4 +332,12 @@ public class DemoTest {
         System.out.println(feeNotax.setScale(0,BigDecimal.ROUND_HALF_UP));
     }
 
+    @Test
+    public void calc(){
+        System.out.println(12 << 1);
+        System.out.println(16 << 1);
+        System.out.println((16 << 1) * 0.75);
+
+    }
+
 }
