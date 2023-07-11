@@ -22,13 +22,14 @@ public class ConsumerSimpleKafka {
          * 是否自动提交偏移量，只有commit之后才更新消费组的 offset  对应consumer-offset的topic中的partition
          * true：自动提交，false：必须手动提交，同步提交consumer.commitSync() 和异步提交consumer.commitUsync()
          */
-        properties.put("enable.auto.commit", "true");
+        properties.put("enable.auto.commit", "false");
         //消费者自动提交的间隔
         properties.put("auto.commit.interval.ms", "1000");
         /**
          *      从最早的数据开始消费 earliest | latest | none
          *      latest:从最新的数据开始消费
          *      none：找不到offset关系，将报错
+         *      如果消费者已经提交了offset，则从提交了的offset开始消费，而不是最早的offset开始。
          */
         properties.put("auto.offset.reset", "earliest");
         //key 和 value的序列化方式
@@ -39,7 +40,6 @@ public class ConsumerSimpleKafka {
 //        consumer.subscribe(Arrays.asList("lzc-test-topic"));
         //指定分区（partition）去消费
         consumer.assign(Arrays.asList(new TopicPartition("lzc-test-topic",0)));
-
         try {
             while (true){
                 ConsumerRecords<String,String> records=consumer.poll(Duration.ofMillis(1000));
@@ -47,6 +47,8 @@ public class ConsumerSimpleKafka {
                     record.timestampType();
                     System.out.printf("offset = %d ,key =%s, value= %s, partition= %s,timestamp=%s,%n" ,record.offset(),record.key(),record.value(),record.partition(),record.timestamp());
                 }
+                //当设置enable.auto.commit为false时，这里可手动提交
+                consumer.commitSync();
             }
         }finally {
             consumer.close();
