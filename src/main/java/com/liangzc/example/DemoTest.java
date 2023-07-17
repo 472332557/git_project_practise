@@ -338,17 +338,6 @@ public class DemoTest {
         System.out.println(16 << 1);
         System.out.println((16 << 1) * 0.75);
 
-        /**
-         *  10
-         *  00001010
-         *  00000101 -> >>1
-         *  00000010 -> >>2
-         */
-
-        System.out.println(10>>1);
-
-        System.out.println(10>>2);
-
     }
 
 }
