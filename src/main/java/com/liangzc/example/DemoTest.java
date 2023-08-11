@@ -330,6 +330,10 @@ public class DemoTest {
         }
 
         System.out.println(feeNotax.setScale(0,BigDecimal.ROUND_HALF_UP));
+
+        System.out.println(BigDecimal.valueOf(1000).negate());
+
+        System.out.println(BigDecimal.valueOf(-1000).negate());
     }
 
     @Test

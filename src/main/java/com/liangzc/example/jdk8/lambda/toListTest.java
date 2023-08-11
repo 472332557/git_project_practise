@@ -8,6 +8,7 @@ import org.springframework.util.MultiValueMap;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class toListTest {
@@ -143,5 +144,36 @@ public class toListTest {
         Map<Integer, List<Student>> collect = list.stream().sorted(Comparator.comparing(Student::getAge)).collect(Collectors.groupingBy(Student::getAge));
         System.out.println(collect);
 
+    }
+
+
+    @Test
+    public void test(){
+        List<Student> list = new ArrayList<>();
+        Student student1 = new Student("lili",10,1,new Date(),new BigDecimal(10));
+        Student student2 = new Student("lucy",11,1,new Date(),new BigDecimal(20));
+        Student student3 = new Student("lei",12,1,new Date(),new BigDecimal(30));
+        Student student4 = new Student("mary",10,2,new Date(),new BigDecimal(40));
+        Student student5 = new Student("tom",9,2,new Date(),new BigDecimal(30));
+        Student student6 = new Student("jack",12,2,new Date(),new BigDecimal(20));
+        Student student7 = new Student("mali",10,3,new Date(),new BigDecimal(20));
+        Student student8 = new Student("kk",10,3,new Date(),new BigDecimal(10));
+        Student student9 = new Student("kk",20,3,new Date(),new BigDecimal(10));
+        list.add(student1);
+        list.add(student2);
+        list.add(student3);
+        list.add(student4);
+        list.add(student5);
+        list.add(student6);
+        list.add(student7);
+        list.add(student8);
+        list.add(student9);
+
+        //
+        Map<String, Student> collect = list.stream().collect(Collectors.toMap(
+                student -> String.format("%d:%d:%s", student.getAge(), student.getGrade(), student.getName()), Function.identity()
+        ));
+
+        System.out.println(collect);
     }
 }
