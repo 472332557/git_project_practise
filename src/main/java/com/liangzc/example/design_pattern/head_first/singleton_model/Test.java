@@ -1,5 +1,7 @@
 package com.liangzc.example.design_pattern.head_first.singleton_model;
 
+import com.liangzc.example.netty.protocol.ReqTypeE;
+
 public class Test {
 
     public static void main(String[] args) {
@@ -26,6 +28,7 @@ public class Test {
         thread1.start();
         thread2.start();
 
+        System.out.println(ReqTypeE.PING.toString());
 
     }
 }
