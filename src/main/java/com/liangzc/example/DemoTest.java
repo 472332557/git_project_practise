@@ -11,11 +11,10 @@ import java.io.File;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class DemoTest {
@@ -355,6 +354,66 @@ public class DemoTest {
 
         System.out.println(20>>2);
 
+    }
+
+    @Test
+    public void listSub(){
+
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0; i < 562; i++) {
+            list.add(i);
+        }
+
+        List<List<Integer>> subList = new ArrayList<>();
+
+        //按1000个元素拆分
+        int subBatch = 1000;
+
+        for (int i = 0; i < list.size(); i+= subBatch) {
+            int endIndex = Math.min(i + subBatch, list.size());
+            List<Integer> subList1 = list.subList(i, endIndex);
+            subList.add(subList1);
+        }
+
+        for (List<Integer> integers : subList) {
+            System.out.println(integers);
+        }
+
+
+        List<List<Integer>> lists = segmentationList(list, 200);
+        for (List<Integer> integers : lists) {
+            System.out.println(integers);
+        }
+
+    }
+
+    @Test
+    public void threadTest(){
+
+
+        new Thread(()->{
+
+            System.out.println("111111111111111111");
+        });
+
+
+        ExecutorService executorService = Executors.newFixedThreadPool(2);
+        executorService.execute(()->{
+            System.out.println("222222222222222222");
+        });
+        executorService.shutdown();
+
+    }
+
+    //大集合拆分为小的集合方法
+    private <T>List<List<T>> segmentationList(List<T> list, int batchSize) {
+        List<List<T>> subList = new ArrayList<>();
+
+        for (int i = 0; i < list.size(); i+= batchSize) {
+            int endIndex = Math.min(i+batchSize, list.size());
+            subList.add(list.subList(i, endIndex));
+        }
+        return subList;
     }
 
 }
