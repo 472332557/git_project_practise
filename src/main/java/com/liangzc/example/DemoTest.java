@@ -527,21 +527,4 @@ public class DemoTest {
         LocalDateTime startOfDay = localDateTime.with(LocalTime.MIN);
         return Date.from(startOfDay.atZone(ZoneId.systemDefault()).toInstant());
     }
-
-    @Test
-    public void between(){
-
-        LocalDate date1 = LocalDate.of(2020, 1, 1);
-        LocalDate date2 = LocalDate.of(2021, 1, 1);
-        Period period = Period.between(date1, date2);
-        int diff = period.getMonths() + period.getYears() * 12;
-        System.out.println("两个日期之间相差 " + diff + " 个月");
-
-
-        String beginTime = "2023-09-01 00:00:00";
-        String endTime= "2023-09-30 00:00:00";
-
-        System.out.println(new Date(beginTime));
-        System.out.println(new Date(endTime));
-    }
 }
