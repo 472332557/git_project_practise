@@ -1,8 +1,13 @@
 package com.liangzc.example;
 
+import cn.hutool.core.date.DateTime;
+import cn.hutool.core.date.DateUnit;
+import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang3.time.DateUtils;
 import org.checkerframework.checker.units.qual.C;
+import org.joda.time.Days;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +17,16 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Period;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -416,4 +431,78 @@ public class DemoTest {
         return subList;
     }
 
+
+    @Test
+    public void between() throws ParseException {
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String start = "2023-09-01 00:00:00";
+        String end = "2023-10-31 00:00:00";
+
+        Date startDate = dateFormat.parse(start);
+        Date endDate = dateFormat.parse(end);
+
+
+        System.out.println(DateUtil.betweenMonth(startDate, endDate, false));
+
+        LocalDate localDateStart = startDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate localDateEnd = endDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        Period period = Period.between(localDateStart, localDateEnd);
+        int diff = period.getMonths() + period.getYears() * 12;
+        System.out.println(diff);
+
+
+        System.out.println(ChronoUnit.MONTHS.between(localDateStart, localDateEnd));
+
+    }
+
+    @Test
+    public void betweenTime() {
+
+        String start = "2023-09-01 00:00:00";
+        String end = "2023-11-30 23:59:59";
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime startDate = LocalDateTime.parse(start, formatter);
+        LocalDateTime endDate = LocalDateTime.parse(end, formatter);
+
+        Period period = Period.between(startDate.toLocalDate(), endDate.toLocalDate());
+        int diff = period.getMonths() + period.getYears() * 12;
+
+        System.out.println("两个日期之间相差 " + diff + " 个月");
+
+
+
+    }
+
+    @Test
+    public void date() throws ParseException {
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String start = "2023-09-01 00:00:00";
+        String end = "2023-10-31 00:00:00";
+
+        Date startDate = dateFormat.parse(start);
+        Date endDate = dateFormat.parse(end);
+
+        Date dateTime = DateUtil.beginOfDay(startDate);
+
+
+        DateTime dateTime1 = DateUtil.endOfMonth(startDate);
+        System.out.println("dateTime:"+dateTime);
+        System.out.println("dateTime1:"+dateTime1);
+
+        DateTime dateTime2 = DateUtil.beginOfDay(dateTime1);
+        System.out.println("dateTime2:"+dateTime2);
+
+        Date date = DateUtils.addDays(dateTime2, 1);
+        System.out.println("date:"+date);
+
+        Date dateTime3 = DateUtils.addDays(dateTime2, 1);
+        System.out.println("dateTime3:"+dateTime3);
+
+        String beginTime = "2023-09-01 00:00:00";
+        String endTime= "2023-09-30 00:00:00";
+    }
 }
