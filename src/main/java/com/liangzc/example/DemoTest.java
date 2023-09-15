@@ -9,8 +9,10 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.*;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
@@ -412,4 +414,41 @@ public class DemoTest {
         return subList;
     }
 
+
+    @Test
+    public void numTest(){
+        int number = 55556;
+        DecimalFormat decimalFormat = new DecimalFormat("0000");
+        String formattedNumber = decimalFormat.format(number);
+        System.out.println(formattedNumber); // 输出: 0005
+
+        String format = String.format("%04d", number);
+        System.out.println(format);
+
+        System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(getStartOfDay(new Date())));
+    }
+
+
+    public static Date getStartOfDay(Date date) {
+        LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(date.getTime()), ZoneId.systemDefault());
+        LocalDateTime startOfDay = localDateTime.with(LocalTime.MIN);
+        return Date.from(startOfDay.atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    @Test
+    public void between(){
+
+        LocalDate date1 = LocalDate.of(2020, 1, 1);
+        LocalDate date2 = LocalDate.of(2021, 1, 1);
+        Period period = Period.between(date1, date2);
+        int diff = period.getMonths() + period.getYears() * 12;
+        System.out.println("两个日期之间相差 " + diff + " 个月");
+
+
+        String beginTime = "2023-09-01 00:00:00";
+        String endTime= "2023-09-30 00:00:00";
+
+        System.out.println(new Date(beginTime));
+        System.out.println(new Date(endTime));
+    }
 }
