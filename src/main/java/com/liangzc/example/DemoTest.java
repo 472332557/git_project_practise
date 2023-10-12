@@ -33,6 +33,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class DemoTest {
 
@@ -445,7 +447,7 @@ public class DemoTest {
         Date endDate = dateFormat.parse(end);
 
 
-        System.out.println(DateUtil.betweenMonth(startDate, endDate, false));
+        System.out.println(DateUtil.betweenMonth(startDate, endDate, false) + 1);
 
         LocalDate localDateStart = startDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         LocalDate localDateEnd = endDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -526,5 +528,73 @@ public class DemoTest {
         LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(date.getTime()), ZoneId.systemDefault());
         LocalDateTime startOfDay = localDateTime.with(LocalTime.MIN);
         return Date.from(startOfDay.atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+
+    @Test
+    public void dateUtilTest() throws ParseException {
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String start = "2023-09-01 00:00:00";
+        String end = "2023-10-31 00:00:00";
+
+        Date startDate = dateFormat.parse(start);
+        Date endDate = dateFormat.parse(end);
+
+
+        long month = DateUtil.betweenMonth(startDate, endDate,Boolean.TRUE);
+        System.out.println(month);
+
+        long between = DateUtil.between(startDate, endDate,DateUnit.DAY);
+        System.out.println(between);
+
+
+        System.out.println(DateUtil.beginOfDay(new Date()));
+
+    }
+
+    /**
+     * 给定两个值，快速的将其区间内的值添加到一个list集合
+     */
+    @Test
+    public void forAddTest(){
+
+        int start = 1;
+        int end = 10;
+
+        List<Integer> list = IntStream.rangeClosed(start, end)
+                .boxed()
+                .collect(Collectors.toList());
+
+        System.out.println(list);
+    }
+
+
+    /**
+     *  用于比较一个对象集合内，字段值是否有相等或者重复的
+     */
+    @Test
+    public void compareTest(){
+        List<FeeItemType> feeItemTypeList = new ArrayList<>();
+        FeeItemType feeItemType = new FeeItemType("1","水","1");
+        FeeItemType feeItemType1 = new FeeItemType("2","物业","2");
+        FeeItemType feeItemType2 = new FeeItemType("3","电","1");
+        feeItemTypeList.add(feeItemType);
+        feeItemTypeList.add(feeItemType1);
+        feeItemTypeList.add(feeItemType2);
+
+        for (int i = 0; i < feeItemTypeList.size(); i++) {
+            for (int j = i+1; j < feeItemTypeList.size(); j++) {
+                FeeItemType feeItemType3 = feeItemTypeList.get(i);
+                FeeItemType feeItemType4 = feeItemTypeList.get(j);
+                if(feeItemType3.getType().equals(feeItemType4.getType())){
+                    System.out.println("类型有交叉了");
+                    System.out.println(feeItemType3);
+                    System.out.println(feeItemType4);
+                    break;
+                }
+            }
+        }
+
     }
 }

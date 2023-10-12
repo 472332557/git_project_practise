@@ -10,7 +10,7 @@ import org.springframework.context.ApplicationContextAware;
 
 public class ApplicationAwareDemo implements ApplicationContextAware {
 
-    private ApplicationContext applicationContext;
+    private static ApplicationContext applicationContext;
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
@@ -22,5 +22,10 @@ public class ApplicationAwareDemo implements ApplicationContextAware {
 
         System.out.println(" this applicationContext is:" + applicationContext);
         return this.applicationContext;
+    }
+
+    // 通过class获取Bean
+    public static <T> T getBean(Class<T> clazz) {
+        return applicationContext.getBean(clazz);
     }
 }

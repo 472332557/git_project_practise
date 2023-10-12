@@ -1,5 +1,6 @@
 package com.liangzc.example.reflect_operate.reflect_practise;
 
+import com.liangzc.example.spring_demo.applicationAware.ApplicationAwareDemo;
 import org.junit.Test;
 
 import java.lang.reflect.Constructor;
@@ -153,7 +154,8 @@ public class DemoTest {
         Method method2 = aClass.getDeclaredMethod("method2", String.class);
         //暴力访问
         method2.setAccessible(true);
-        method2.invoke(obj, "private method");
+        Object invoke2 = method2.invoke(obj, "private method");
+        String invoke2String = (String) invoke2;
 
         Method method3 = aClass.getMethod("method3");
         Object invoke1 = method3.invoke(obj);
@@ -162,6 +164,12 @@ public class DemoTest {
         //获取默认方法：getDeclaredMethod，默认方法不需要暴力破解
         Method method4 = aClass.getDeclaredMethod("method4");
         method4.invoke(obj);
+
+        System.out.println("---------------------------------------------------------");
+        Teacher teacher = ApplicationAwareDemo.getBean(Teacher.class);
+        Method declaredMethod = Teacher.class.getDeclaredMethod("method2", String.class);
+        declaredMethod.setAccessible(true);
+        System.out.println(declaredMethod.invoke(teacher, "通过springContext获取"));
     }
 
 
