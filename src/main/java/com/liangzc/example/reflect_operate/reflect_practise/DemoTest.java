@@ -165,11 +165,9 @@ public class DemoTest {
         Method method4 = aClass.getDeclaredMethod("method4");
         method4.invoke(obj);
 
-        System.out.println("---------------------------------------------------------");
-        Teacher teacher = ApplicationAwareDemo.getBean(Teacher.class);
-        Method declaredMethod = Teacher.class.getDeclaredMethod("method2", String.class);
-        declaredMethod.setAccessible(true);
-        System.out.println(declaredMethod.invoke(teacher, "通过springContext获取"));
+        System.out.println("-------------------------method5--------------------------------");
+        Method method5 = aClass.getDeclaredMethod("method5", boolean.class,Long.class);
+        method5.invoke(obj, false,null);
     }
 
 

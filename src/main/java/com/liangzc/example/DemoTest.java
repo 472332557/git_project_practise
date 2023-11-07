@@ -597,4 +597,25 @@ public class DemoTest {
         }
 
     }
+
+    @Test
+    public void splitTest(){
+        String code = "PLANHOUSE|6002977";
+        String[] split = code.split("\\|");
+        System.out.println(JSON.toJSONString(split));
+        for (String s : split) {
+            System.out.println(s);
+        }
+
+    }
+
+    @Test
+    public void getBeginMonth(){
+        Date startDay = DateUtil.beginOfMonth(new Date());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(startDay);
+        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        System.out.println(calendar.getTime());
+    }
 }

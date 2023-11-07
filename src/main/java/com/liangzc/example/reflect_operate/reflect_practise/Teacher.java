@@ -48,6 +48,14 @@ public class Teacher {
         System.out.println("默认的访问类型的方法！");
     }
 
+    void method5(boolean isCheck,Long num){
+        if (isCheck){
+            System.out.println("SUCCESS");
+        }else {
+            System.out.println("FALSE");
+        }
+    }
+
     @Override
     public String toString() {
         return "Teacher{" +
