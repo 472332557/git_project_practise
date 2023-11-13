@@ -39,6 +39,7 @@ public class toListTest {
         List<Student> collect = list.stream().filter(e -> e.getGrade() == 2).sorted((x,z)-> z.getAge().compareTo(x.getAge())).collect(Collectors.toList());
         List<String> collect1 = list.stream().map(Student::getName).distinct().collect(Collectors.toList());
 
+
         System.out.println(collect);
         System.out.println("collect1=============:"+collect1);
 

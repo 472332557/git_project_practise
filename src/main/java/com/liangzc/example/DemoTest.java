@@ -618,4 +618,22 @@ public class DemoTest {
         calendar.set(Calendar.MILLISECOND, 0);
         System.out.println(calendar.getTime());
     }
+
+    @Test
+    public void getMonth() throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        String endDate = "2023-11-20";
+        Date parse = simpleDateFormat.parse(endDate);
+
+        Date startDate = new Date();
+
+        String end = "2023-11-20 00:00:00";
+        String start = "2023-11-10 00:00:00";
+
+        DateTime dateTime = DateUtil.beginOfMonth(parse);
+        DateTime dateTime1 = DateUtil.beginOfMonth(startDate);
+        System.out.println(dateTime);
+        System.out.println(dateTime1);
+    }
 }
