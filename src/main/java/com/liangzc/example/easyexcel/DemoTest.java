@@ -33,7 +33,8 @@ public class DemoTest {
     public void simpleTest(){
 
         String fileName = filePath + "/easyExcel_" + System.currentTimeMillis() + ".xlsx";
-        EasyExcel.write(fileName, DemoData.class).sheet("模板1").doWrite(()-> data());
+        EasyExcel.write(fileName, DemoData.class).registerWriteHandler(new CustomSheetWriteHandler())
+                .sheet("模板1").doWrite(()-> data());
 
     }
 

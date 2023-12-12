@@ -16,4 +16,10 @@ public class DemoData {
 
     @ExcelProperty("数字值")
     private Integer number;
+
+    @ExcelProperty("选项")
+    private String choose;
+
+    @ExcelProperty("选项2")
+    private String choose1;
 }

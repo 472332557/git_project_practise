@@ -635,5 +635,7 @@ public class DemoTest {
         DateTime dateTime1 = DateUtil.beginOfMonth(startDate);
         System.out.println(dateTime);
         System.out.println(dateTime1);
+
+        System.out.println(Boolean.FALSE.toString());
     }
 }
