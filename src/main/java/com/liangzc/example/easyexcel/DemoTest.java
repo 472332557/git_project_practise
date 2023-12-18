@@ -35,7 +35,6 @@ public class DemoTest {
         String fileName = filePath + "/easyExcel_" + System.currentTimeMillis() + ".xlsx";
         EasyExcel.write(fileName, DemoData.class).registerWriteHandler(new CustomSheetWriteHandler())
                 .sheet("模板1").doWrite(()-> data());
-
     }
 
     //仅导出指定列或者忽略指定列
