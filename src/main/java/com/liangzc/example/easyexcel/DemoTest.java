@@ -35,6 +35,14 @@ public class DemoTest {
         String fileName = filePath + "/easyExcel_" + System.currentTimeMillis() + ".xlsx";
         EasyExcel.write(fileName, DemoData.class).registerWriteHandler(new CustomSheetWriteHandler())
                 .sheet("模板1").doWrite(()-> data());
+
+        /*try(ExcelWriter excelWriter = EasyExcel.write(fileName, DemoData.class).registerWriteHandler(new CustomSheetWriteHandler()).build()){
+            WriteSheet writeSheet1 = EasyExcel.writerSheet(0,"模板1").build();
+            WriteSheet writeSheet2 = EasyExcel.writerSheet(1,"模板2").build();
+            excelWriter.write(data(), writeSheet2);
+            excelWriter.write(data(), writeSheet1);
+
+        }*/
     }
 
     //仅导出指定列或者忽略指定列

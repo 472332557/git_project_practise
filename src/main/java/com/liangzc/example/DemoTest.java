@@ -654,4 +654,42 @@ public class DemoTest {
         System.out.println(names.add("1"));
         System.out.println(names.add("1"));
     }
+
+    @Test
+    public void dateParse() throws ParseException {
+        String s = "20121225";
+        SimpleDateFormat oldFormat = new SimpleDateFormat("yyyyMMdd");
+        Date date = oldFormat.parse(s);
+
+        SimpleDateFormat newFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String result = newFormat.format(date);
+
+        System.out.println(result);  // 输出：2012-12-25
+
+        System.out.println(newFormat.parse(result));
+
+
+        System.out.println(DateUtil.parse(s, "yyyyMMdd"));
+
+
+    }
+
+    @Test
+    public void stringJoin(){
+        StringJoiner stringJoiner = new StringJoiner(",","{","}");
+
+        for (int i = 0; i < 5; i++) {
+            stringJoiner.add("这是第").add("" + i);
+        }
+
+        System.out.println(stringJoiner.toString());
+
+        Set<Integer> nums = new HashSet<>();
+        nums.add(1);
+        nums.add(2);
+        nums.add(1);
+
+        System.out.println(nums);
+    }
+
 }
