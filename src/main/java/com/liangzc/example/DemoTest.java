@@ -6,6 +6,7 @@ import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
+import com.liangzc.example.em.PayChannelEnum;
 import org.apache.commons.lang3.time.DateUtils;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -690,6 +691,35 @@ public class DemoTest {
         nums.add(1);
 
         System.out.println(nums);
+    }
+
+    @Test
+    public void hashTest(){
+        String key = "111";
+        String value = "222";
+
+        String end = key + value;
+        System.out.println(end.hashCode());
+        System.out.println(end.hashCode());
+
+        end = key + "010" + value;
+        System.out.println(end.hashCode());
+    }
+
+
+    @Test
+    public void enumTest(){
+
+        Optional<PayChannelEnum> first = Arrays.stream(PayChannelEnum.values()).filter(e -> e.getCode().contains("CCB_PAY")).findFirst();
+        System.out.println(first.isPresent());
+        System.out.println(first.get().getCode());
+
+        System.out.println("-------------------------------------------------------------------");
+        Optional<PayChannelEnum> channelEnumOptional = Arrays.stream(PayChannelEnum.values()).filter(e -> e.getCode().contains("PAY_COMM_UNION")).findFirst();
+        System.out.println(channelEnumOptional.isPresent());
+        System.out.println(channelEnumOptional);
+        PayChannelEnum payChannelEnum = channelEnumOptional.get();
+        System.out.println(payChannelEnum);
     }
 
 }
