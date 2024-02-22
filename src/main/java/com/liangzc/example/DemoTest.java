@@ -691,6 +691,14 @@ public class DemoTest {
         nums.add(1);
 
         System.out.println(nums);
+
+        System.out.println("-----------------------------------");
+
+        StringJoiner serialNoJoiner = new StringJoiner(",");
+        serialNoJoiner.add("11111111111111111111");
+        serialNoJoiner.add("\n"+"111111111222222222");
+        System.out.println(serialNoJoiner.toString());
+        System.out.println(serialNoJoiner.length());
     }
 
     @Test
@@ -721,5 +729,39 @@ public class DemoTest {
         PayChannelEnum payChannelEnum = channelEnumOptional.get();
         System.out.println(payChannelEnum);
     }
+
+    @Test
+    public void joinTest(){
+        String[] words = {"Java", "Python", "C++", "JavaScript", "TypeScript", "Kotlin", "Swift", "Go", "Rust", "Ruby"};
+        String prefix = "【";
+        String suffix = "】";
+        StringJoiner sj = new StringJoiner(", ", prefix, suffix);
+        int maxLength = 50; // 最大长度阈值
+        StringBuilder currentLine = new StringBuilder(); // 用于构建当前行的字符串
+        System.out.println(sj.toString());
+        System.out.println("是否相等："+sj.toString().equals(prefix + suffix));
+
+        for (String word : words) {
+            // 检查如果当前行加上下一个单词超过最大长度，则先换行
+            if (currentLine.length() + word.length() > maxLength) {
+                sj.add(currentLine.toString()).add("\n"); // 将当前行添加到StringJoiner
+                currentLine = new StringBuilder(); // 重置当前行
+            }
+            // 如果当前行不为空，添加逗号和空格作为分隔符
+            if (currentLine.length() > 0) {
+                currentLine.append(", ");
+            }
+            currentLine.append(word); // 添加单词到当前行
+        }
+        // 循环结束后，添加最后一行（如果有）
+        if (currentLine.length() > 0) {
+            sj.add(currentLine.toString());
+        }
+
+        // 使用换行符连接每一行
+//        String result = sj.toString().replace(", ", "\n");
+        System.out.println(sj.toString());
+        System.out.println("是否相等2："+sj.toString().equals(prefix + suffix));
+}
 
 }
