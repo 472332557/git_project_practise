@@ -33,6 +33,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -763,5 +765,33 @@ public class DemoTest {
         System.out.println(sj.toString());
         System.out.println("是否相等2："+sj.toString().equals(prefix + suffix));
 }
+
+    @Test
+    public void beginEnd(){
+        DateTime dateTime = DateUtil.beginOfMonth(new Date());
+
+        DateTime dateTime1 = DateUtil.endOfMonth(new Date());
+
+        DateTime dateTime2 = DateUtil.beginOfDay(dateTime1);
+    }
+
+    @Test
+    public void patternTest(){
+        /**
+         * <img 表示字符串以<img开头。
+         * .*? 表示非贪婪模式下的任意字符序列。
+         * > 表示字符串以>结尾。
+         * 然后，使用Pattern和Matcher类来查找与此正则表达式匹配的子字符串。matcher.find()方法用于查找下一个匹配项，如果找到，matcher.group()方法将返回匹配的字符串。
+         */
+        String input = "这是一段文本，包含一个图片标签<img src=\"image.jpg\" />和其他内容。";
+        Pattern pattern = Pattern.compile("<img.*?>");
+        Matcher matcher = pattern.matcher(input);
+
+        while (matcher.find()) {
+            String group = matcher.group();
+            System.out.println(group);
+        }
+
+    }
 
 }
