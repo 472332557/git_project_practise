@@ -1010,6 +1010,8 @@ public class DemoTest {
     public void commitTest(){
 
         System.out.println("-------------------commit 1");
+
+        System.out.println("---------------------commit 2");
     }
 
 }
