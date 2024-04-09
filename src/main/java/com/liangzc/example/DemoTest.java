@@ -1006,4 +1006,10 @@ public class DemoTest {
         System.out.println(students.isEmpty());
     }
 
+    @Test
+    public void commitTest(){
+
+        System.out.println("-------------------commit 1");
+    }
+
 }
