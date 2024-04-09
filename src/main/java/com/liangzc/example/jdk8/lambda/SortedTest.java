@@ -1,6 +1,7 @@
 package com.liangzc.example.jdk8.lambda;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 //排序
@@ -19,10 +20,10 @@ public class SortedTest {
         list.stream().filter(s -> s.startsWith("a")).forEach(System.out::println);
         System.out.println("- - - - - - - - -");
         //自定义排序 倒叙排序
-        list.stream().sorted(((s, t1) -> t1.compareTo(s))).filter(s -> s.startsWith("a")).forEach(System.out::println);
+        list.stream().sorted((Comparator.reverseOrder())).filter(s -> s.startsWith("a")).forEach(System.out::println);
 
         System.out.println("- - - - - - - - -");
         //顺序排
-        list.stream().sorted(((s, t1) -> s.compareTo(t1))).filter(s -> s.startsWith("a")).forEach(System.out::println);
+        list.stream().sorted((String::compareTo)).filter(s -> s.startsWith("a")).forEach(System.out::println);
     }
 }

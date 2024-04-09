@@ -7,6 +7,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
 import com.liangzc.example.em.PayChannelEnum;
+import com.liangzc.example.jdk8.lambda.Student;
 import org.apache.commons.lang3.time.DateUtils;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -792,6 +793,217 @@ public class DemoTest {
             System.out.println(group);
         }
 
+
+        System.out.println("--------------------------找到src------------------");
+        /**
+         * 找到src标签
+         */
+        String html = "<img style=\"max-width: 150px;max-height: 60px;margin-bottom:8px;display:block;\" src=\"${logoImage}\">";
+        String pattern1 = "src=\"([^\"]*)\"";
+        Pattern r = Pattern.compile(pattern1);
+        Matcher m = r.matcher(html);
+        if (m.find()) {
+            System.out.println("Found src: " + m.group(1));
+        } else {
+            System.out.println("No src found");
+        }
+
+
+        System.out.println("--------------------------找到并替换src------------------");
+        /**
+         * 找到src并替换
+         */
+        String html2 = "<img style=\"max-width: 150px;max-height: 60px;margin-bottom:8px;display:block;\" src=\"https://bop-charge.oss-cn-shenzhen.aliyuncs.com/0/receiptlogo/5f95f7189df1484c8603feee9f3286dc20220412.png\">";
+        String newSrc = "newImage.jpg";
+        String pattern2 = "src=\"([^\"]*)\"";
+        Pattern r2 = Pattern.compile(pattern2);
+        Matcher m2 = r2.matcher(html2);
+        if (m2.find()) {
+            String oldSrc = m2.group(1);
+            String replacedHtml = html2.replace(oldSrc, newSrc);
+            System.out.println(replacedHtml);
+        } else {
+            System.out.println("No src found");
+        }
+
+
+        System.out.println("--------------------------找到并替换第一个src------------------");
+        /**
+         * 找到并替换第一个src
+         */
+        String html3 = "<div class=\"printArea\" style=\"margin-top: 10px;height:auto;position: relative;\">\n" +
+                "    <div class=\"container-fluid receipt-box\">\n" +
+                "        <div class=\"TopHead\">\n" +
+                "            <div class=\"receipt-title\" style=\"height: 80px;\">\n" +
+                "                <div class=\"receipt-left\">\n" +
+                "                    <div class=\"eleproLogo\">\n" +
+                "                        <!-- <img style=\"max-width: 150px;max-height: 60px;margin-bottom:8px;display:block;\"\n" +
+                "                            src=\"https://bop-charge.oss-cn-shenzhen.aliyuncs.com/0/receiptlogo/5f95f7189df1484c8603feee9f3286dc20220412.png\"> -->\n" +
+                "                    </div>\n" +
+                "                    <div>\n" +
+                "                        <span>收款日期：<span class=\"collectionTime\">${collectionTime}</span></span>\n" +
+                "                    </div>\n" +
+                "                </div>\n" +
+                "                <div class=\"elereceipt-center\">\n" +
+                "                    <div class=\"elereceipt-mode\" style=\"margin-top: -12px;line-height: 28px;\"> ${projectName}电子收据</div>\n" +
+                "                    <div style=\"margin-top:20px\">\n" +
+                "                        <!-- <span>分享时间: <span class=\"sharingTime\">${shareTime}</span></span> -->\n" +
+                "                    </div>\n" +
+                "                </div>\n" +
+                "                <div class=\"receipt-right\" style=\"right:10px;\">\n" +
+                "                    <div class=\"eleNumber ff3333\">No.<span class=\"ff3333\">${no}</span><span\n" +
+                "                            class=\"pipelineNum ff3333\"></span>\n" +
+                "                    </div>\n" +
+                "                    <div style=\"text-align:right;margin-bottom:-2px\">\n" +
+                "                        <span>打印时间：<span class=\"printTime\">${printTime}</span></span>\n" +
+                "                    </div>\n" +
+                "                </div>\n" +
+                "            </div>\n" +
+                "        </div>\n" +
+                "        <table class=\"table-box receipt-table\" cellpadding=\"0\" cellspacing=\"0\">\n" +
+                "            <thead class=\"text-center ellipsis\">\n" +
+                "                <tr>\n" +
+                "                    <td>${multi}</td>\n" +
+                "                    <td class=\"roomName\">${buildFloorRoom}</td>\n" +
+                "                    <td class=\"w-115\">客户名称</td>\n" +
+                "                    <td colspan=\"4\" class=\"customerName\">${customerName}</td>\n" +
+                "                    <td>托收账号</td>\n" +
+                "                    <td colspan=\"2\" class=\"pay_cardNo\"></td>\n" +
+                "                    <td style=\"width:70px\">面积(m²)</td>\n" +
+                "                    <td class=\"area\" style=\"width:70px\">${buildArea}</td>\n" +
+                "                </tr>\n" +
+                "                <tr>\n" +
+                "                    <td>收款方式</td>\n" +
+                "                    <td class=\"payType\">${payType}</td>\n" +
+                "                    <td class=\"w-115\">开立时间</td>\n" +
+                "                    <td colspan=\"4\" class=\"pay_cardNo\">${issuerTime}</td>\n" +
+                "                    <td>开立人</td>\n" +
+                "                    <td class=\"area\" colspan=\"2\">${issuer}</td>\n" +
+                "                    <td style=\"width:60px\"></td>\n" +
+                "                    <td style=\"width:60px\"></td>\n" +
+                "                </tr>\n" +
+                "                <tr>\n" +
+                "                    <td rowspan=\"2\" class=\"w-115\">收费项目</td>\n" +
+                "                    <td rowspan=\"2\">收费时段</td>\n" +
+                "                    <td rowspan=\"2\">计费用量</td>\n" +
+                "                    <td colspan=\"3\">单价</td>\n" +
+                "                    <td rowspan=\"2\">实收本月</td>\n" +
+                "                    <td rowspan=\"2\">实收往欠</td>\n" +
+                "                    <td rowspan=\"2\">预收下月</td>\n" +
+                "                    <td rowspan=\"2\">本次实收</td>\n" +
+                "                    <td rowspan=\"2\">上次读数</td>\n" +
+                "                    <td rowspan=\"2\">本次读数</td>\n" +
+                "                </tr>\n" +
+                "                <tr class=\"jt\">\n" +
+                "                    <td>阶梯1</td>\n" +
+                "                    <td>阶梯2</td>\n" +
+                "                    <td>阶梯3</td>\n" +
+                "                </tr>\n" +
+                "            </thead>\n" +
+                "            <tbody class=\"text-center ellipsis\">\n" +
+                "                ${能耗缴费}\n" +
+                "                ${非能耗缴费}\n" +
+                "            </tbody>\n" +
+                "            <tbody class=\"completetb\">\n" +
+                "                <tr class=\"hidden splitTips\" style=\"display:none\"></tr>\n" +
+                "                <tr class=\"fw_b\">\n" +
+                "                    <td class=\"text-center\">实收总计</td>\n" +
+                "                    <td colspan=\"9\" style=\"text-align:left\">大写：<span>${totalAmountDigitToChinese}</span></td>\n" +
+                "                    <td colspan=\"2\" style=\"text-align:left\">（小写）:￥<span class=\"yingshou_zongji\">${totalAmount}</span></td>\n" +
+                "                </tr>\n" +
+                "                <tr style=\"height:60px\">\n" +
+                "                    <td class=\"text-center\">说明</td>\n" +
+                "                    <td colspan=\"11\" class=\"subRemark\">\n" +
+                "                        <span></span>\n" +
+                "                        <span class=\"explainRemark\" style=\"word-break:break-all;text-align:left\">${templateComment}</span>\n" +
+                "                    </td>\n" +
+                "                </tr>\n" +
+                "            </tbody>\n" +
+                "        </table>\n" +
+                "        <div style=\"margin-top: 10px;text-align: left\">\n" +
+                "            <span>防伪代码:</span>\n" +
+                "            <span class=\"antiCode\">\n" +
+                "                $1$/Zh1wd47$v3MOsVe83yaTA.m/4y/5B/\n" +
+                "            </span>\n" +
+                "        </div>\n" +
+                "    </div>\n" +
+                "    <div class=\"receipt-seal\">\n" +
+                "        <!-- <img src=\"./电子单据_files/a60d12c0ae34823c044f4d59dc81507e.png\" alt=\"印章logo\"\n" +
+                "            style=\"max-width:40mm;max-height: 40mm;\"> -->\n" +
+                "        ${sealImage}\n" +
+                "    </div>\n" +
+                "    <div>\n" +
+                "        <div style=\"text-align: center;position: relative\">\n" +
+                "            <!-- <h2><span style=\"display: block\">限额伍仟元整，超出无效</span></h2> -->\n" +
+                "            <div style=\"top:-20px;right: 50px;position: absolute\">\n" +
+                "                <img class=\"qrcodeImg\"\n" +
+                "                    src=\"${checkQrImage}\"\n" +
+                "                    style=\"width:60px;height:60px\">\n" +
+                "                <div style=\"text-align:center\">物业校验收据</div>\n" +
+                "            </div>\n" +
+                "        </div>\n" +
+                "    </div>\n" +
+                "\t${invalidBegin}\n" +
+                "</div>";
+        String newSrc3 = "newImage3.jpg";
+
+        String pattern3 = "src=\"([^\"]*)\"";
+        Pattern r3 = Pattern.compile(pattern3);
+        Matcher m3 = r3.matcher(html3);
+        if (m3.find()) {
+            String oldSrc = m3.group(1);
+            String replacedHtml = html3.replaceFirst(oldSrc, newSrc3);
+            System.out.println(replacedHtml);
+        } else {
+            System.out.println("No src found");
+        }
+    }
+
+    @Test
+    public void dateCompareToTest(){
+        Date now = new Date();
+
+        //当前时间加一小时
+        Date after = new Date(System.currentTimeMillis() + 60 * 60 * 1000);
+
+        System.out.println(after.compareTo(now));
+
+    }
+
+    @Test
+    public void startTest(){
+
+        String img = "${wechatOfficialAccountImage}";
+
+        System.out.println(img.startsWith("$"));
+    }
+
+    @Test
+    public void listAddTest(){
+
+        List<Student> students = new ArrayList<>();
+        Student student1 = new Student();
+        student1.setName("1");
+        student1.setAge(1);
+        student1.setGrade(1);
+        student1.setCreateDate(new Date());
+        student1.setMoney(BigDecimal.ONE);
+        Student student2 = new Student();
+        student2.setName("2");
+        student2.setAge(2);
+        student2.setCreateDate(new Date());
+        student2.setMoney(BigDecimal.TEN);
+
+        students.add(student1);
+        students.add(student2);
+
+        Map<Integer, List<Student>> collect = students.stream().collect(Collectors.groupingBy(Student::getGrade));
+        for (Map.Entry<Integer, List<Student>> entry : collect.entrySet()) {
+            System.out.println(entry);
+        }
+
+        System.out.println(students.size());
+        System.out.println(students.isEmpty());
     }
 
 }

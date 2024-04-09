@@ -176,5 +176,8 @@ public class toListTest {
         ));
 
         System.out.println(collect);
+
+        Student student = list.parallelStream().sorted(Comparator.comparing(Student::getAge).reversed()).findFirst().get();
+        System.out.println(student);
     }
 }
