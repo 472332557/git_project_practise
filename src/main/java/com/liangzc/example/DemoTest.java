@@ -410,6 +410,34 @@ public class DemoTest {
     }
 
     @Test
+    public void setSub(){
+
+        Set<Integer> list = new HashSet<>();
+        for (int i = 0; i < 562; i++) {
+            list.add(i);
+        }
+
+        List<Set<Integer>> subList = new ArrayList<>();
+        Iterator<Integer> iterator = list.iterator();
+        //按1000个元素拆分
+        int subBatch = 1000;
+        while (iterator.hasNext()){
+            Set<Integer> subSet = new HashSet<>();
+            for (int i = 0; i < subBatch && iterator.hasNext(); i++) {
+                subSet.add(iterator.next());
+            }
+            subList.add(subSet);
+        }
+        System.out.println(subList);
+        System.out.println("-------------------------------------------------------------------------------");
+        List<Set<Integer>> sets = segmentationSet(list, 200);
+        for (Set<Integer> set : sets) {
+            System.out.println(set);
+        }
+
+    }
+
+    @Test
     public void threadTest(){
 
 
@@ -436,6 +464,21 @@ public class DemoTest {
             subList.add(list.subList(i, endIndex));
         }
         return subList;
+    }
+
+
+    //大集合拆分为小的集合方法Set集合
+    private static <T> List<Set<T>> segmentationSet(Set<T> set, int batchSize) {
+        List<Set<T>> subSets = new ArrayList<>();
+        Iterator<T> iterator = set.iterator();
+        while (iterator.hasNext()) {
+            Set<T> subSet = new HashSet<>();
+            for (int i = 0; i < batchSize && iterator.hasNext(); i++) {
+                subSet.add(iterator.next());
+            }
+            subSets.add(subSet);
+        }
+        return subSets;
     }
 
 
