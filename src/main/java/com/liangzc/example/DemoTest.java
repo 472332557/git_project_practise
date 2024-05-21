@@ -3,18 +3,23 @@ package com.liangzc.example;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.http.HttpRequest;
+import cn.hutool.http.HttpResponse;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
 import com.liangzc.example.em.PayChannelEnum;
 import com.liangzc.example.jdk8.lambda.Student;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.DateUtils;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.DigestUtils;
 
 import java.io.File;
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -39,6 +44,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+@Slf4j
 public class DemoTest {
 
     private static final Logger logger = LoggerFactory.getLogger(DemoTest.class);
@@ -1055,6 +1061,71 @@ public class DemoTest {
         System.out.println("-------------------commit 1");
 
         System.out.println("---------------------commit 2");
+    }
+
+    @Test
+    public void testOcrEmsWayBill(){
+        String upload1 = "https://bop-core-oss.itianding.com/0/default/190bd7a8968648e087b6a3b749b3db0f20240308.jpg";
+        String upload2 = "https://bop-core-oss.itianding.com/0/default/5512f3402ab746ecacedabb2add1614620240308.jpg";
+        String upload3 = "https://bop-core-oss.itianding.com/0/default/d72b418d99d64b26af01083c0f8c07b320240308.jpg";
+
+
+        String upload4 = "https://bop-core-oss.itianding.com/0/default/1c987a6d6071410f89b905df1e8eafb120240417.jpg";
+        String upload5 = "https://bop-core-oss.itianding.com/0/default/94e3b0934e3e48c49f70958e7617985720240417.jpg";
+
+        String upload6 = "https://bop-core-oss.itianding.com/0/default/45f5c3caa5854fb7b266e9c366cc8b1020240422.jpg";
+        String upload7 = "https://bop-core-oss.itianding.com/0/default/da42259f002a42d088236b8f92bcca8b20240422.jpg";
+        long timestamp = System.currentTimeMillis() / 1000;
+        HttpResponse execute = HttpRequest.post("https://api.regenai.com/v1/docs/fetch")
+                .contentType("multipart/form-data")
+                .form("app_key", "wh0jn52vxryk3vvh")
+                .form("token", DigestUtils.md5DigestAsHex(String.format("%s+%d+%s", "wh0jn52vxryk3vvh", timestamp, "4ppnjxl9aoez4r6m1dana5mk6mphvw7sao0bidmm")
+                        .getBytes(StandardCharsets.UTF_8)))
+                .form("timestamp", timestamp)
+                .form("image_url", upload7) //pdf 图片都可以识别
+                .execute();
+        execute.close();
+        log.info("ocr识别：{}", execute.body());
+        String body = execute.body();
+        JSONObject jsonObject = JSON.parseObject(body);
+        int result = jsonObject.getIntValue("result");
+        System.out.println(result);
+        if(jsonObject.getIntValue("result") != 1){
+            log.error("上传EMS面单，调用运单号识别接口出错！");
+        }
+
+        JSONObject jsonObject1 = jsonObject.getJSONObject("response").getJSONObject("data").getJSONArray("identify_results").getJSONObject(0)
+                .getJSONObject("details");
+        System.out.println(jsonObject1);
+        String expressWaybillNumber = jsonObject1.getString("expresswaybillnumber");
+        System.out.println(expressWaybillNumber);
+
+        String Recipientname = jsonObject1.getString("Recipientname");
+        System.out.println(Recipientname);
+    }
+
+
+    @Test
+    public void dateBeginTest(){
+
+            Date date = DateUtil.date();
+            Date start = DateUtil.yesterday();
+            Date end = DateUtil.tomorrow();
+
+            boolean isIn = DateUtil.isIn(date, start, end);
+            System.out.println(isIn);  // 输出 true
+
+    }
+
+    @Test
+    public void dateParseTest(){
+
+        String date = "202305";
+        DateTime dateTime = DateUtil.parse(date, "yyyyMM");
+        DateTime beginOfDay = DateUtil.beginOfDay(dateTime);
+        System.out.println(beginOfDay);
+
+
     }
 
 }
