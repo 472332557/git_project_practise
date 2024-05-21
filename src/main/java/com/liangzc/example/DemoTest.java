@@ -1125,7 +1125,6 @@ public class DemoTest {
         DateTime beginOfDay = DateUtil.beginOfDay(dateTime);
         System.out.println(beginOfDay);
 
-        System.out.println("--------commit 11111");
 
     }
 
