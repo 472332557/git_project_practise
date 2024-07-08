@@ -389,10 +389,19 @@ public class DemoTest {
     public void threadTest(){
 
 
-        new Thread(()->{
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("111111111111111111");
+            }
+        };
+
+        Thread thread = new Thread(runnable);
+
+/*        new Thread(()->{
 
             System.out.println("111111111111111111");
-        });
+        });*/
 
 
         ExecutorService executorService = Executors.newFixedThreadPool(2);

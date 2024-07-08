@@ -113,9 +113,11 @@ public class toListTest {
 
 
         //顺序
-//        List<Student> collect1 = list.stream().sorted(Comparator.comparing(Student::getAge)).collect(Collectors.toList());
-//        System.out.println("先排序："+collect1);
+        List<Student> collect1 = list.stream().sorted(Comparator.comparing(Student::getAge)).collect(Collectors.toList());
+        System.out.println("先排序："+collect1);
 
+        System.out.println("------------倒叙排了------------");
+        list.stream().sorted(Comparator.comparing(Student::getAge)).forEach(s-> System.out.println(s));
 
 /*        MultiValueMap<Integer, Student> listMap = new LinkedMultiValueMap<>();
         for (Student student : collect1) {
@@ -142,6 +144,12 @@ public class toListTest {
 
         Map<Integer, List<Student>> collect = list.stream().sorted(Comparator.comparing(Student::getAge)).collect(Collectors.groupingBy(Student::getAge));
         System.out.println(collect);
+
+        //帮我生成一合，切分成小的集
+
+
+        //请求 https://www.codegeex.cn/ 网站，获取返回响应状态、响应头、响应内容，并dd输出
+
 
     }
 }
