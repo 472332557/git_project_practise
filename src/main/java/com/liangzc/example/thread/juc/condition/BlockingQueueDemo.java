@@ -17,7 +17,7 @@ public class BlockingQueueDemo {
     //数组的容量
     private volatile int count;
 
-    private  Lock lock = new ReentrantLock();
+    private Lock lock = new ReentrantLock();
 
     //移除元素
     private final Condition notEmpty = lock.newCondition();
@@ -34,18 +34,18 @@ public class BlockingQueueDemo {
     public void put(String item) throws InterruptedException {
         lock.lock();
         try {
-            if (size >= count){
+            if (size >= count) {
                 //数组满了，需要去阻塞
                 System.out.println("阻塞队列满了，等消费！");
                 notFull.await();
             }
             ++size;//增加元素个数
             items.add(item);
-            System.out.println("生产者生产消息："+item);
+            System.out.println("生产者生产消息：" + item);
             //唤醒消费者去消费
             notEmpty.signal();
 
-        }finally {
+        } finally {
             lock.unlock();
         }
     }
@@ -54,15 +54,15 @@ public class BlockingQueueDemo {
     public void remove() throws InterruptedException {
         lock.lock();
         try {
-            if (size == 0){
+            if (size == 0) {
                 System.out.println("阻塞队列空了，先等会！");
                 notEmpty.await();
             }
             --size;
             String item = items.remove(0);
-            System.out.println("消费者消费消息："+item);
+            System.out.println("消费者消费消息：" + item);
             notFull.signal();
-        }finally {
+        } finally {
             lock.unlock();
         }
     }
@@ -88,7 +88,7 @@ public class BlockingQueueDemo {
 
         Thread thread2 = new Thread(() -> {
             Random random = new Random();
-            for (;;) {
+            for (; ; ) {
                 try {
                     bq.remove();
                     Thread.sleep(random.nextInt(1000));

@@ -7,7 +7,7 @@ public class ProcessDemo {
     public static void main(String[] args) {
 
 
-        ProcessBuilder processBuilder = new ProcessBuilder("notepad","test1");
+        ProcessBuilder processBuilder = new ProcessBuilder("notepad", "test1");
         try {
             Process process = processBuilder.start();
 //            process.waitFor();

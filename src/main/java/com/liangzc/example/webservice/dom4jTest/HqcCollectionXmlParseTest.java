@@ -14,7 +14,6 @@ public class HqcCollectionXmlParseTest {
     public static void main(String[] args) throws DocumentException {
 
 
-
     }
 
     public static void parse() throws DocumentException {
@@ -50,10 +49,10 @@ public class HqcCollectionXmlParseTest {
 
         Element id = bizresult.element("id");
 
-        System.out.println("id -------"+id);
+        System.out.println("id -------" + id);
 
         Element state = rootElement.element("state");
-        if(state != null){
+        if (state != null) {
             String text = state.getText();
             System.out.println(text);
         }

@@ -10,7 +10,7 @@ public class BIOServerSocketWithThread {
 
     public static void main(String[] args) {
 
-        ServerSocket serverSocket =null;
+        ServerSocket serverSocket = null;
         ExecutorService executorService = Executors.newFixedThreadPool(10);
 
         try {
@@ -25,8 +25,8 @@ public class BIOServerSocketWithThread {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
-            if (serverSocket != null){
+        } finally {
+            if (serverSocket != null) {
                 try {
                     serverSocket.close();
                 } catch (IOException e) {

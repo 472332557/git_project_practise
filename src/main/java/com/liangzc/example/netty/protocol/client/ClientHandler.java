@@ -10,8 +10,8 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        MessageRecord record=(MessageRecord) msg;
-        log.info("client Receive Message:"+record);
+        MessageRecord record = (MessageRecord) msg;
+        log.info("client Receive Message:" + record);
         super.channelRead(ctx, msg);
     }
 }

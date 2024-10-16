@@ -6,7 +6,7 @@ public class Test {
 
         INote note = new JavaAbstractFactory().createNote();
         IVideo video = new JavaAbstractFactory().createVideo();
-        ICourse course = new JavaCourse(note,video);
+        ICourse course = new JavaCourse(note, video);
         JavaCourse javaCourse = (JavaCourse) course;
         javaCourse.explain();
         javaCourse.note();

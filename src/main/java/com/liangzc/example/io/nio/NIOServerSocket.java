@@ -21,7 +21,7 @@ public class NIOServerSocket {
             ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
             serverSocketChannel.configureBlocking(false);//设置连接非阻塞
             serverSocketChannel.socket().bind(new InetSocketAddress(8888));
-            while (true){
+            while (true) {
                 //获得客户端连接
                 SocketChannel socketChannel = serverSocketChannel.accept();
                 if (socketChannel != null) {
@@ -32,7 +32,7 @@ public class NIOServerSocket {
 
                     byteBuffer.flip();//反转
                     socketChannel.write(byteBuffer);
-                }else {
+                } else {
                     Thread.sleep(1000);
                     System.out.println("连接未就绪！");
                 }

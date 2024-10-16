@@ -16,11 +16,16 @@ public class FifterDemo {
 
         //创建一个集合
         List<String> list = new ArrayList<>();
-        list.add("a1");list.add("a2");list.add("a3");list.add("b1");list.add("b2");list.add("b3");
+        list.add("a1");
+        list.add("a2");
+        list.add("a3");
+        list.add("b1");
+        list.add("b2");
+        list.add("b3");
         sreamFilterTest(list);
     }
 
-    public static void sreamFilterTest(List<String> lists){ //要明确这list的泛型类型，否则jvm不能根据上下文确定参数类型
+    public static void sreamFilterTest(List<String> lists) { //要明确这list的泛型类型，否则jvm不能根据上下文确定参数类型
         lists.stream().filter((s -> s.startsWith("a"))).forEach(System.out::print);//将开头是a的过滤出来
         System.out.println();
 
@@ -36,7 +41,7 @@ public class FifterDemo {
 
 
     @Test
-    public void filterTest(){
+    public void filterTest() {
         String objs = "[\n" +
                 "  {\n" +
                 "    \"buildingName\": \"1栋\",\n" +
@@ -97,7 +102,7 @@ public class FifterDemo {
 
 //        receivableOverviewNormalPageVOS = receivableOverviewNormalPageVOS.stream().filter(e -> e.getTotalPaidAmount().compareTo(BigDecimal.ZERO) > 0).collect(Collectors.toList());
 
-        receivableOverviewNormalPageVOS = receivableOverviewNormalPageVOS.stream().filter(e -> Objects.nonNull(e.getTotalPendingAmount())).filter(e->e.getTotalPendingAmount().compareTo(BigDecimal.ZERO) > 0).collect(Collectors.toList());
+        receivableOverviewNormalPageVOS = receivableOverviewNormalPageVOS.stream().filter(e -> Objects.nonNull(e.getTotalPendingAmount())).filter(e -> e.getTotalPendingAmount().compareTo(BigDecimal.ZERO) > 0).collect(Collectors.toList());
         System.out.println(receivableOverviewNormalPageVOS);
     }
 }

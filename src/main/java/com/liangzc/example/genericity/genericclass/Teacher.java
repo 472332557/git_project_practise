@@ -12,7 +12,7 @@ public class Teacher {
         this.age = age;
     }
 
-    public void print(){
+    public void print() {
         System.out.println(age);
     }
 }

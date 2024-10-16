@@ -4,7 +4,7 @@ public class ThreadJoinTest {
 
     public static void main(String[] args) throws InterruptedException {
 
-        Thread thread1 = new Thread(()->{
+        Thread thread1 = new Thread(() -> {
 
             try {
                 Thread.sleep(5000);
@@ -15,7 +15,7 @@ public class ThreadJoinTest {
         });
 
 
-        Thread thread2 = new Thread(()->{
+        Thread thread2 = new Thread(() -> {
             try {
                 Thread.sleep(500);
                 System.out.println("thread 2 执行-");

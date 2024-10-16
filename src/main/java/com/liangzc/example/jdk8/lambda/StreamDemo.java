@@ -9,11 +9,17 @@ public class StreamDemo {
     public static void main(String[] args) {
         //创建一个集合
         List<String> list = new ArrayList<>();
-        list.add("a1");list.add("a2");list.add("a3");list.add("b1");list.add("b2");list.add("b3");
+        list.add("a1");
+        list.add("a2");
+        list.add("a3");
+        list.add("b1");
+        list.add("b2");
+        list.add("b3");
         sreamFilterTest(list);
 
     }
-    public static void sreamFilterTest(List<String> lists){ //要明确这list的泛型类型，否则jvm不能根据上下文确定参数类型
+
+    public static void sreamFilterTest(List<String> lists) { //要明确这list的泛型类型，否则jvm不能根据上下文确定参数类型
         lists.stream().filter((s -> s.startsWith("a"))).forEach(System.out::println);//将开头是a的过滤出来
 
         //等价于以上操作

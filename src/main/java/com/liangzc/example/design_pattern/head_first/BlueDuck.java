@@ -2,7 +2,7 @@ package com.liangzc.example.design_pattern.head_first;
 
 public class BlueDuck extends Duck {
 
-    public BlueDuck(){
+    public BlueDuck() {
         //在这里具体确定，引入什么样的飞行动作和叫的动作
         duckFlyHandler = new LiveDuckFly();
         duckQuackHandler = new LiveDuckQuack();

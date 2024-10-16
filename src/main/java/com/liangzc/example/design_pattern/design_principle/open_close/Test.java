@@ -3,9 +3,9 @@ package com.liangzc.example.design_pattern.design_principle.open_close;
 public class Test {
 
     public static void main(String[] args) {
-        ICourse course = new JavaCourse("Java",8000.00);
-        System.out.println("课程名称:"+course.getName()  +
-                            "\n价格："+course.getPrice());
+        ICourse course = new JavaCourse("Java", 8000.00);
+        System.out.println("课程名称:" + course.getName() +
+                "\n价格：" + course.getPrice());
         /**
          * 现在需要获取到打折以后的价格，还要展示原价，该怎么做呢？
          * 遵守开闭原则，对扩展开放，修改关闭
@@ -14,8 +14,8 @@ public class Test {
          */
         course = new JavaDiscountCourse("java", 8000.0);
         JavaDiscountCourse discountCourse = (JavaDiscountCourse) course;
-        System.out.println("课程名称:"+discountCourse.getName()  +
-                            "\n价格："+discountCourse.getPrice() +
-                            "\n折扣价"+discountCourse.getDiscountPrice());
+        System.out.println("课程名称:" + discountCourse.getName() +
+                "\n价格：" + discountCourse.getPrice() +
+                "\n折扣价" + discountCourse.getDiscountPrice());
     }
 }

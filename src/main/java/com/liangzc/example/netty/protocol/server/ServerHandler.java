@@ -26,7 +26,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         //ServerHandler， 应该是SocketChannel触发的。
         MessageRecord messageRecord = (MessageRecord) msg;
-        log.info("服务端收到了客户端请求：{}",messageRecord);
+        log.info("服务端收到了客户端请求：{}", messageRecord);
         //反写回客户端
         messageRecord.setContent("Server Response Message");
         messageRecord.getHeader().setReqType(ReqTypeE.RESPONSE.getType());

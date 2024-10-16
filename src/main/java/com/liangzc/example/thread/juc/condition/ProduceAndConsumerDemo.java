@@ -37,14 +37,14 @@ public class ProduceAndConsumerDemo {
             for (int i = 0; i < 1000; i++) {
                 lock.lock();
                 try {
-                    if(size >= count){
+                    if (size >= count) {
                         System.out.println("队列满了，阻塞生产者！");
                         notFull.await();
                     }
                     ++size;
                     String msg = "item" + i;
                     items.add(msg);
-                    System.out.println("生产者生产一条消息："+msg);
+                    System.out.println("生产者生产一条消息：" + msg);
                     Thread.sleep(random.nextInt(1000));
                     notEmpty.signal();//唤醒消费者
                 } catch (InterruptedException e) {
@@ -55,23 +55,22 @@ public class ProduceAndConsumerDemo {
             }
 
         }
-    },"thread-1");
-
+    }, "thread-1");
 
 
     Thread thread2 = new Thread(new Runnable() {
         @Override
         public void run() {
-            for (;;){
+            for (; ; ) {
                 lock.lock();
                 try {
-                    if (items.isEmpty()){
+                    if (items.isEmpty()) {
                         System.out.println("队列空了，先阻塞消费者！");
                         notEmpty.await();
                     }
                     --size;
                     String item = items.remove(0);
-                    System.out.println("消费者消费一条数据："+item);
+                    System.out.println("消费者消费一条数据：" + item);
                     Thread.sleep(random.nextInt(1000));
                     notFull.signal();//唤醒生产者
                 } catch (InterruptedException e) {
@@ -81,7 +80,7 @@ public class ProduceAndConsumerDemo {
                 }
             }
         }
-    },"thread-2");
+    }, "thread-2");
 
 
     public static void main(String[] args) throws InterruptedException {

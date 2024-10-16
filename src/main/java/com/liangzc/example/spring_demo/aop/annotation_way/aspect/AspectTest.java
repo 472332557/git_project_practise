@@ -11,13 +11,13 @@ public class AspectTest {
 
 
     @Before("execution(* com.liangzc.example.spring_demo.aop.annotation_way.basic.service.impl.*.*(..))")
-    public void startMethod(){
+    public void startMethod() {
 
         System.out.println("执行前增强！！！！！！！！！！！！！");
     }
 
     @After("execution(* com.liangzc.example.spring_demo.aop.annotation_way.basic.service.impl.*.*(..))")
-    public void endMethod(){
+    public void endMethod() {
         System.out.println("执行后增强！！！！！！！！！！！！！！");
     }
 }

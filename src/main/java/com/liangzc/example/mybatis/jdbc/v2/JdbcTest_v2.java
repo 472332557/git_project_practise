@@ -23,30 +23,30 @@ public class JdbcTest_v2 {
         PreparedStatement pst = connection.prepareStatement(sql);
         long start = System.currentTimeMillis();
         for (int i = 0; i < 10000; i++) {
-            pst.setObject(1,"小美");
-            pst.setObject(2,18);
-            pst.setObject(3,"女");
+            pst.setObject(1, "小美");
+            pst.setObject(2, 18);
+            pst.setObject(3, "女");
             pst.addBatch();
         }
         int[] ints = pst.executeBatch();
         long end = System.currentTimeMillis();
-        System.out.println("耗时========================："+(end -start));
-        DbUtils.close(connection,pst);
-        if(ints.length > 0){
+        System.out.println("耗时========================：" + (end - start));
+        DbUtils.close(connection, pst);
+        if (ints.length > 0) {
             System.out.println("SUCCESS");
         }
     }
 
 
-    static void query(){
+    static void query() {
         Connection connection = DbUtils.getConnection();
         String sql = "select * from person where name = ?";
         try {
             PreparedStatement pst = connection.prepareStatement(sql);
             pst.setObject(1, "丽丽");
             ResultSet rs = pst.executeQuery();
-            if(rs != null){
-                while (rs.next()){
+            if (rs != null) {
+                while (rs.next()) {
                     int id = rs.getInt("id");
                     String name = rs.getString("name");
                     int age = rs.getInt("age");
@@ -62,7 +62,7 @@ public class JdbcTest_v2 {
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        }finally {
+        } finally {
 
         }
 

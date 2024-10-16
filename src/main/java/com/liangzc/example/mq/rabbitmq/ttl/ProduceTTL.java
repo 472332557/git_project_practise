@@ -32,8 +32,8 @@ public class ProduceTTL {
                 .expiration("20000")
                 .build();
 
-        String msg =  "消息过期消息！！！";
-        channel.basicPublish("ttl-exchange","ttl",properties,msg.getBytes());
+        String msg = "消息过期消息！！！";
+        channel.basicPublish("ttl-exchange", "ttl", properties, msg.getBytes());
 
         System.out.println("消息已发送。。。。。。");
         channel.close();

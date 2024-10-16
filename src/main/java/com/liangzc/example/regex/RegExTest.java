@@ -28,7 +28,7 @@ public class RegExTest {
     }
 
 
-    public static void test(String temp){
+    public static void test(String temp) {
         List<String> paramKeyList = Lists.newArrayList();
         Pattern p = Pattern.compile("#\\{(\\w*)\\}");
         Matcher m = p.matcher(temp);
@@ -36,24 +36,24 @@ public class RegExTest {
         while (m.find()) {
 //            paramKeyList.add(m.group(1));
             paramKeyList.add(m.group());
-            System.out.println("group:"+m.group());
-            System.out.println("group1:"+m.group(1));
+            System.out.println("group:" + m.group());
+            System.out.println("group1:" + m.group(1));
             stringJoiner.add(m.group());
         }
 
         String joins = stringJoiner.toString();
-        System.out.println("joins替换前:"+joins);
+        System.out.println("joins替换前:" + joins);
         String replaceAll = joins.replaceAll("#\\{companyName}", "CXSD-11111")
                 .replaceAll("#\\{resourceName}", "车位1")
                 .replaceAll("#\\{custTel}", "18136520321")
                 .replaceAll("#\\{contractStartDate}", "2022-07-25 18-24-20");
-        System.out.println("joins替换后:"+replaceAll);
+        System.out.println("joins替换后:" + replaceAll);
         System.out.println(Arrays.asList(replaceAll));
 
         System.out.println(paramKeyList);
     }
 
-    public static void test1(){
+    public static void test1() {
         String temp = "#{prestoreBalanceFee}#{custName}#{resInstName}#{custId}#{endTime}";
         Pattern p = Pattern.compile("#\\{(\\w*)\\}");
         Matcher m = p.matcher(temp);
@@ -62,7 +62,7 @@ public class RegExTest {
             stringJoiner.add(m.group());
         }
         String joinString = stringJoiner.toString();
-        System.out.println("joinString=====================:"+joinString);
+        System.out.println("joinString=====================:" + joinString);
         StringJoiner sendStr = new StringJoiner(",");
 
     }

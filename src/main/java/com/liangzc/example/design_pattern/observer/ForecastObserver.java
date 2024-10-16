@@ -1,7 +1,7 @@
 package com.liangzc.example.design_pattern.observer;
 
 /**
- *   天气预报观察者
+ * 天气预报观察者
  */
 public class ForecastObserver implements IObserver {
 

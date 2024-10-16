@@ -8,7 +8,7 @@ public class PizzaStore {
         this.simplePizzaFactory = simplePizzaFactory;
     }
 
-    public Pizza orderPizza(Class clazz){
+    public Pizza orderPizza(Class clazz) {
 
 //        Pizza pizza = new SpicyGlutenPizza();
         Pizza pizza = simplePizzaFactory.createPizza(clazz);//使用简单工厂创建pizza实例

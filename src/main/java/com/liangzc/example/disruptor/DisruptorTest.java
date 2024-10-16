@@ -21,8 +21,8 @@ public class DisruptorTest {
     /**
      * 统一消费，定义多个消费者，每个消费者都消费一份生产者生产的数据
      */
-    public static void test1(){
-        Disruptor<MsgResult> disruptor = new Disruptor<MsgResult>(MsgResult::new,128, Executors.defaultThreadFactory(), ProducerType.SINGLE,new BlockingWaitStrategy());
+    public static void test1() {
+        Disruptor<MsgResult> disruptor = new Disruptor<MsgResult>(MsgResult::new, 128, Executors.defaultThreadFactory(), ProducerType.SINGLE, new BlockingWaitStrategy());
 
         //设置自定义异常处理器，不设置会使用默认的异常处理器：FatalExceptionHandler，该处理器会直接抛出异常，导致程序终止，后续任务也不会执行
         disruptor.setDefaultExceptionHandler(new CustomerException());
@@ -43,7 +43,7 @@ public class DisruptorTest {
         for (int i = 0; i < 100000; i++) {
             MsgResult msgResult = new MsgResult();
             msgResult.setName("测试");
-            msgResult.setValue(i+"");
+            msgResult.setValue(i + "");
 //            list.add(msgResult);
             msgProducer.send(msgResult);
         }
@@ -53,17 +53,17 @@ public class DisruptorTest {
     /**
      * 分组消费：每个生产者生产的数据只被消费一次
      */
-    public static void test2(){
-        Disruptor<MsgResult> disruptor = new Disruptor<MsgResult>(MsgResult::new,8, Executors.defaultThreadFactory());
+    public static void test2() {
+        Disruptor<MsgResult> disruptor = new Disruptor<MsgResult>(MsgResult::new, 8, Executors.defaultThreadFactory());
 
         disruptor.setDefaultExceptionHandler(new CustomerException());
 
         //I/O密集型线程数建议给到cpu核心数的2倍
         int threadCount = Runtime.getRuntime().availableProcessors() * 2;
-        System.out.println("cpu核心数："+threadCount);
+        System.out.println("cpu核心数：" + threadCount);
         MyWorkHandler[] myWorkHandlers = new MyWorkHandler[threadCount];
         for (int i = 0; i < threadCount; i++) {
-            myWorkHandlers[i] = new MyWorkHandler("worker"+i);
+            myWorkHandlers[i] = new MyWorkHandler("worker" + i);
         }
 //        disruptor.handleEventsWithWorkerPool(new MyWorkHandler("work1"),new MyWorkHandler("work2"));
         disruptor.handleEventsWithWorkerPool(myWorkHandlers);
@@ -77,12 +77,11 @@ public class DisruptorTest {
         for (int i = 0; i < 100000; i++) {
             MsgResult msgResult = new MsgResult();
             msgResult.setName("测试");
-            msgResult.setValue(i+"");
+            msgResult.setValue(i + "");
 //            list.add(msgResult);
             msgProducer.send(msgResult);
         }
     }
-
 
 
 }

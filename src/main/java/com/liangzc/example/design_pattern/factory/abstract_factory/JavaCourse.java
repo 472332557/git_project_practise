@@ -15,11 +15,11 @@ public class JavaCourse implements ICourse {
         this.video = video;
     }
 
-    public void note(){
+    public void note() {
         iNote.edit();
     }
 
-    public void video(){
+    public void video() {
         video.replay();
     }
 }

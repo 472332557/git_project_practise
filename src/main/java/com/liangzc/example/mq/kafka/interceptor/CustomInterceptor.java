@@ -6,7 +6,7 @@ import org.apache.kafka.clients.producer.RecordMetadata;
 
 import java.util.Map;
 
-public class CustomInterceptor implements ProducerInterceptor<String,String> {
+public class CustomInterceptor implements ProducerInterceptor<String, String> {
     // 发送消息的时候触发
     @Override
     public ProducerRecord<String, String> onSend(ProducerRecord<String, String> record) {

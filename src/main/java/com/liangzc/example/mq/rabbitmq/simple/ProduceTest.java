@@ -12,6 +12,7 @@ public class ProduceTest {
     private static final String EXCHANGE_DIRECT = "exchange-direct";
     private static final String EXCHANGE_TOPIC = "exchange-topic";
     private static final String EXCHANGE_FANOUT = "fanout-exechange";
+
     public static void main(String[] args) throws Exception {
 
 //        directTest();
@@ -20,7 +21,7 @@ public class ProduceTest {
     }
 
 
-    public static void fanoutTest(){
+    public static void fanoutTest() {
         Connection connection = null;
         Channel channel = null;
         ConnectionFactory factory = new ConnectionFactory();
@@ -38,7 +39,7 @@ public class ProduceTest {
             // String exchange, String routingKey, BasicProperties props, byte[] body
 //            channel.basicPublish(EXCHANGE_DIRECT, "", null, msg.getBytes());
             channel.basicPublish(EXCHANGE_FANOUT, "", null, msg.getBytes());
-            System.out.println("消息已发送："+msg);
+            System.out.println("消息已发送：" + msg);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (TimeoutException e) {
@@ -64,17 +65,17 @@ public class ProduceTest {
         factory.setHost("121.37.249.94");
         factory.setPort(5672);
         factory.setVirtualHost("/");
-            connection = factory.newConnection();
-            //创建一个channel
-            channel = connection.createChannel();
-            // 发送消息
-            String msg = "GG,没中签！！！";
-            // String exchange, String routingKey, BasicProperties props, byte[] body
-            channel.basicPublish(EXCHANGE_DIRECT, "aaa", null, msg.getBytes());
+        connection = factory.newConnection();
+        //创建一个channel
+        channel = connection.createChannel();
+        // 发送消息
+        String msg = "GG,没中签！！！";
+        // String exchange, String routingKey, BasicProperties props, byte[] body
+        channel.basicPublish(EXCHANGE_DIRECT, "aaa", null, msg.getBytes());
 //            channel.basicPublish(EXCHANGE_FANOUT, "", null, msg.getBytes());
-            System.out.println("消息已发送："+msg);
-            channel.close();
-            connection.close();
+        System.out.println("消息已发送：" + msg);
+        channel.close();
+        connection.close();
     }
 
     public static void toppicTest() throws IOException, TimeoutException {
@@ -94,7 +95,7 @@ public class ProduceTest {
         // String exchange, String routingKey, BasicProperties props, byte[] body
         channel.basicPublish(EXCHANGE_TOPIC, "com.aa.bb", null, msg.getBytes());
 //            channel.basicPublish(EXCHANGE_FANOUT, "", null, msg.getBytes());
-        System.out.println("消息已发送："+msg);
+        System.out.println("消息已发送：" + msg);
         channel.close();
         connection.close();
 

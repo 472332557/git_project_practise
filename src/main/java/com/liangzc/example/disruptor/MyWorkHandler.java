@@ -16,6 +16,6 @@ public class MyWorkHandler implements WorkHandler<MsgResult> {
     public void onEvent(MsgResult msgResult) throws Exception {
         TimeUnit.SECONDS.sleep(60);
         System.out.println(1 / 0);
-        System.out.println(this.name +"------接受到信息:"+msgResult);
+        System.out.println(this.name + "------接受到信息:" + msgResult);
     }
 }

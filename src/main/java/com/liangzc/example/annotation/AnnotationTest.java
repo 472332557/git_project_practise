@@ -8,8 +8,8 @@ public class AnnotationTest {
     }
 
 
-    @MethodAno(name = "first ano",numValue = 1)
-    public static void say(){
+    @MethodAno(name = "first ano", numValue = 1)
+    public static void say() {
 
         System.out.println("...........");
     }

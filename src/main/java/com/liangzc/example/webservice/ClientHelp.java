@@ -15,14 +15,14 @@ import java.net.URL;
 public class ClientHelp {
 
 
-    public static String sendMsg(String url,String reqMsg) throws IOException {
+    public static String sendMsg(String url, String reqMsg) throws IOException {
 
         //建立连接
         URL url1 = new URL(url);
         HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
         connection.setRequestMethod("POST");
         connection.setDoOutput(true);
-        connection.setRequestProperty("Content-Type","text/xml; charset=utf-8");
+        connection.setRequestProperty("Content-Type", "text/xml; charset=utf-8");
         connection.connect();
 
         //发送请求
@@ -33,9 +33,9 @@ public class ClientHelp {
 
         //解析返回信息
         InputStream inputStream;
-        if(connection.getResponseCode() == 200){
+        if (connection.getResponseCode() == 200) {
             inputStream = connection.getInputStream();
-        }else {
+        } else {
             inputStream = connection.getErrorStream();
         }
 
@@ -43,14 +43,14 @@ public class ClientHelp {
         BufferedReader bufferedReader = new BufferedReader(reader);
         String line = "";
         StringBuilder sb = new StringBuilder();
-        while ((line = bufferedReader.readLine()) != null){
+        while ((line = bufferedReader.readLine()) != null) {
             sb.append(line);
         }
         inputStream.close();
         return sb.toString();
     }
 
-    private static String  getRequestParam(String param) {
+    private static String getRequestParam(String param) {
         StringBuilder sb = new StringBuilder();
         sb.append("<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:web=\"http://webservice.example.org/\">");
         sb.append("<soapenv:Header/>");
@@ -71,7 +71,6 @@ public class ClientHelp {
         documentParseXML(s);
 
 
-
         System.out.println(s);
 
         JSONObject jsonObject = XML.toJSONObject(s);
@@ -82,9 +81,9 @@ public class ClientHelp {
 
         Result result = JSON.parseObject(aReturn, Result.class);
         System.out.println(result);
-        if(result.getCode().equals("ok")){
+        if (result.getCode().equals("ok")) {
             System.out.println("SUCCESS");
-        }else {
+        } else {
             System.out.println("FAIL");
         }
 

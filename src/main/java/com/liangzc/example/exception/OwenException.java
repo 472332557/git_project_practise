@@ -13,7 +13,7 @@ public class OwenException extends RuntimeException {
         super(message);
     }
 
-    public OwenException(Integer code,String message) {
+    public OwenException(Integer code, String message) {
         super(message);
         this.code = code;
     }

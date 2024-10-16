@@ -10,8 +10,8 @@ import com.liangzc.example.spring_demo.demo.service.IDemoService;
 @LzcService
 public class DemoService implements IDemoService {
 
-	public String get(String name) {
-		return "My name is " + name + ",from service.";
-	}
+    public String get(String name) {
+        return "My name is " + name + ",from service.";
+    }
 
 }

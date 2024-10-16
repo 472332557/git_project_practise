@@ -35,10 +35,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -55,8 +52,8 @@ public class DemoTest {
         System.out.println(1 << 30);
 
 
-        System.out.println(128 >>>3);
-        System.out.println(128 >>3);
+        System.out.println(128 >>> 3);
+        System.out.println(128 >> 3);
 
 
         List list = new LinkedList();
@@ -71,45 +68,45 @@ public class DemoTest {
 
     }
 
-    public static String tempReplace(String temp){
+    public static String tempReplace(String temp) {
         return temp.replaceAll("#\\{organName}", "优家园").replaceAll("#\\{resInstName}", "lllll");
     }
 
     @Test
-    public void subStringTest(){
+    public void subStringTest() {
         String date = "20220908000000";
-        System.out.println(date.substring(0,8));
+        System.out.println(date.substring(0, 8));
 
         System.out.println(System.currentTimeMillis());
     }
 
     @Test
-    public void forTest(){
+    public void forTest() {
 
         for (int i = 0; i < 10; i++) {
-            System.out.println("i当前数："+i);
+            System.out.println("i当前数：" + i);
 
             for (int j = 0; j < 10; j++) {
-                System.out.println("j当前数："+j);
-                if (j == 5){
-                    System.out.println("=====跳出======："+j);
+                System.out.println("j当前数：" + j);
+                if (j == 5) {
+                    System.out.println("=====跳出======：" + j);
                     break;
                 }
             }
 
-            System.out.println("-----------------i结束："+i);
+            System.out.println("-----------------i结束：" + i);
         }
     }
 
 
     @Test
-    public void replaceTest(){
+    public void replaceTest() {
         String temp = "dsfdsfds#{organName},都是佛挡杀佛的#{resInstName}";
         System.out.println(tempReplace(temp));
     }
 
     @Test
-    public void StingConcatTest(){
+    public void StingConcatTest() {
         String rootPath = "";
         String rootPath2 = null;
         System.out.println(rootPath.concat("fileName").concat(".xlsx"));
@@ -118,15 +115,15 @@ public class DemoTest {
     }
 
     @Test
-    public void logErrorTest(){
+    public void logErrorTest() {
         for (int i = 10; i >= 0; i--) {
             try {
-                if(i == 6){
+                if (i == 6) {
                     throw new Exception("111111");
                 }
                 System.out.println(i);
-            }catch (Exception e){
-                logger.error("处理数据出错,值为：{}",i,e);
+            } catch (Exception e) {
+                logger.error("处理数据出错,值为：{}", i, e);
 //                continue;
             }
         }
@@ -134,32 +131,32 @@ public class DemoTest {
     }
 
     @Test
-    public void sizeTest(){
+    public void sizeTest() {
         System.out.println(Integer.SIZE);
     }
 
     @Test
-    public void fileTest(){
+    public void fileTest() {
 
         String fileName = "D:/receive-file/DOWNLOAD_PATH/在线支付查询_20221121155215693199.xlsx";
         File file = new File(fileName);
 
-        System.out.println("文件名："+fileName);
-        System.out.println("后缀下标位置："+fileName.indexOf("."));
-        System.out.println("文件名长度："+fileName.length());
-        System.out.println("文件是否存在:"+file.exists());
-        if(!file.exists()){
+        System.out.println("文件名：" + fileName);
+        System.out.println("后缀下标位置：" + fileName.indexOf("."));
+        System.out.println("文件名长度：" + fileName.length());
+        System.out.println("文件是否存在:" + file.exists());
+        if (!file.exists()) {
             fileName = fileName.substring(0, fileName.indexOf(".")).concat(".xls");
-            System.out.println("新文件名："+fileName);
+            System.out.println("新文件名：" + fileName);
             file = new File(fileName);
-            System.out.println("文件是否存在"+file.exists());
+            System.out.println("文件是否存在" + file.exists());
         }
 
 
     }
 
     @Test
-    public void addTest(){
+    public void addTest() {
 
         int sum = 0;
 
@@ -170,10 +167,10 @@ public class DemoTest {
     }
 
     @Test
-    public void mathTest(){
+    public void mathTest() {
 
         //Math.ceil:向上取整
-        System.out.println((int)Math.ceil((double) 10 / (double) 3));
+        System.out.println((int) Math.ceil((double) 10 / (double) 3));
 
         //向下取整
         System.out.println(Math.floor((double) 10 / (double) 3));
@@ -183,14 +180,14 @@ public class DemoTest {
     @Test
     public void futureTest() throws InterruptedException {
 
-            CompletableFuture.runAsync(() -> {
-                try {
-                    calcTest();
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
+        CompletableFuture.runAsync(() -> {
+            try {
+                calcTest();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-            });
+        });
         TimeUnit.SECONDS.sleep(1);
 
     }
@@ -200,29 +197,29 @@ public class DemoTest {
         for (int i = 0; i < 10; i++) {
             try {
                 int i2 = i % 2;
-                System.out.println(i+"对2取模后的值："+i2);
-                if(i2 == 0){
-                    throw new RuntimeException("错误："+i);
+                System.out.println(i + "对2取模后的值：" + i2);
+                if (i2 == 0) {
+                    throw new RuntimeException("错误：" + i);
                 }
                 System.out.println(i);
-            }catch (Exception e){
-                logger.error("错误呀！",e);
+            } catch (Exception e) {
+                logger.error("错误呀！", e);
 //                System.out.println("错误呀！,"+e.getMessage());
             }
         }
     }
 
     @Test
-    public void randomTest(){
+    public void randomTest() {
 
-        System.out.println((int)((Math.random()*9+1)*100000));
+        System.out.println((int) ((Math.random() * 9 + 1) * 100000));
 
 
-        System.out.println(new SimpleDateFormat("yyyyMMddHHmmssSSS") .format(new Date()));
+        System.out.println(new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()));
     }
 
     @Test
-    public void qumo(){
+    public void qumo() {
 
         System.out.println(800 % 500);
 
@@ -266,7 +263,7 @@ public class DemoTest {
     }
 
     @Test
-    public void objTest(){
+    public void objTest() {
         String resp = "{\"code\":\"0\",\"message\":\"success\",\"data\":{}}";
         System.out.println(resp);
         JSONObject object = JSON.parseObject(resp);
@@ -282,7 +279,7 @@ public class DemoTest {
         }
         System.out.println(object);
 
-        System.out.println("result:"+result);
+        System.out.println("result:" + result);
         System.out.println(result != null);
         System.out.println(result.length());
 
@@ -303,7 +300,7 @@ public class DemoTest {
 
 
     @Test
-    public void jsonTest(){
+    public void jsonTest() {
         String result = "{\"code\":\"0\",\"msg\":\"\",\"data\":{\"contractChangeDto\":{\"contractId\":11522,\"contractNo\":\"ZGDX-2018-08-0013\",\"totalRentArea\":\"81.6\",\"secondId\":1032,\"secondName\":\"深圳市汇嘉粮食有限公司\",\"secondType\":\"企业客户\",\"secondCredType\":\"营业执照\",\"secondCredNo\":\"000000000\",\"contractResource\":2001,\"startDate\":20180101000000,\"endDate\":20201231000000,\"depositMoney\":1349600,\"preTaxAmount\":1929400,\"afterTaxAmount\":1929400,\"taxAmount\":0,\"firstLease\":612000,\"averagePrice\":0,\"processTimes\":\"2018-12-03 16:02:18\",\"contractDuration\":36,\"resList\":[]}},\"message\":\"\"}";
         JSONObject jsonObject = JSON.parseObject(result);
         Object obj = jsonObject.getJSONObject("data").get("contractChangeDto");
@@ -313,7 +310,7 @@ public class DemoTest {
     }
 
     @Test
-    public void equalsTest(){
+    public void equalsTest() {
 
         Long id = 1002L;
         String s = String.valueOf(id);
@@ -324,7 +321,7 @@ public class DemoTest {
     }
 
     @Test
-    public void numFormat(){
+    public void numFormat() {
 
         String fee = "-3287.00";
         BigDecimal bigDecimal = new BigDecimal(fee);
@@ -336,18 +333,18 @@ public class DemoTest {
         System.out.println(feelong);
         System.out.println(abs);
         String s = abs.toString();
-        System.out.println("string s :"+s);
+        System.out.println("string s :" + s);
 
 //        System.out.println(Long.valueOf(fee));
 
     }
 
     @Test
-    public void bigDecimalTest(){
+    public void bigDecimalTest() {
         BigDecimal fee = new BigDecimal("870968.00");
         BigDecimal taxFee = new BigDecimal("41474.6667");
 
-        System.out.println(fee.subtract(taxFee).setScale(0,BigDecimal.ROUND_HALF_UP).longValue());
+        System.out.println(fee.subtract(taxFee).setScale(0, BigDecimal.ROUND_HALF_UP).longValue());
 
         BigDecimal feeNotax = BigDecimal.ZERO;
 
@@ -356,7 +353,7 @@ public class DemoTest {
             System.out.println(feeNotax);
         }
 
-        System.out.println(feeNotax.setScale(0,BigDecimal.ROUND_HALF_UP));
+        System.out.println(feeNotax.setScale(0, BigDecimal.ROUND_HALF_UP));
 
         System.out.println(BigDecimal.valueOf(1000).negate());
 
@@ -364,7 +361,7 @@ public class DemoTest {
     }
 
     @Test
-    public void calc(){
+    public void calc() {
         System.out.println(12 << 1);
         System.out.println(16 << 1);
         System.out.println((16 << 1) * 0.75);
@@ -376,16 +373,16 @@ public class DemoTest {
          *  00000010 -> >>2
          */
 
-        System.out.println(10>>1);
+        System.out.println(10 >> 1);
 
-        System.out.println(10>>2);
+        System.out.println(10 >> 2);
 
-        System.out.println(20>>2);
+        System.out.println(20 >> 2);
 
     }
 
     @Test
-    public void listSub(){
+    public void listSub() {
 
         List<Integer> list = new ArrayList<>();
         for (int i = 0; i < 562; i++) {
@@ -397,7 +394,7 @@ public class DemoTest {
         //按1000个元素拆分
         int subBatch = 1000;
 
-        for (int i = 0; i < list.size(); i+= subBatch) {
+        for (int i = 0; i < list.size(); i += subBatch) {
             int endIndex = Math.min(i + subBatch, list.size());
             List<Integer> subList1 = list.subList(i, endIndex);
             subList.add(subList1);
@@ -416,7 +413,7 @@ public class DemoTest {
     }
 
     @Test
-    public void setSub(){
+    public void setSub() {
 
         Set<Integer> list = new HashSet<>();
         for (int i = 0; i < 562; i++) {
@@ -427,7 +424,7 @@ public class DemoTest {
         Iterator<Integer> iterator = list.iterator();
         //按1000个元素拆分
         int subBatch = 1000;
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             Set<Integer> subSet = new HashSet<>();
             for (int i = 0; i < subBatch && iterator.hasNext(); i++) {
                 subSet.add(iterator.next());
@@ -444,17 +441,17 @@ public class DemoTest {
     }
 
     @Test
-    public void threadTest(){
+    public void threadTest() {
 
 
-        new Thread(()->{
+        new Thread(() -> {
 
             System.out.println("111111111111111111");
         });
 
 
         ExecutorService executorService = Executors.newFixedThreadPool(2);
-        executorService.execute(()->{
+        executorService.execute(() -> {
             System.out.println("222222222222222222");
         });
         executorService.shutdown();
@@ -462,11 +459,11 @@ public class DemoTest {
     }
 
     //大集合拆分为小的集合方法
-    private <T>List<List<T>> segmentationList(List<T> list, int batchSize) {
+    private <T> List<List<T>> segmentationList(List<T> list, int batchSize) {
         List<List<T>> subList = new ArrayList<>();
 
-        for (int i = 0; i < list.size(); i+= batchSize) {
-            int endIndex = Math.min(i+batchSize, list.size());
+        for (int i = 0; i < list.size(); i += batchSize) {
+            int endIndex = Math.min(i + batchSize, list.size());
             subList.add(list.subList(i, endIndex));
         }
         return subList;
@@ -529,7 +526,6 @@ public class DemoTest {
         System.out.println("两个日期之间相差 " + diff + " 个月");
 
 
-
     }
 
     @Test
@@ -546,24 +542,28 @@ public class DemoTest {
 
 
         DateTime dateTime1 = DateUtil.endOfMonth(startDate);
-        System.out.println("dateTime:"+dateTime);
-        System.out.println("dateTime1:"+dateTime1);
+        System.out.println("dateTime:" + dateTime);
+        System.out.println("dateTime1:" + dateTime1);
 
         DateTime dateTime2 = DateUtil.beginOfDay(dateTime1);
-        System.out.println("dateTime2:"+dateTime2);
+        System.out.println("dateTime2:" + dateTime2);
 
         Date date = DateUtils.addDays(dateTime2, 1);
-        System.out.println("date:"+date);
+        System.out.println("date:" + date);
 
         Date dateTime3 = DateUtils.addDays(dateTime2, 1);
-        System.out.println("dateTime3:"+dateTime3);
+        System.out.println("dateTime3:" + dateTime3);
 
         String beginTime = "2023-09-01 00:00:00";
-        String endTime= "2023-09-30 00:00:00";
+        String endTime = "2023-09-30 00:00:00";
+
+        System.out.println("------------------------------beginOfDay");
+        DateTime beginOfDay = DateUtil.beginOfDay(new Date());
+        System.out.println(beginOfDay);
     }
 
     @Test
-    public void numTest(){
+    public void numTest() {
         int number = 55556;
         DecimalFormat decimalFormat = new DecimalFormat("0000");
         String formattedNumber = decimalFormat.format(number);
@@ -594,10 +594,10 @@ public class DemoTest {
         Date endDate = dateFormat.parse(end);
 
 
-        long month = DateUtil.betweenMonth(startDate, endDate,Boolean.TRUE);
+        long month = DateUtil.betweenMonth(startDate, endDate, Boolean.TRUE);
         System.out.println(month);
 
-        long between = DateUtil.between(startDate, endDate,DateUnit.DAY);
+        long between = DateUtil.between(startDate, endDate, DateUnit.DAY);
         System.out.println(between);
 
 
@@ -609,7 +609,7 @@ public class DemoTest {
      * 给定两个值，快速的将其区间内的值添加到一个list集合
      */
     @Test
-    public void forAddTest(){
+    public void forAddTest() {
 
         int start = 1;
         int end = 10;
@@ -623,23 +623,23 @@ public class DemoTest {
 
 
     /**
-     *  用于比较一个对象集合内，字段值是否有相等或者重复的
+     * 用于比较一个对象集合内，字段值是否有相等或者重复的
      */
     @Test
-    public void compareTest(){
+    public void compareTest() {
         List<FeeItemType> feeItemTypeList = new ArrayList<>();
-        FeeItemType feeItemType = new FeeItemType("1","水","1");
-        FeeItemType feeItemType1 = new FeeItemType("2","物业","2");
-        FeeItemType feeItemType2 = new FeeItemType("3","电","1");
+        FeeItemType feeItemType = new FeeItemType("1", "水", "1");
+        FeeItemType feeItemType1 = new FeeItemType("2", "物业", "2");
+        FeeItemType feeItemType2 = new FeeItemType("3", "电", "1");
         feeItemTypeList.add(feeItemType);
         feeItemTypeList.add(feeItemType1);
         feeItemTypeList.add(feeItemType2);
 
         for (int i = 0; i < feeItemTypeList.size(); i++) {
-            for (int j = i+1; j < feeItemTypeList.size(); j++) {
+            for (int j = i + 1; j < feeItemTypeList.size(); j++) {
                 FeeItemType feeItemType3 = feeItemTypeList.get(i);
                 FeeItemType feeItemType4 = feeItemTypeList.get(j);
-                if(feeItemType3.getType().equals(feeItemType4.getType())){
+                if (feeItemType3.getType().equals(feeItemType4.getType())) {
                     System.out.println("类型有交叉了");
                     System.out.println(feeItemType3);
                     System.out.println(feeItemType4);
@@ -651,7 +651,7 @@ public class DemoTest {
     }
 
     @Test
-    public void splitTest(){
+    public void splitTest() {
         String code = "PLANHOUSE|6002977";
         String[] split = code.split("\\|");
         System.out.println(JSON.toJSONString(split));
@@ -662,7 +662,7 @@ public class DemoTest {
     }
 
     @Test
-    public void getBeginMonth(){
+    public void getBeginMonth() {
         Date startDay = DateUtil.beginOfMonth(new Date());
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(startDay);
@@ -692,7 +692,7 @@ public class DemoTest {
     }
 
     @Test
-    public void ListToArray(){
+    public void ListToArray() {
 
         ArrayList<String> strings = Lists.newArrayList("1", "2", "3", "4");
         String[] strings1 = strings.toArray(new String[]{});
@@ -702,7 +702,7 @@ public class DemoTest {
     }
 
     @Test
-    public void setAdd(){
+    public void setAdd() {
         Set<String> names = new HashSet<>();
         System.out.println(names.add("1"));
         System.out.println(names.add("1"));
@@ -728,8 +728,8 @@ public class DemoTest {
     }
 
     @Test
-    public void stringJoin(){
-        StringJoiner stringJoiner = new StringJoiner(",","{","}");
+    public void stringJoin() {
+        StringJoiner stringJoiner = new StringJoiner(",", "{", "}");
 
         for (int i = 0; i < 5; i++) {
             stringJoiner.add("这是第").add("" + i);
@@ -748,13 +748,13 @@ public class DemoTest {
 
         StringJoiner serialNoJoiner = new StringJoiner(",");
         serialNoJoiner.add("11111111111111111111");
-        serialNoJoiner.add("\n"+"111111111222222222");
+        serialNoJoiner.add("\n" + "111111111222222222");
         System.out.println(serialNoJoiner.toString());
         System.out.println(serialNoJoiner.length());
     }
 
     @Test
-    public void hashTest(){
+    public void hashTest() {
         String key = "111";
         String value = "222";
 
@@ -768,7 +768,7 @@ public class DemoTest {
 
 
     @Test
-    public void enumTest(){
+    public void enumTest() {
 
         Optional<PayChannelEnum> first = Arrays.stream(PayChannelEnum.values()).filter(e -> e.getCode().contains("CCB_PAY")).findFirst();
         System.out.println(first.isPresent());
@@ -783,7 +783,7 @@ public class DemoTest {
     }
 
     @Test
-    public void joinTest(){
+    public void joinTest() {
         String[] words = {"Java", "Python", "C++", "JavaScript", "TypeScript", "Kotlin", "Swift", "Go", "Rust", "Ruby"};
         String prefix = "【";
         String suffix = "】";
@@ -791,7 +791,7 @@ public class DemoTest {
         int maxLength = 50; // 最大长度阈值
         StringBuilder currentLine = new StringBuilder(); // 用于构建当前行的字符串
         System.out.println(sj.toString());
-        System.out.println("是否相等："+sj.toString().equals(prefix + suffix));
+        System.out.println("是否相等：" + sj.toString().equals(prefix + suffix));
 
         for (String word : words) {
             // 检查如果当前行加上下一个单词超过最大长度，则先换行
@@ -813,11 +813,11 @@ public class DemoTest {
         // 使用换行符连接每一行
 //        String result = sj.toString().replace(", ", "\n");
         System.out.println(sj.toString());
-        System.out.println("是否相等2："+sj.toString().equals(prefix + suffix));
-}
+        System.out.println("是否相等2：" + sj.toString().equals(prefix + suffix));
+    }
 
     @Test
-    public void beginEnd(){
+    public void beginEnd() {
         DateTime dateTime = DateUtil.beginOfMonth(new Date());
 
         DateTime dateTime1 = DateUtil.endOfMonth(new Date());
@@ -826,7 +826,7 @@ public class DemoTest {
     }
 
     @Test
-    public void patternTest(){
+    public void patternTest() {
         /**
          * <img 表示字符串以<img开头。
          * .*? 表示非贪婪模式下的任意字符序列。
@@ -1009,7 +1009,7 @@ public class DemoTest {
     }
 
     @Test
-    public void dateCompareToTest(){
+    public void dateCompareToTest() {
         Date now = new Date();
 
         //当前时间加一小时
@@ -1020,7 +1020,7 @@ public class DemoTest {
     }
 
     @Test
-    public void startTest(){
+    public void startTest() {
 
         String img = "${wechatOfficialAccountImage}";
 
@@ -1028,7 +1028,7 @@ public class DemoTest {
     }
 
     @Test
-    public void listAddTest(){
+    public void listAddTest() {
 
         List<Student> students = new ArrayList<>();
         Student student1 = new Student();
@@ -1056,7 +1056,7 @@ public class DemoTest {
     }
 
     @Test
-    public void commitTest(){
+    public void commitTest() {
 
         System.out.println("-------------------commit 1");
 
@@ -1064,7 +1064,7 @@ public class DemoTest {
     }
 
     @Test
-    public void testOcrEmsWayBill(){
+    public void testOcrEmsWayBill() {
         String upload1 = "https://bop-core-oss.itianding.com/0/default/190bd7a8968648e087b6a3b749b3db0f20240308.jpg";
         String upload2 = "https://bop-core-oss.itianding.com/0/default/5512f3402ab746ecacedabb2add1614620240308.jpg";
         String upload3 = "https://bop-core-oss.itianding.com/0/default/d72b418d99d64b26af01083c0f8c07b320240308.jpg";
@@ -1090,7 +1090,7 @@ public class DemoTest {
         JSONObject jsonObject = JSON.parseObject(body);
         int result = jsonObject.getIntValue("result");
         System.out.println(result);
-        if(jsonObject.getIntValue("result") != 1){
+        if (jsonObject.getIntValue("result") != 1) {
             log.error("上传EMS面单，调用运单号识别接口出错！");
         }
 
@@ -1106,19 +1106,19 @@ public class DemoTest {
 
 
     @Test
-    public void dateBeginTest(){
+    public void dateBeginTest() {
 
-            Date date = DateUtil.date();
-            Date start = DateUtil.yesterday();
-            Date end = DateUtil.tomorrow();
+        Date date = DateUtil.date();
+        Date start = DateUtil.yesterday();
+        Date end = DateUtil.tomorrow();
 
-            boolean isIn = DateUtil.isIn(date, start, end);
-            System.out.println(isIn);  // 输出 true
+        boolean isIn = DateUtil.isIn(date, start, end);
+        System.out.println(isIn);  // 输出 true
 
     }
 
     @Test
-    public void dateParseTest(){
+    public void dateParseTest() {
 
         String date = "202305";
         DateTime dateTime = DateUtil.parse(date, "yyyyMM");
@@ -1127,6 +1127,30 @@ public class DemoTest {
 
         System.out.println("--------commit 11111");
 
+        Student student = new Student();
+        System.out.println(student == null);
+
+    }
+
+    @Test
+    public void executeTest() throws InterruptedException {
+
+        ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(2);
+        scheduledExecutorService.schedule(() -> {
+            System.out.println("延迟10秒执行！");
+        }, 10, TimeUnit.SECONDS);
+
+        for (int i = 0; i < 10; i++) {
+            System.out.println(i);
+            int finalI = i;
+            scheduledExecutorService.submit(() -> {
+                System.out.println("Executing task " + finalI);
+            });
+        }
+
+        // 关闭线程池并等待所有任务完成
+        scheduledExecutorService.shutdown();
+//        scheduledExecutorService.awaitTermination(15, TimeUnit.SECONDS);
     }
 
 }

@@ -15,15 +15,15 @@ public class toListTest {
 
     public static void main(String[] args) {
         List<Student> list = new ArrayList<>();
-        Student student1 = new Student("lili",10,1,new Date());
-        Student student2 = new Student("lucy",11,1,new Date());
-        Student student3 = new Student("lei",12,1,new Date());
-        Student student4 = new Student("mary",10,2,new Date());
-        Student student5 = new Student("tom",9,2,new Date());
-        Student student6 = new Student("jack",12,2,new Date());
-        Student student7 = new Student("mali",10,3,new Date());
-        Student student8 = new Student("kk",10,3,new Date());
-        Student student9 = new Student("kk",20,3,new Date());
+        Student student1 = new Student("lili", 10, 1, new Date());
+        Student student2 = new Student("lucy", 11, 1, new Date());
+        Student student3 = new Student("lei", 12, 1, new Date());
+        Student student4 = new Student("mary", 10, 2, new Date());
+        Student student5 = new Student("tom", 9, 2, new Date());
+        Student student6 = new Student("jack", 12, 2, new Date());
+        Student student7 = new Student("mali", 10, 3, new Date());
+        Student student8 = new Student("kk", 10, 3, new Date());
+        Student student9 = new Student("kk", 20, 3, new Date());
         list.add(student1);
         list.add(student2);
         list.add(student3);
@@ -36,12 +36,12 @@ public class toListTest {
         System.out.println(JSONArray.toJSONString(list));
 
         //倒叙
-        List<Student> collect = list.stream().filter(e -> e.getGrade() == 2).sorted((x,z)-> z.getAge().compareTo(x.getAge())).collect(Collectors.toList());
+        List<Student> collect = list.stream().filter(e -> e.getGrade() == 2).sorted((x, z) -> z.getAge().compareTo(x.getAge())).collect(Collectors.toList());
         List<String> collect1 = list.stream().map(Student::getName).distinct().collect(Collectors.toList());
 
 
         System.out.println(collect);
-        System.out.println("collect1=============:"+collect1);
+        System.out.println("collect1=============:" + collect1);
 
 
         System.out.println(list.stream().map(v -> v.getAge()).max(Comparator.comparing(Integer::intValue)).get());
@@ -63,39 +63,39 @@ public class toListTest {
 
 
         Integer grade = list.stream().map(e -> e.getGrade()).max(Comparator.comparing(Integer::intValue)).get();
-        System.out.println("=================grade:"+grade);
+        System.out.println("=================grade:" + grade);
         System.out.println(list.stream().filter(e -> e.getGrade() == grade).mapToLong(Student::getAge).sum());
         System.out.println(list.stream().filter(e -> e.getGrade() == grade).mapToLong(Student::getGrade).sum());
     }
 
     @Test
-    public void sum(){
+    public void sum() {
 
 
-            List<BigDecimal> list = new ArrayList<>();
-            list.add(BigDecimal.valueOf(1.1));
-            list.add(BigDecimal.valueOf(1.2));
-            list.add(BigDecimal.valueOf(1.3));
-            list.add(BigDecimal.valueOf(1.4));
+        List<BigDecimal> list = new ArrayList<>();
+        list.add(BigDecimal.valueOf(1.1));
+        list.add(BigDecimal.valueOf(1.2));
+        list.add(BigDecimal.valueOf(1.3));
+        list.add(BigDecimal.valueOf(1.4));
 
-            BigDecimal decimal = list.stream().reduce(BigDecimal.ZERO, BigDecimal::add);
-            System.out.println(decimal);
+        BigDecimal decimal = list.stream().reduce(BigDecimal.ZERO, BigDecimal::add);
+        System.out.println(decimal);
 
     }
 
 
     @Test
-    public void bigdecimalAddTest(){
+    public void bigdecimalAddTest() {
         List<Student> list = new ArrayList<>();
-        Student student1 = new Student("lili",10,1,new Date(),new BigDecimal(10));
-        Student student2 = new Student("lucy",11,1,new Date(),new BigDecimal(20));
-        Student student3 = new Student("lei",12,1,new Date(),new BigDecimal(30));
-        Student student4 = new Student("mary",10,2,new Date(),new BigDecimal(40));
-        Student student5 = new Student("tom",9,2,new Date(),new BigDecimal(30));
-        Student student6 = new Student("jack",12,2,new Date(),new BigDecimal(20));
-        Student student7 = new Student("mali",10,3,new Date(),new BigDecimal(20));
-        Student student8 = new Student("kk",10,3,new Date(),new BigDecimal(10));
-        Student student9 = new Student("kk",20,3,new Date(),new BigDecimal(10));
+        Student student1 = new Student("lili", 10, 1, new Date(), new BigDecimal(10));
+        Student student2 = new Student("lucy", 11, 1, new Date(), new BigDecimal(20));
+        Student student3 = new Student("lei", 12, 1, new Date(), new BigDecimal(30));
+        Student student4 = new Student("mary", 10, 2, new Date(), new BigDecimal(40));
+        Student student5 = new Student("tom", 9, 2, new Date(), new BigDecimal(30));
+        Student student6 = new Student("jack", 12, 2, new Date(), new BigDecimal(20));
+        Student student7 = new Student("mali", 10, 3, new Date(), new BigDecimal(20));
+        Student student8 = new Student("kk", 10, 3, new Date(), new BigDecimal(10));
+        Student student9 = new Student("kk", 20, 3, new Date(), new BigDecimal(10));
         list.add(student1);
         list.add(student2);
         list.add(student3);
@@ -107,7 +107,7 @@ public class toListTest {
         list.add(student9);
 
 
-        Integer grade = list.parallelStream().map(e ->e.getGrade()).min(Comparator.comparing(Integer::intValue)).get();
+        Integer grade = list.parallelStream().map(e -> e.getGrade()).min(Comparator.comparing(Integer::intValue)).get();
 
         BigDecimal money = list.parallelStream().filter(e -> e.getGrade() == grade).map(Student::getMoney).reduce(BigDecimal.ZERO, BigDecimal::add);
 
@@ -137,9 +137,9 @@ public class toListTest {
          *
          */
         //使用LinkedHashMap是有序的，这样就会保持有序
-        Map<Integer, List<Student>> collect2 = list.stream().sorted(Comparator.comparing(Student::getAge)).collect(Collectors.groupingBy(Student::getAge,LinkedHashMap::new,Collectors.toList()));
+        Map<Integer, List<Student>> collect2 = list.stream().sorted(Comparator.comparing(Student::getAge)).collect(Collectors.groupingBy(Student::getAge, LinkedHashMap::new, Collectors.toList()));
 
-        System.out.println("再分组："+collect2);
+        System.out.println("再分组：" + collect2);
 
 
         Map<Integer, List<Student>> collect = list.stream().sorted(Comparator.comparing(Student::getAge)).collect(Collectors.groupingBy(Student::getAge));
@@ -149,17 +149,17 @@ public class toListTest {
 
 
     @Test
-    public void test(){
+    public void test() {
         List<Student> list = new ArrayList<>();
-        Student student1 = new Student("lili",10,1,new Date(),new BigDecimal(10));
-        Student student2 = new Student("lucy",11,1,new Date(),new BigDecimal(20));
-        Student student3 = new Student("lei",12,1,new Date(),new BigDecimal(30));
-        Student student4 = new Student("mary",10,2,new Date(),new BigDecimal(40));
-        Student student5 = new Student("tom",9,2,new Date(),new BigDecimal(30));
-        Student student6 = new Student("jack",12,2,new Date(),new BigDecimal(20));
-        Student student7 = new Student("mali",10,3,new Date(),new BigDecimal(20));
-        Student student8 = new Student("kk",10,3,new Date(),new BigDecimal(10));
-        Student student9 = new Student("kk",20,3,new Date(),new BigDecimal(10));
+        Student student1 = new Student("lili", 10, 1, new Date(), new BigDecimal(10));
+        Student student2 = new Student("lucy", 11, 1, new Date(), new BigDecimal(20));
+        Student student3 = new Student("lei", 12, 1, new Date(), new BigDecimal(30));
+        Student student4 = new Student("mary", 10, 2, new Date(), new BigDecimal(40));
+        Student student5 = new Student("tom", 9, 2, new Date(), new BigDecimal(30));
+        Student student6 = new Student("jack", 12, 2, new Date(), new BigDecimal(20));
+        Student student7 = new Student("mali", 10, 3, new Date(), new BigDecimal(20));
+        Student student8 = new Student("kk", 10, 3, new Date(), new BigDecimal(10));
+        Student student9 = new Student("kk", 20, 3, new Date(), new BigDecimal(10));
         list.add(student1);
         list.add(student2);
         list.add(student3);

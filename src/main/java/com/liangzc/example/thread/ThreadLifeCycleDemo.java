@@ -3,25 +3,25 @@ package com.liangzc.example.thread;
 import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
 
-public class ThreadLifeCycleDemo implements Runnable{
+public class ThreadLifeCycleDemo implements Runnable {
 
     public static void main(String[] args) {
 
         Object object = new Object();
-        new Thread(()->{
+        new Thread(() -> {
             try {
-                while (true){
+                while (true) {
                     TimeUnit.SECONDS.sleep(10);
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        },"thread-01").start();
+        }, "thread-01").start();
 
-        new Thread(()->{
+        new Thread(() -> {
             try {
-                synchronized (ThreadLifeCycleDemo.class){
-                    while (true){
+                synchronized (ThreadLifeCycleDemo.class) {
+                    while (true) {
 
                         ThreadLifeCycleDemo.class.wait();
                     }
@@ -30,7 +30,7 @@ public class ThreadLifeCycleDemo implements Runnable{
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        },"thread-02").start();
+        }, "thread-02").start();
 
         ThreadLifeCycleDemo demo1 = new ThreadLifeCycleDemo();
         Thread thread1 = new Thread(demo1, "thread-03");
@@ -42,7 +42,7 @@ public class ThreadLifeCycleDemo implements Runnable{
 
     @Override
     public void run() {
-        synchronized (this){
+        synchronized (this) {
             try {
                 TimeUnit.SECONDS.sleep(100);
             } catch (InterruptedException e) {

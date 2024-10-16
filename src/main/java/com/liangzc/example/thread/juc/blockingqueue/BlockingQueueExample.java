@@ -33,40 +33,40 @@ public class BlockingQueueExample {
         this.items = new ArrayList<>(count);
     }
 
-    public void put(String item){
+    public void put(String item) {
 
         lock.lock();
         try {
             //如果此时添加数量超过队列总的大小时，阻塞
-            if (size >= count){
+            if (size >= count) {
                 System.out.println("队列满了，需要阻塞一会！！！");
                 notFull.await();
             }
             ++size;//增加元素个数
             items.add(item);
-            System.out.println("生产者生产了："+item);
+            System.out.println("生产者生产了：" + item);
             //此时队列不为空了，唤醒消费者线程去消费
             notEmpty.signal();
         } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             lock.unlock();
         }
     }
 
     //队列取数据
-    public void take(){
+    public void take() {
 
         lock.lock();
         try {
 
-            if(items.isEmpty()){
+            if (items.isEmpty()) {
                 System.out.println("队列空了，暂停消费！！！");
                 notEmpty.await();
             }
             --size;
             String remove = items.remove(0);
-            System.out.println("消费者消费了:"+remove);
+            System.out.println("消费者消费了:" + remove);
             //此时唤醒生产者线程去生产
             notFull.signal();
         } catch (Exception e) {

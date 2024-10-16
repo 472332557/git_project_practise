@@ -12,6 +12,7 @@ import org.apache.zookeeper.WatchedEvent;
 public class CuratorWatchExample {
 
     private static CuratorFramework curatorFramework;
+
     public CuratorWatchExample() {
         curatorFramework = CuratorFrameworkFactory.builder().
                 connectionTimeoutMs(20000)//连接超时时间
@@ -26,21 +27,22 @@ public class CuratorWatchExample {
 
     /**
      * 普通Watch机制，只会触发监听一次
+     *
      * @throws Exception
      */
     public void normalWatcher() throws Exception {
         CuratorWatcher curatorWatcher = new CuratorWatcher() {
             @Override
             public void process(WatchedEvent watchedEvent) throws Exception {
-                System.out.println("监听到的事件"+watchedEvent.toString());
+                System.out.println("监听到的事件" + watchedEvent.toString());
             }
         };
 
         String node = curatorFramework.create().forPath("/watcher", "Watcher String".getBytes());
-        System.out.println("节点创建成功："+node);
+        System.out.println("节点创建成功：" + node);
 
         byte[] data = curatorFramework.getData().usingWatcher(curatorWatcher).forPath(node);
-        System.out.println("监听获取到节点数据："+new String(data));
+        System.out.println("监听获取到节点数据：" + new String(data));
 
         curatorFramework.setData().forPath("/watcher", "666".getBytes());
         Thread.sleep(2000);
@@ -51,12 +53,12 @@ public class CuratorWatchExample {
     /**
      * 持续监听
      */
-    public void persisWatcher(String node){
+    public void persisWatcher(String node) {
         CuratorCache curatorCache = CuratorCache.build(curatorFramework, node, CuratorCache.Options.SINGLE_NODE_CACHE);
         CuratorCacheListener listener = CuratorCacheListener.builder().forAll(new CuratorCacheListener() {
             @Override
             public void event(Type type, ChildData oldData, ChildData data) {
-                System.out.println("事件类型："+type+":oldData:"+oldData+":data"+data);
+                System.out.println("事件类型：" + type + ":oldData:" + oldData + ":data" + data);
             }
         }).build();
         curatorCache.listenable().addListener(listener);

@@ -11,11 +11,16 @@ public class SortedTest {
 
         //创建一个集合
         List<String> list = new ArrayList<>();
-        list.add("a1");list.add("a2");list.add("a3");list.add("b1");list.add("b2");list.add("b3");
+        list.add("a1");
+        list.add("a2");
+        list.add("a3");
+        list.add("b1");
+        list.add("b2");
+        list.add("b3");
         streamSortedTest(list);
     }
 
-    private static void streamSortedTest(List<String> list){
+    private static void streamSortedTest(List<String> list) {
         //默认排序
         list.stream().filter(s -> s.startsWith("a")).forEach(System.out::println);
         System.out.println("- - - - - - - - -");

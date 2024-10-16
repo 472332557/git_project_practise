@@ -19,9 +19,7 @@ public class ThreadPoolExecutorExample {
     }
 
 
-
-
-    static class Task implements Runnable{
+    static class Task implements Runnable {
 
         private volatile Integer count;
 
@@ -31,7 +29,7 @@ public class ThreadPoolExecutorExample {
 
         @Override
         public void run() {
-            System.out.println(Thread.currentThread().getName()+":开始执行了！" +count);
+            System.out.println(Thread.currentThread().getName() + ":开始执行了！" + count);
         }
     }
 }

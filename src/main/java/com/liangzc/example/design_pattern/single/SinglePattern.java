@@ -8,9 +8,9 @@ public class SinglePattern {
 
     }
 
-    public static SinglePattern getInstance(){
+    public static SinglePattern getInstance() {
 
-        if(SinglePattern.instance == null){
+        if (SinglePattern.instance == null) {
             SinglePattern.instance = new SinglePattern();
         }
         return SinglePattern.instance;

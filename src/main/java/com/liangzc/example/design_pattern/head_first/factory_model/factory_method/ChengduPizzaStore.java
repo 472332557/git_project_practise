@@ -7,7 +7,7 @@ public class ChengduPizzaStore extends PizzaStore {
 
     @Override
     public Pizza createPizza(Class<? extends Pizza> clazz) {
-        if(clazz != null){
+        if (clazz != null) {
             try {
                 return clazz.newInstance();
             } catch (Exception e) {

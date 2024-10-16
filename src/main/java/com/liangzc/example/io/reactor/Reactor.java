@@ -11,12 +11,12 @@ import java.util.Set;
 
 /**
  * Reactor模型有三个重要组件：
- *      · Reactor ：将I/O事件发派给对应的Handler。Reactor线程：负责多路分离套接字，有新连接到来触发connect 事件之后，交由Acceptor进行处理，有IO读写事件之后交给hanlder 处理。
- *      · Acceptor ：处理客户端连接请求。Acceptor主要任务就是构建handler ，在获取到和client相关的SocketChannel之后 ，绑定到相应的hanlder上，
- *                   对应的SocketChannel有读写事件之后，基于racotor 分发,hanlder就可以处理了（所有的IO事件都绑定到selector上，由Reactor分发）
- *      · Handlers ：执行非阻塞读/写
+ * · Reactor ：将I/O事件发派给对应的Handler。Reactor线程：负责多路分离套接字，有新连接到来触发connect 事件之后，交由Acceptor进行处理，有IO读写事件之后交给hanlder 处理。
+ * · Acceptor ：处理客户端连接请求。Acceptor主要任务就是构建handler ，在获取到和client相关的SocketChannel之后 ，绑定到相应的hanlder上，
+ * 对应的SocketChannel有读写事件之后，基于racotor 分发,hanlder就可以处理了（所有的IO事件都绑定到selector上，由Reactor分发）
+ * · Handlers ：执行非阻塞读/写
  */
-public class Reactor implements Runnable{
+public class Reactor implements Runnable {
 
 
     private Selector selector;
@@ -33,17 +33,16 @@ public class Reactor implements Runnable{
     }
 
 
-
     @Override
     public void run() {
 
-        while (!Thread.interrupted()){
+        while (!Thread.interrupted()) {
             try {
                 //阻塞，等待一个事件（连接、IO事件）
                 selector.select();
                 Set<SelectionKey> selectionKeys = selector.selectedKeys();
                 Iterator<SelectionKey> iterator = selectionKeys.iterator();
-                while (iterator.hasNext()){
+                while (iterator.hasNext()) {
                     dsipatcher(iterator.next());
                     iterator.remove();
                 }
@@ -60,7 +59,7 @@ public class Reactor implements Runnable{
          *  Handler
          */
         Runnable runnable = (Runnable) selectionKey.attachment();
-        if(runnable != null){
+        if (runnable != null) {
             runnable.run();
         }
     }

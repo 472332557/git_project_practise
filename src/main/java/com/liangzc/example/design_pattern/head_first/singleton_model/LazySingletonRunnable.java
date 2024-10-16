@@ -4,6 +4,6 @@ public class LazySingletonRunnable implements Runnable {
     @Override
     public void run() {
         LazySingletonModel instance = LazySingletonModel.getInstance();
-        System.out.println(Thread.currentThread().getName() +"---instance:"+instance);
+        System.out.println(Thread.currentThread().getName() + "---instance:" + instance);
     }
 }

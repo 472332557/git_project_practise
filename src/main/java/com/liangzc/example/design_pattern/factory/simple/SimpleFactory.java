@@ -7,17 +7,17 @@ package com.liangzc.example.design_pattern.factory.simple;
  */
 public class SimpleFactory {
 
-    public JavaCourse createCourse(String name){
-        if("java".equals(name)){
+    public JavaCourse createCourse(String name) {
+        if ("java".equals(name)) {
             return new JavaCourse();
         }
         return null;
     }
 
 
-    public JavaCourse createCourseByCLassName(String className){
+    public JavaCourse createCourseByCLassName(String className) {
 
-        if(!(className == null && "".equals(className))){
+        if (!(className == null && "".equals(className))) {
             try {
                 return (JavaCourse) Class.forName(className).newInstance();
             } catch (Exception e) {
@@ -28,9 +28,9 @@ public class SimpleFactory {
     }
 
 
-    public JavaCourse createCourseByCLass(Class<? extends JavaCourse> clazz){
+    public JavaCourse createCourseByCLass(Class<? extends JavaCourse> clazz) {
 
-        if(!(clazz == null && "".equals(clazz))){
+        if (!(clazz == null && "".equals(clazz))) {
             try {
                 return clazz.newInstance();
             } catch (Exception e) {

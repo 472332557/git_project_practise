@@ -10,6 +10,7 @@ public class CopyTest {
     /**
      * Spring的copyProperties如果字段类型不一样，则不会复制
      * apache 的copyProperties，字段类型不一样，也会复制
+     *
      * @throws InvocationTargetException
      * @throws IllegalAccessException
      */
@@ -25,12 +26,12 @@ public class CopyTest {
         System.out.println("-------------------------spring copy--------------------------------");
         FruitCopy fruitCopy = new FruitCopy();
         BeanUtils.copyProperties(fruit, fruitCopy);
-        System.out.println("spring copy后："+fruitCopy);
+        System.out.println("spring copy后：" + fruitCopy);
 
         System.out.println("-----------------------------apache copy----------------------------------");
         FruitCopy fruitCopy1 = new FruitCopy();
         org.apache.commons.beanutils.BeanUtils.copyProperties(fruitCopy1, fruit);
-        System.out.println("apache copy后："+fruitCopy1);
+        System.out.println("apache copy后：" + fruitCopy1);
 
 
     }

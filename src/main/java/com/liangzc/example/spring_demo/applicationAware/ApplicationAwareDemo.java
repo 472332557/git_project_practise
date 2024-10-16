@@ -5,7 +5,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
 /**
- *   实现ApplicationContextAware接口，获得ApplicationContext(容器本身)
+ * 实现ApplicationContextAware接口，获得ApplicationContext(容器本身)
  */
 
 public class ApplicationAwareDemo implements ApplicationContextAware {
@@ -18,7 +18,7 @@ public class ApplicationAwareDemo implements ApplicationContextAware {
     }
 
 
-    public ApplicationContext getApplicationContext(){
+    public ApplicationContext getApplicationContext() {
 
         System.out.println(" this applicationContext is:" + applicationContext);
         return this.applicationContext;

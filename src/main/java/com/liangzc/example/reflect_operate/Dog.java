@@ -9,12 +9,12 @@ public class Dog implements Pet {
 
     @Override
     public void eat() {
-        System.out.println("小狗喜欢吃："+food);
+        System.out.println("小狗喜欢吃：" + food);
     }
 
     @Override
     public void hobby() {
-        System.out.println("小狗喜欢玩：" +hobbies);
+        System.out.println("小狗喜欢玩：" + hobbies);
     }
 
 
@@ -26,7 +26,7 @@ public class Dog implements Pet {
                 '}';
     }
 
-    public String getWord(String a,String b){
-        return a.toUpperCase() +"_"+ b.toLowerCase();
+    public String getWord(String a, String b) {
+        return a.toUpperCase() + "_" + b.toLowerCase();
     }
 }

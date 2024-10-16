@@ -10,7 +10,7 @@ import java.util.List;
 public class SpringTest {
 
     @Test
-    public void springTest(){
+    public void springTest() {
 
         //1、
         List<String> loadFactoryNames = SpringFactoriesLoader.loadFactoryNames(Food.class, ClassUtils.getDefaultClassLoader());
@@ -23,7 +23,7 @@ public class SpringTest {
     }
 
     @Test
-    public void springTest2(){
+    public void springTest2() {
         List<Food> foods = SpringFactoriesLoader.loadFactories(Food.class, ClassUtils.getDefaultClassLoader());
         for (Food food : foods) {
             System.out.println(food);

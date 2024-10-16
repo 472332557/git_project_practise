@@ -30,11 +30,11 @@ public class DemoTest {
 
     //简单导出
     @Test
-    public void simpleTest(){
+    public void simpleTest() {
 
         String fileName = filePath + "/easyExcel_" + System.currentTimeMillis() + ".xlsx";
         EasyExcel.write(fileName, DemoData.class).registerWriteHandler(new CustomSheetWriteHandler())
-                .sheet("模板1").doWrite(()-> data());
+                .sheet("模板1").doWrite(() -> data());
 
         /*try(ExcelWriter excelWriter = EasyExcel.write(fileName, DemoData.class).registerWriteHandler(new CustomSheetWriteHandler()).build()){
             WriteSheet writeSheet1 = EasyExcel.writerSheet(0,"模板1").build();
@@ -47,32 +47,32 @@ public class DemoTest {
 
     //仅导出指定列或者忽略指定列
     @Test
-    public void appointExport(){
-        String fileName = filePath + "/easyExcel_" +LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + ".xlsx";
+    public void appointExport() {
+        String fileName = filePath + "/easyExcel_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + ".xlsx";
 
         //根据传入字段，忽略 DemoData中对应的date列
         Set<String> excludeColumnFiledNames = new HashSet<String>();
         excludeColumnFiledNames.add("date");
-        EasyExcel.write(fileName,DemoData.class).excludeColumnFieldNames(excludeColumnFiledNames).sheet("指定忽略").doWrite(data());
+        EasyExcel.write(fileName, DemoData.class).excludeColumnFieldNames(excludeColumnFiledNames).sheet("指定忽略").doWrite(data());
 
 
-        String fileName1 = filePath + "/easyExcel_" +LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + ".xlsx";
+        String fileName1 = filePath + "/easyExcel_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + ".xlsx";
         // 根据用户传入字段 假设我们只要导出 DemoData中对应的date列,项目中汇总列的，可以使用这种方式
         Set<String> includeColumnFiledNames = new HashSet<String>();
         includeColumnFiledNames.add("date");
-        EasyExcel.write(fileName1,DemoData.class).includeColumnFieldNames(excludeColumnFiledNames).sheet("指定包含").doWrite(data());
+        EasyExcel.write(fileName1, DemoData.class).includeColumnFieldNames(excludeColumnFiledNames).sheet("指定包含").doWrite(data());
     }
 
     //多次写入到同一个sheet
     @Test
-    public void duplicationExportSheet(){
+    public void duplicationExportSheet() {
         /**
          *  1、写到同一个sheet
          */
-        String fileName = filePath + "/easyExcel_" +LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + ".xlsx";
-        try(ExcelWriter excelWriter = EasyExcel.write(fileName).head(head())
+        String fileName = filePath + "/easyExcel_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + ".xlsx";
+        try (ExcelWriter excelWriter = EasyExcel.write(fileName).head(head())
                 .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())//自动列宽
-                .registerWriteHandler(new SimpleRowHeightStyleStrategy((short)35,(short)25)).build()) {
+                .registerWriteHandler(new SimpleRowHeightStyleStrategy((short) 35, (short) 25)).build()) {
             // 这里注意 如果同一个sheet只要创建一次
             WriteSheet writeSheet = EasyExcel.writerSheet("重复写入sheet模板").build();
             // 去调用写入,这里我调用了五次，实际使用时根据数据库分页的总的页数来
@@ -94,11 +94,11 @@ public class DemoTest {
      * 但上面的写法没办法满足，所以只好按下面的写法，try-finally，每次手动去关闭写入的IO流。
      */
     @Test
-    public void duplicationExportSheetV2(){
+    public void duplicationExportSheetV2() {
         /**
          *  1、写到同一个sheet
          */
-        String fileName = filePath + "/easyExcel_" +LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + ".xlsx";
+        String fileName = filePath + "/easyExcel_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + ".xlsx";
         boolean isEnter = false;
         ExcelWriter excelWriter = null;
         WriteSheet writeSheet = null;
@@ -107,13 +107,13 @@ public class DemoTest {
         int headRows = 2;
         int mergerColumnIndex = 1;
         HorizontalCellStyleStrategy horizontalCellStyleStrategy = buildHorizontalCellStyleStrategy();
-        try{
+        try {
             for (int i = 1; i <= 10; i++) {
-                if(!isEnter){
+                if (!isEnter) {
                     //只有超过两个单元格才合并
-                    if(mergerColumnIndex > 1){
+                    if (mergerColumnIndex > 1) {
                         //合并单元格：合计
-                        OnceAbsoluteMergeStrategy mergeStrategy = new OnceAbsoluteMergeStrategy(count + headRows, count + headRows, 0, mergerColumnIndex-1);
+                        OnceAbsoluteMergeStrategy mergeStrategy = new OnceAbsoluteMergeStrategy(count + headRows, count + headRows, 0, mergerColumnIndex - 1);
                         excelWriter = EasyExcel.write(fileName).head(head())
                                 .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())//自动列宽
                                 .registerWriteHandler(new SimpleRowHeightStyleStrategy((short) 35, (short) 25))
@@ -121,7 +121,7 @@ public class DemoTest {
                                 .registerWriteHandler(horizontalCellStyleStrategy)//样式
                                 .registerWriteHandler(new CustomCellWriteHandler(count + headRows))//自定义处理器去处理最后一行样式
                                 .build();
-                    }else {
+                    } else {
                         excelWriter = EasyExcel.write(fileName).head(head())
                                 .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())//自动列宽
                                 .registerWriteHandler(new SimpleRowHeightStyleStrategy((short) 35, (short) 25))
@@ -143,22 +143,22 @@ public class DemoTest {
                     e.printStackTrace();
                 }
 
-                if(i == 10){
+                if (i == 10) {
 //                    List<List<String>> resultList = dynamicData();
                     List<List<String>> resultList = new ArrayList<>();
                     List<String> list1 = new ArrayList();
-                    list1.add("合计111"+i);
-                    list1.add("合计111"+i);
-                    list1.add("最后一行111"+i);
-                    list1.add("最后一行111"+i);
-                    list1.add("最后一行111"+i);
+                    list1.add("合计111" + i);
+                    list1.add("合计111" + i);
+                    list1.add("最后一行111" + i);
+                    list1.add("最后一行111" + i);
+                    list1.add("最后一行111" + i);
                     resultList.add(list1);
                     List<String> lits = new ArrayList();
-                    lits.add("合计_"+i);
-                    lits.add("合计_"+i);
-                    lits.add("最后一行_"+i);
-                    lits.add("最后一行"+i);
-                    lits.add("最后一行"+i);
+                    lits.add("合计_" + i);
+                    lits.add("合计_" + i);
+                    lits.add("最后一行_" + i);
+                    lits.add("最后一行" + i);
+                    lits.add("最后一行" + i);
                     resultList.add(lits);
                     excelWriter.write(resultList, writeSheet);
                     return;
@@ -166,8 +166,8 @@ public class DemoTest {
 
                 excelWriter.write(dynamicData(), writeSheet);
             }
-        }finally {
-            if(excelWriter != null){
+        } finally {
+            if (excelWriter != null) {
                 excelWriter.close();
             }
         }
@@ -175,27 +175,28 @@ public class DemoTest {
 
     /**
      * 动态头、动态列写入，不创建对象的写，复杂头
+     *
      * @return
      */
     @Test
-    public void dynamicHeadExport(){
-        String fileName = filePath + "/easyExcel_" +LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + ".xlsx";
+    public void dynamicHeadExport() {
+        String fileName = filePath + "/easyExcel_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + ".xlsx";
         List<List<String>> lists = dynamicData();
         lists.add(Lists.newArrayList("合计", "合计", "合计", "ddd", "111"));
-        System.out.println("lists size:"+lists.size());
+        System.out.println("lists size:" + lists.size());
         //头和内容的策略
 //        HorizontalCellStyleStrategy horizontalCellStyleStrategy = new HorizontalCellStyleStrategy(headWriteCellStyle,contentWriteCellStyle);
 //        HorizontalCellStyleStrategy horizontalCellStyleStrategy = new HorizontalCellStyleStrategy(headWriteCellStyle, writeCellStyleList);
         HorizontalCellStyleStrategy horizontalCellStyleStrategy = buildHorizontalCellStyleStrategy();
 
         //合并单元格，最后一行，第1 - 3列合并
-        OnceAbsoluteMergeStrategy onceAbsoluteMergeStrategy = new OnceAbsoluteMergeStrategy(lists.size()+1,lists.size()+1,0,2);
+        OnceAbsoluteMergeStrategy onceAbsoluteMergeStrategy = new OnceAbsoluteMergeStrategy(lists.size() + 1, lists.size() + 1, 0, 2);
         EasyExcel.write(fileName).head(head())
                 .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())//自动列宽
                 .registerWriteHandler(horizontalCellStyleStrategy)//样式
                 .registerWriteHandler(onceAbsoluteMergeStrategy)//合并单元格
-                .registerWriteHandler(new SimpleRowHeightStyleStrategy((short)35,(short)25))//头行高：40 内容行高：25
-                .registerWriteHandler(new CustomCellWriteHandler(lists.size()+1))//自定义策略
+                .registerWriteHandler(new SimpleRowHeightStyleStrategy((short) 35, (short) 25))//头行高：40 内容行高：25
+                .registerWriteHandler(new CustomCellWriteHandler(lists.size() + 1))//自定义策略
                 .sheet("动态头sheet")
                 .doWrite(lists);
     }
@@ -221,7 +222,7 @@ public class DemoTest {
         contentWriteCellStyle.setBorderBottom(BorderStyle.THIN);
         WriteFont contentWriteFont = new WriteFont();
         // 字体大小
-        contentWriteFont.setFontHeightInPoints((short)11);
+        contentWriteFont.setFontHeightInPoints((short) 11);
         contentWriteFont.setFontName("宋体");
         contentWriteCellStyle.setWriteFont(contentWriteFont);
         // 这个策略是 头是头的样式 内容是内容的样式 其他的策略可以自己实现
@@ -233,11 +234,12 @@ public class DemoTest {
 
     /**
      * 合并单元格
+     *
      * @return
      */
     @Test
-    public void mergExport(){
-        String fileName = filePath + "/easyExcel_" +LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + ".xlsx";
+    public void mergExport() {
+        String fileName = filePath + "/easyExcel_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + ".xlsx";
         //第2列，每隔2行进行汇总
         LoopMergeStrategy loopMergeStrategy = new LoopMergeStrategy(2, 1);
         EasyExcel.write(fileName).head(head()).registerWriteHandler(loopMergeStrategy).sheet("合并sheet").doWrite(dynamicData());
@@ -248,8 +250,8 @@ public class DemoTest {
         list.add(Lists.newArrayList("字符串"));
         list.add(Lists.newArrayList("数字"));
         list.add(Lists.newArrayList("日期"));
-        list.add(Lists.newArrayList("复杂头","复杂头1"));
-        list.add(Lists.newArrayList("复杂头","复杂头2"));
+        list.add(Lists.newArrayList("复杂头", "复杂头1"));
+        list.add(Lists.newArrayList("复杂头", "复杂头2"));
         return list;
     }
 
@@ -257,11 +259,11 @@ public class DemoTest {
         List<List<String>> list = new ArrayList<List<String>>();
         for (int i = 0; i < 10; i++) {
             List<String> head0 = new ArrayList<String>();
-            head0.add("动态列1_"+i);
-            head0.add("动态列2_"+i);
-            head0.add("动态列3_"+i);
-            head0.add("动态列4_复杂1"+i);
-            head0.add("动态列4_复杂2"+i);
+            head0.add("动态列1_" + i);
+            head0.add("动态列2_" + i);
+            head0.add("动态列3_" + i);
+            head0.add("动态列4_复杂1" + i);
+            head0.add("动态列4_复杂2" + i);
             list.add(head0);
         }
         return list;
@@ -272,7 +274,7 @@ public class DemoTest {
         List<DemoData> list = ListUtils.newArrayList();
         for (int i = 0; i < 100; i++) {
             DemoData data = new DemoData();
-            data.setName("列名"+i);
+            data.setName("列名" + i);
             data.setDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
             data.setNumber(2673);
             list.add(data);
@@ -281,9 +283,9 @@ public class DemoTest {
     }
 
     @Test
-    public void ListsArrayList(){
+    public void ListsArrayList() {
 
-        String[] titles = {"1","2","3","4","5"};
+        String[] titles = {"1", "2", "3", "4", "5"};
         ArrayList<String> strings = Lists.newArrayList(titles);
         System.out.println(strings);
 

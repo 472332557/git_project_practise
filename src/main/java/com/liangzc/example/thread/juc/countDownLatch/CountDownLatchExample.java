@@ -9,7 +9,7 @@ public class CountDownLatchExample {
     public static CountDownLatch countDownLatch = new CountDownLatch(3);
 
 
-    static class Thread1 extends Thread{
+    static class Thread1 extends Thread {
 
         @Override
         public void run() {
@@ -23,7 +23,7 @@ public class CountDownLatchExample {
         }
     }
 
-    static class Thread2 extends Thread{
+    static class Thread2 extends Thread {
 
         @Override
         public void run() {
@@ -36,7 +36,7 @@ public class CountDownLatchExample {
         }
     }
 
-    static class Thread3 extends Thread{
+    static class Thread3 extends Thread {
 
         @Override
         public void run() {

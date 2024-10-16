@@ -14,13 +14,13 @@ public class Edit {
         this.address = address;
     }
 
-    public MemoRandum addMemoRandum(){
-        MemoRandum memoRandum = new MemoRandum(this.title,this.content,this.address);
+    public MemoRandum addMemoRandum() {
+        MemoRandum memoRandum = new MemoRandum(this.title, this.content, this.address);
         return memoRandum;
 
     }
 
-    public void undoMemoRandum(MemoRandum memoRandum){
+    public void undoMemoRandum(MemoRandum memoRandum) {
 
         this.title = memoRandum.getTitle();
         this.content = memoRandum.getContent();

@@ -11,7 +11,12 @@ public class CollectDemo {
 
         //创建一个集合
         List<String> list = new ArrayList<>();
-        list.add("a1");list.add("a2");list.add("a3");list.add("b1");list.add("b2");list.add("b3");
+        list.add("a1");
+        list.add("a2");
+        list.add("a3");
+        list.add("b1");
+        list.add("b2");
+        list.add("b3");
 
         list.stream().sorted().filter(e -> e.startsWith("b")).collect(Collectors.toList()).forEach(System.out::print);
 

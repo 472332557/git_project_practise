@@ -13,16 +13,16 @@ http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
        xmlns:task="http://www.springframework.org/schema/task">
 
 
-    <aop:aspectj-autoproxy /> <!-- 支持注解方式 -->
+    <aop:aspectj-autoproxy/> <!-- 支持注解方式 -->
 
 
-    <context:component-scan  base-package="com.liangzc.example.spring_demo.aop.annotation_way"/>
+    <context:component-scan base-package="com.liangzc.example.spring_demo.aop.annotation_way"/>
 
     <!--事件监听器-->
     <bean class="com.liangzc.example.spring_demo.event.PersonApplicationListen"/>
 
     <!-- 获得容器本身 -->
-    <bean id="application" class="com.liangzc.example.spring_demo.applicationAware.ApplicationAwareDemo" />
+    <bean id="application" class="com.liangzc.example.spring_demo.applicationAware.ApplicationAwareDemo"/>
 
     <!--factoryBean -->
     <bean id="cat" class="com.liangzc.example.spring_demo.factorybean.PetFactory"/>

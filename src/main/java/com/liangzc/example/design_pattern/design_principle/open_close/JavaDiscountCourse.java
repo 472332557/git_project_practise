@@ -5,7 +5,7 @@ public class JavaDiscountCourse extends JavaCourse {
         super(name, price);
     }
 
-    public Double getDiscountPrice(){
+    public Double getDiscountPrice() {
         return super.getPrice() * 0.6;
     }
 }

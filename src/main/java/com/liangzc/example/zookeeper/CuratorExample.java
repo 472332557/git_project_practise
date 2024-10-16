@@ -32,20 +32,20 @@ public class CuratorExample {
         String node1 = curatorFramework.create()
                 .creatingParentsIfNeeded()
                 .withMode(CreateMode.CONTAINER)
-                .forPath("/node/node1",value.getBytes());
-        System.out.println("创建了节点："+node1);
+                .forPath("/node/node1", value.getBytes());
+        System.out.println("创建了节点：" + node1);
 
         Stat stat = new Stat();
         byte[] statBytes = curatorFramework.getData().storingStatIn(stat).forPath(node1);
-        System.out.println("节点状态为："+new String(statBytes));
+        System.out.println("节点状态为：" + new String(statBytes));
 
         //修改值
         stat = curatorFramework.setData().withVersion(stat.getAversion()).forPath(node1, "hello zkServer".getBytes());
 
-        System.out.println("stat是："+stat);
+        System.out.println("stat是：" + stat);
         //修改节点之后的值
         byte[] result = curatorFramework.getData().forPath(node1);
-        System.out.println("修改节点之后的值："+new String(result));
+        System.out.println("修改节点之后的值：" + new String(result));
         System.out.println("开始删除节点");
 
         curatorFramework.delete().forPath(node1);
@@ -54,7 +54,7 @@ public class CuratorExample {
 //        curatorFramework.delete().deletingChildrenIfNeeded().forPath("/node");
 
         Stat stat1 = curatorFramework.checkExists().forPath(node1);
-        if(stat1 == null){
+        if (stat1 == null) {
             System.out.println("节点删除成功！");
         }
 

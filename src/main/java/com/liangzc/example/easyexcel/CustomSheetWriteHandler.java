@@ -21,15 +21,15 @@ public class CustomSheetWriteHandler implements SheetWriteHandler {
         Integer lastRowIndex = context.getWriteSheetHolder().getLastRowIndex();
         log.info("最后一行{}", lastRowIndex);
         //需要对第4列数据进行下拉选项设置,由于第一行是头，所以从第二行开始
-        CellRangeAddressList cellRangeAddressList = new CellRangeAddressList(1,10,3,3);
+        CellRangeAddressList cellRangeAddressList = new CellRangeAddressList(1, 10, 3, 3);
         DataValidationHelper helper = context.getWriteSheetHolder().getSheet().getDataValidationHelper();
-        DataValidationConstraint constraint = helper.createExplicitListConstraint(new String[] {"测试1", "测试2"});
+        DataValidationConstraint constraint = helper.createExplicitListConstraint(new String[]{"测试1", "测试2"});
         DataValidation dataValidation = helper.createValidation(constraint, cellRangeAddressList);
 
 
-        CellRangeAddressList cellRangeAddressList1 = new CellRangeAddressList(1,10,4,4);
+        CellRangeAddressList cellRangeAddressList1 = new CellRangeAddressList(1, 10, 4, 4);
         DataValidationHelper helper1 = context.getWriteSheetHolder().getSheet().getDataValidationHelper();
-        DataValidationConstraint constraint1 = helper1.createExplicitListConstraint(new String[] {"测试3", "测试4"});
+        DataValidationConstraint constraint1 = helper1.createExplicitListConstraint(new String[]{"测试3", "测试4"});
         DataValidation dataValidation1 = helper.createValidation(constraint1, cellRangeAddressList1);
 
         context.getWriteSheetHolder().getSheet().addValidationData(dataValidation);

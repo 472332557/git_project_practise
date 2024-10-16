@@ -1,4 +1,5 @@
 package com.liangzc.example.mybatis.jdbc.v1;
+
 import com.liangzc.example.mybatis.jdbc.Person;
 
 import java.sql.*;
@@ -28,9 +29,9 @@ public class JdbcTest_V1 {
             count += st.executeUpdate(sql);
         }
         long end = System.currentTimeMillis();
-        System.out.println("================================耗时："+ (end - start));
+        System.out.println("================================耗时：" + (end - start));
 
-        if(count > 0){
+        if (count > 0) {
             System.out.println("插入数据成功！");
         }
     }
@@ -47,7 +48,7 @@ public class JdbcTest_V1 {
         String sql = "select * from person";
 
         ResultSet rs = statement.executeQuery(sql);
-        while (rs.next()){
+        while (rs.next()) {
 
             int id = rs.getInt("id");
             String name = rs.getString("name");
@@ -62,13 +63,13 @@ public class JdbcTest_V1 {
             System.out.println(person);
         }
 
-        if(rs != null){
+        if (rs != null) {
             rs.close();
         }
-        if(statement != null){
+        if (statement != null) {
             statement.close();
         }
-        if(connection != null){
+        if (connection != null) {
             connection.close();
         }
     }

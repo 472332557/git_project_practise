@@ -47,14 +47,14 @@ public class ProtocolClient {
                 header.setSessionId(111121321);
                 header.setReqType(ReqTypeE.REQUEST.getType());
                 messageRecord.setHeader(header);
-                String content = "这是客户端发送请求"+i;
+                String content = "这是客户端发送请求" + i;
                 messageRecord.setContent(content);
                 channel.writeAndFlush(messageRecord);
             }
             channelFuture.channel().closeFuture().sync();//同步等待客户端关闭
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             work.shutdownGracefully();
         }
     }

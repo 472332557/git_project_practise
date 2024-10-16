@@ -12,7 +12,7 @@ public class Student {
         this.name = name;
     }
 
-    public void print(){
+    public void print() {
         System.out.println(name);
     }
 }

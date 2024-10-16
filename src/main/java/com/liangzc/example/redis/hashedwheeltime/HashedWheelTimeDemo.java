@@ -16,16 +16,16 @@ public class HashedWheelTimeDemo {
 
     @Test
     public void test() throws IOException {
-        System.out.println("currentTime:"+new Date());
+        System.out.println("currentTime:" + new Date());
 
         //一个任务延迟5秒后执行
         hashedWheelTimer.newTimeout(new TimerTask() {
             @Override
             public void run(Timeout timeout) throws Exception {
-                System.out.println("延迟5秒后执行beginExecute:"+new Date());
+                System.out.println("延迟5秒后执行beginExecute:" + new Date());
                 timeout.timer().newTimeout(timeout1 -> {
-                    System.out.println("再延迟5秒后执行againExecute:"+new Date());
-                },5000,TimeUnit.MILLISECONDS);
+                    System.out.println("再延迟5秒后执行againExecute:" + new Date());
+                }, 5000, TimeUnit.MILLISECONDS);
             }
         }, 5000, TimeUnit.MILLISECONDS);
 

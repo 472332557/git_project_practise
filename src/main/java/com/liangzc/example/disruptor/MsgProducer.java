@@ -17,18 +17,18 @@ public class MsgProducer {
         this.disruptor = disruptor;
     }
 
-    public void send(MsgResult msgResult){
+    public void send(MsgResult msgResult) {
         RingBuffer<MsgResult> ringBuffer = this.disruptor.getRingBuffer();
         //获取下一个放置数据的位置
         long next = ringBuffer.next();
         long ringBufferSise = ringBuffer.remainingCapacity();
-        System.out.println("ringBuffer 大小："+ringBufferSise);
+        System.out.println("ringBuffer 大小：" + ringBufferSise);
 
         MemoryMXBean memory = ManagementFactory.getMemoryMXBean();
         MemoryUsage heapMemory = memory.getHeapMemoryUsage();
-        System.out.println("初始化大小："+heapMemory.getInit()/(1024*1024));
-        System.out.println("最大："+heapMemory.getMax()/(1024*1024));
-        System.out.println("已使用："+heapMemory.getUsed()/(1024*1024));
+        System.out.println("初始化大小：" + heapMemory.getInit() / (1024 * 1024));
+        System.out.println("最大：" + heapMemory.getMax() / (1024 * 1024));
+        System.out.println("已使用：" + heapMemory.getUsed() / (1024 * 1024));
 
         MsgResult msgResult1 = null;
         try {
@@ -43,7 +43,7 @@ public class MsgProducer {
         }
     }
 
-    public void send(List<MsgResult> msgResults){
+    public void send(List<MsgResult> msgResults) {
         msgResults.stream().forEach(e -> this.send(e));
     }
 }

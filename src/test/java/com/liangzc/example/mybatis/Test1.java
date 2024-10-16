@@ -57,7 +57,7 @@ public class Test1 {
         SqlSession sqlSession = sessionFactory.openSession();
 
         PersonMapper mapper = sqlSession.getMapper(PersonMapper.class);
-        List<Person> personList = mapper.selectPersonList("玛丽",1);
+        List<Person> personList = mapper.selectPersonList("玛丽", 1);
         for (Person person : personList) {
             System.out.println(person);
         }
@@ -75,7 +75,7 @@ public class Test1 {
 
         PersonMapper personMapper = sqlSession.getMapper(PersonMapper.class);
 
-        RowBounds rowBounds = new RowBounds(0,2);
+        RowBounds rowBounds = new RowBounds(0, 2);
 
         List<Person> personList = personMapper.selectPersonByGender(rowBounds);
 
@@ -87,7 +87,7 @@ public class Test1 {
     }
 
 
-//    @Test
+    //    @Test
     public void insert() throws IOException {
         InputStream inputStream = Resources.getResourceAsStream("mybatis-config.xml");
         //获取defaultSqlSessionFactory对象，并且解析配置文件、映射文件和statement

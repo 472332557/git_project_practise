@@ -39,8 +39,8 @@ public class DelayedMessageConsumer {
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties,
                                        byte[] body) throws IOException {
                 String msg = new String(body, "UTF-8");
-                SimpleDateFormat sf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-                System.out.println("收到消息：[" + msg + "]\n接收时间：" +sf.format(new Date()));
+                SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+                System.out.println("收到消息：[" + msg + "]\n接收时间：" + sf.format(new Date()));
             }
         };
 

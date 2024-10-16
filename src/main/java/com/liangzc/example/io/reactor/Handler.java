@@ -14,10 +14,10 @@ public class Handler implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("当前线程："+Thread.currentThread().getName());
+        System.out.println("当前线程：" + Thread.currentThread().getName());
 
         ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
-        int len=0,total=0;
+        int len = 0, total = 0;
         String msg = "";
         try {
             do {
@@ -35,11 +35,11 @@ public class Handler implements Runnable {
             //ServetRequets: 请求信息
             //数据库的判断
             //返回数据，通过channel写回到客户端
-            System.out.println(socketChannel.getRemoteAddress()+"————>server receive msg："+msg);
+            System.out.println(socketChannel.getRemoteAddress() + "————>server receive msg：" + msg);
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
-            if(socketChannel != null){
+        } finally {
+            if (socketChannel != null) {
                 try {
                     socketChannel.close();
                 } catch (IOException e) {

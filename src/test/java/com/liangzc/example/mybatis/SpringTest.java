@@ -27,7 +27,7 @@ public class SpringTest {
 
 
     @Test
-    public void test1(){
+    public void test1() {
 
 //        RowBounds rowBounds = new RowBounds(2, 2);
         PageHelper.offsetPage(4, 2);
@@ -37,7 +37,7 @@ public class SpringTest {
 
 
     @Test
-    public void test2(){
+    public void test2() {
 
         for (int i = 0; i < 100; i++) {
             try {

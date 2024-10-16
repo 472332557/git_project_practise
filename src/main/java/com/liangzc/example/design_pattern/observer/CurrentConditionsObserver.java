@@ -3,7 +3,7 @@ package com.liangzc.example.design_pattern.observer;
 /**
  * 当前状况观察者
  */
-public class CurrentConditionsObserver implements IObserver,DisplayElement {
+public class CurrentConditionsObserver implements IObserver, DisplayElement {
 
     private IWeatherDataSubject weatherDataSubject;
     private float temperature;
@@ -18,7 +18,7 @@ public class CurrentConditionsObserver implements IObserver,DisplayElement {
     @Override
     public void display() {
 
-        System.out.println("Current conditions:" + temperature +"F degrees and " +humidity +"% humidity");
+        System.out.println("Current conditions:" + temperature + "F degrees and " + humidity + "% humidity");
     }
 
     @Override

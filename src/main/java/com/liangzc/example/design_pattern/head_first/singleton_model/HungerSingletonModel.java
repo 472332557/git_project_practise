@@ -12,7 +12,7 @@ public class HungerSingletonModel {
 
     }
 
-    public static HungerSingletonModel getInstance(){
+    public static HungerSingletonModel getInstance() {
         return instance;
     }
 }

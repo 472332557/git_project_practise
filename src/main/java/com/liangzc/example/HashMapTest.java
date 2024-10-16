@@ -15,7 +15,7 @@ public class HashMapTest {
         String bankCode = " 1000 2003 0050 3156 2014 ";
 
         System.out.println(bankCode);
-        System.out.println(bankCode.trim().replaceAll("\\s",""));
+        System.out.println(bankCode.trim().replaceAll("\\s", ""));
 
         List<String> list = new ArrayList<>();
         list.add("1");
@@ -38,7 +38,7 @@ public class HashMapTest {
         Map<String, Object> map1 = new HashMap<>();
         map1.put("1", 1);
 
-        System.out.println("hash码为："+("1".hashCode()));
+        System.out.println("hash码为：" + ("1".hashCode()));
 
         ConcurrentHashMap concurrentHashMap = new ConcurrentHashMap();
         concurrentHashMap.put("1", 1);
@@ -47,7 +47,7 @@ public class HashMapTest {
     }
 
     @Test
-    public void multiValueMapTest(){
+    public void multiValueMapTest() {
         MultiValueMap<String, Object> multiValueMap = new LinkedMultiValueMap<>();
         multiValueMap.add("1", 111);
         multiValueMap.add("1", 222);

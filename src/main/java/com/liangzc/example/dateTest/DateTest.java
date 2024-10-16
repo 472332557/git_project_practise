@@ -41,7 +41,6 @@ public class DateTest {
     }
 
 
-
     public static final int hoursBetweenNew() {
 
         LocalDateTime now = LocalDateTime.now();
@@ -51,12 +50,12 @@ public class DateTest {
         String dateString = "2022-07-19 07:30:20";
         LocalDateTime earlyDate = LocalDateTime.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
-        Duration duration = Duration.between(earlyDate,now);
+        Duration duration = Duration.between(earlyDate, now);
         long toHours = duration.toHours();
-        System.out.println("相差小时时间："+toHours);
+        System.out.println("相差小时时间：" + toHours);
 
         long toMinutes = duration.toMinutes();
-        System.out.println("相差分钟时间："+toMinutes);
+        System.out.println("相差分钟时间：" + toMinutes);
 
 
         Date date = new Date();

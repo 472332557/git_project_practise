@@ -20,14 +20,14 @@ public class RecordEncoder extends MessageToByteEncoder<MessageRecord> {
         out.writeLong(header.getSessionId());//写8个字节的sessionid
         out.writeByte(header.getReqType());//1个字节的消息类型
         Object content = messageRecord.getContent();
-        if (content != null){
+        if (content != null) {
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream(bos);
             oos.writeObject(content);
             byte[] bytes = bos.toByteArray();
             out.writeInt(bytes.length);//4个字节的写消息长度
             out.writeBytes(bytes);//消息内容
-        }else {
+        } else {
             out.writeInt(0);
         }
 

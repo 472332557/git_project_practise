@@ -16,7 +16,7 @@ public class CompartorTest {
         a.compareTo(b);
 
         List<Student> list = new ArrayList<>();
-        Student stu1 = new Student("a",1);
+        Student stu1 = new Student("a", 1);
         Student stu2 = new Student("b", 3);
         Student stu3 = new Student("c", 5);
         list.add(stu1);

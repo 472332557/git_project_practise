@@ -16,11 +16,11 @@ public class SoftReferenceDemo {
         SoftReference softReference = new SoftReference(student);
         student = null;
 
-        if(softReference != null){
+        if (softReference != null) {
             student = (Student) softReference.get();
             student.setName("小明");
             System.out.println(student);
-        }else {
+        } else {
             student = new Student();
             softReference = new SoftReference(student);
         }

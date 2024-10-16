@@ -26,10 +26,10 @@ public class RandomTest {
     }
 
 
-    public static String forTest(){
+    public static String forTest() {
         for (int i = 0; i < 100; i++) {
-            System.out.println("当前是："+i);
-            if(i == 50){
+            System.out.println("当前是：" + i);
+            if (i == 50) {
                 return "SUCCESS";
             }
         }

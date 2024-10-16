@@ -7,12 +7,12 @@ public class Drafts {
     private static final Stack<MemoRandum> MemoRandums = new Stack<>();
 
 
-    public void addDrafts(MemoRandum memoRandum){
+    public void addDrafts(MemoRandum memoRandum) {
         MemoRandums.push(memoRandum);
     }
 
 
-    public MemoRandum undoDrafts(){
+    public MemoRandum undoDrafts() {
         MemoRandum pop = MemoRandums.pop();
         return pop;
     }

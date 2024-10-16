@@ -22,11 +22,12 @@ public class DeferredImportSelectorDemo implements DeferredImportSelector {
     /**
      * 负责收集实例化的类
      */
-    private static class DeferredImportSelectorGroupDemo implements Group{
+    private static class DeferredImportSelectorGroupDemo implements Group {
         List<Entry> list = new ArrayList<>();
 
         /**
          * 负责收集需要实例化的类
+         *
          * @param annotationMetadata
          * @param deferredImportSelector
          */
@@ -41,6 +42,7 @@ public class DeferredImportSelectorDemo implements DeferredImportSelector {
 
         /**
          * 把收集到的类返回给spring容器
+         *
          * @return
          */
         @Override

@@ -21,11 +21,11 @@ public class CustomCellWriteHandler implements CellWriteHandler {
     @Override
     public void afterCellDispose(CellWriteHandlerContext context) {
         Cell cell = context.getCell();
-        log.info("CellDataList:{}",context.getCellDataList().size());
+        log.info("CellDataList:{}", context.getCellDataList().size());
 
-        log.info("===========FirstCellNum:{}",cell.getRow().getRowNum());
-        log.info("===========LastCellNum:{}",cell.getRow().getLastCellNum());
-        log.info("===========rowNum:{}",cell.getRow().getRowNum());
+        log.info("===========FirstCellNum:{}", cell.getRow().getRowNum());
+        log.info("===========LastCellNum:{}", cell.getRow().getLastCellNum());
+        log.info("===========rowNum:{}", cell.getRow().getRowNum());
 
         // 这里可以对cell进行任何操作
         log.info("第{}行，第{}列写入完成。", cell.getRowIndex(), cell.getColumnIndex());
@@ -33,7 +33,7 @@ public class CustomCellWriteHandler implements CellWriteHandler {
         // 当前事件会在 数据设置到poi的cell里面才会回调
         // 判断不是头的情况 如果是fill 的情况 这里会==null 所以用not true
         if (BooleanUtils.isNotTrue(context.getHead())) {
-            if(cell.getRowIndex() == totalDataSize){
+            if (cell.getRowIndex() == totalDataSize) {
                 // 第一个单元格
                 // 只要不是头 一定会有数据 当然fill的情况 可能要context.getCellDataList() ,这个需要看模板，因为一个单元格会有多个 WriteCellData
                 WriteCellData<?> cellData = context.getFirstCellData();

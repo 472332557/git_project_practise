@@ -23,13 +23,13 @@ public class SemaphoreDemo2 implements Runnable {
             System.out.println(name + "获得线程执行权");
 
             for (int i = 0; i < 5; i++) {
-                SemaphoreCount.count --;
-                System.out.println(name+":"+SemaphoreCount.count);
+                SemaphoreCount.count--;
+                System.out.println(name + ":" + SemaphoreCount.count);
             }
 
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             semaphore.release();
         }
     }

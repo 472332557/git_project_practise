@@ -8,13 +8,13 @@ public class GenericityTest<T> {
         this.obj = obj;
     }
 
-    public T print(){
+    public T print() {
 
         return obj;
     }
 
-    public void type(){
-        System.out.println("type of T is:"+obj.getClass().getName());
+    public void type() {
+        System.out.println("type of T is:" + obj.getClass().getName());
 
 
     }

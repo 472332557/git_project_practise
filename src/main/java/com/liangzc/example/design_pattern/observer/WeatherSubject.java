@@ -5,7 +5,7 @@ import java.util.List;
 
 ;
 
-public class WeatherSubject implements IWeatherDataSubject{
+public class WeatherSubject implements IWeatherDataSubject {
 
     public static final List<IObserver> observerList = new ArrayList<>();
     private float temperature;
@@ -14,14 +14,14 @@ public class WeatherSubject implements IWeatherDataSubject{
 
 
     //注册观察者
-    public void registerObserver(IObserver observer){
+    public void registerObserver(IObserver observer) {
         observerList.add(observer);
     }
 
     //取消观察者
-    public void removeObserver(IObserver observer){
+    public void removeObserver(IObserver observer) {
         int index = observerList.indexOf(observer);
-        if(index > 0){
+        if (index > 0) {
             observerList.remove(index);
         }
     }
@@ -30,17 +30,16 @@ public class WeatherSubject implements IWeatherDataSubject{
     @Override
     public void notifyObserver() {
         for (IObserver observer : observerList) {
-            observer.update(temperature,humidity,pressure);
+            observer.update(temperature, humidity, pressure);
         }
     }
 
-    public void setMeasurements(float temp,float humidity,float pressure){
+    public void setMeasurements(float temp, float humidity, float pressure) {
         this.temperature = temp;
         this.humidity = humidity;
         this.pressure = pressure;
         notifyObserver();
     }
-
 
 
 }

@@ -14,14 +14,14 @@ public class SimplePartitionProduce {
 
         Properties properties = new Properties();
         //Broker地址
-        properties.put("bootstrap.servers","119.23.189.136:9092");
+        properties.put("bootstrap.servers", "119.23.189.136:9092");
         //key 和 value的序列化方式
-        properties.put("key.serializer","org.apache.kafka.common.serialization.StringSerializer");
-        properties.put("value.serializer","org.apache.kafka.common.serialization.StringSerializer");
+        properties.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+        properties.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         //produce确认机制  0：发出去就确认 | 1：leader副本落盘就确认  | -1：所有follower副本同步完成才确认
         properties.put("acks", "1");
         // 异常自动重试次数
-        properties.put("reties",3);
+        properties.put("reties", 3);
         //多少条数据发送一次，默认16k
         properties.put("batch.size", 16384);
         //批量发送的等待时间
@@ -34,9 +34,9 @@ public class SimplePartitionProduce {
         //创建Sender线程
         KafkaProducer<String, String> producer = new KafkaProducer<String, String>(properties);
 
-        for (int i =0 ;i<10;i++) {
-            producer.send(new ProducerRecord<String,String>("lzc-test-topic",1,Integer.toString(i),Integer.toString(i)));
-            System.out.println("发送:"+i);
+        for (int i = 0; i < 10; i++) {
+            producer.send(new ProducerRecord<String, String>("lzc-test-topic", 1, Integer.toString(i), Integer.toString(i)));
+            System.out.println("发送:" + i);
         }
 
         producer.close();

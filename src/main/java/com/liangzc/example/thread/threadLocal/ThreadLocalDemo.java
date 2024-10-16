@@ -3,14 +3,14 @@ package com.liangzc.example.thread.threadLocal;
 import org.junit.Test;
 
 /**
- *  ThreadLocal保证线程安全，实现线程之间的隔离，互不影响
+ * ThreadLocal保证线程安全，实现线程之间的隔离，互不影响
  */
 
 public class ThreadLocalDemo {
 
     public static Integer count = 0;
 
-    public static ThreadLocal<Integer> threadLocal = new ThreadLocal<Integer>(){
+    public static ThreadLocal<Integer> threadLocal = new ThreadLocal<Integer>() {
         @Override
         protected Integer initialValue() {
             return 0;
@@ -18,7 +18,7 @@ public class ThreadLocalDemo {
     };
 
     @Test
-    public void baseTest(){
+    public void baseTest() {
         Thread[] threads = new Thread[5];
         for (int i = 0; i < 5; i++) {
             threads[i] = new Thread(new ThreadDemo());
@@ -33,7 +33,7 @@ public class ThreadLocalDemo {
 
 
     @Test
-    public void threadLocalTest(){
+    public void threadLocalTest() {
         Thread[] threads = new Thread[5];
         for (int i = 0; i < 5; i++) {
             threads[i] = new Thread(new ThreadLocalClazz());
@@ -46,24 +46,24 @@ public class ThreadLocalDemo {
         }
     }
 
-    static class ThreadDemo implements Runnable{
+    static class ThreadDemo implements Runnable {
 
         @Override
         public void run() {
             count += 5;
-            System.out.println("count 值为："+count);
+            System.out.println("count 值为：" + count);
         }
     }
 
 
-    static class ThreadLocalClazz implements Runnable{
+    static class ThreadLocalClazz implements Runnable {
 
         @Override
         public void run() {
             Integer count = threadLocal.get();
             count += 5;
             threadLocal.set(count);
-            System.out.println("count 值为："+threadLocal.get());
+            System.out.println("count 值为：" + threadLocal.get());
         }
     }
 
