@@ -11,14 +11,14 @@ import java.net.URL;
 
 public class GtClientHelp {
 
-    public static String sendMsg(String url,String reqMsg) throws IOException {
+    public static String sendMsg(String url, String reqMsg) throws IOException {
 
         //建立连接
         URL url1 = new URL(url);
         HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
         connection.setRequestMethod("POST");
         connection.setDoOutput(true);
-        connection.setRequestProperty("Content-Type","text/xml; charset=utf-8");
+        connection.setRequestProperty("Content-Type", "text/xml; charset=utf-8");
         connection.connect();
 
         //发送请求
@@ -29,16 +29,16 @@ public class GtClientHelp {
 
         //解析返回信息
         InputStream inputStream;
-        if(connection.getResponseCode() == 200){
+        if (connection.getResponseCode() == 200) {
             inputStream = connection.getInputStream();
-        }else {
+        } else {
             inputStream = connection.getErrorStream();
         }
         Reader reader = new InputStreamReader(inputStream);
         BufferedReader bufferedReader = new BufferedReader(reader);
         String line = "";
         StringBuilder sb = new StringBuilder();
-        while ((line = bufferedReader.readLine()) != null){
+        while ((line = bufferedReader.readLine()) != null) {
             sb.append(line);
         }
         inputStream.close();
@@ -46,7 +46,7 @@ public class GtClientHelp {
         return sb.toString();
     }
 
-    private static String  getRequestParam(String param) {
+    private static String getRequestParam(String param) {
         StringBuilder sb = new StringBuilder();
         sb.append("<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:web=\"webservices.nc.leatc.com\">");
         sb.append("<soapenv:Header/>");
@@ -97,7 +97,7 @@ public class GtClientHelp {
                 "}";
 
         String s = GtClientHelp.sendMsg("http://10.240.1.23/services/LeatcNCService", param);
-        System.out.println("返回信息============================="+s);
+        System.out.println("返回信息=============================" + s);
         documentParseXML(s);
 
 

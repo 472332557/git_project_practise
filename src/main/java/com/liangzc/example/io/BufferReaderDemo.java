@@ -8,7 +8,7 @@ public class BufferReaderDemo {
         int i;
         String line;
         FileInputStream fis = null;
-        if(args.length != 1){
+        if (args.length != 1) {
             System.out.println(args.length);
             System.out.println("命令行参数有误");
             return;
@@ -20,15 +20,15 @@ public class BufferReaderDemo {
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("D:\\env\\uhome-config-export.properties")));
             do {
                 line = reader.readLine();
-                if(line != null){
+                if (line != null) {
                     System.out.println(line);
                     writer.write(line);
                 }
-            }while (line != null);
+            } while (line != null);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if(fis != null){
+            if (fis != null) {
                 try {
                     //关闭流
                     fis.close();

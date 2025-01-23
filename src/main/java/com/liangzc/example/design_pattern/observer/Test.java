@@ -8,7 +8,7 @@ public class Test {
         WeatherSubject weatherSubject = (WeatherSubject) weatherDataSubject;
 
         IObserver observer = new CurrentConditionsObserver(weatherDataSubject);
-        weatherSubject.setMeasurements(80,65,30.4f);
+        weatherSubject.setMeasurements(80, 65, 30.4f);
 
 
     }

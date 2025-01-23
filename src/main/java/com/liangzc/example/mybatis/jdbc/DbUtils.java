@@ -19,8 +19,8 @@ public class DbUtils {
     }
 
     //获得连接
-    public static Connection getConnection(){
-        if(connection == null){
+    public static Connection getConnection() {
+        if (connection == null) {
             try {
                 connection = DriverManager.getConnection(url, name, password);
             } catch (SQLException e) {
@@ -30,18 +30,18 @@ public class DbUtils {
         return connection;
     }
 
-    public static void close(Connection connection){
-        close(connection,null);
+    public static void close(Connection connection) {
+        close(connection, null);
     }
 
-    public static void close(Connection connection,Statement statement){
+    public static void close(Connection connection, Statement statement) {
 
-        close(connection,statement,null);
+        close(connection, statement, null);
     }
 
-    public static void close(Connection connection,Statement statement,ResultSet resultSet){
+    public static void close(Connection connection, Statement statement, ResultSet resultSet) {
 
-        if(resultSet != null){
+        if (resultSet != null) {
             try {
                 resultSet.close();
             } catch (SQLException e) {
@@ -49,14 +49,14 @@ public class DbUtils {
             }
         }
 
-        if(statement != null){
+        if (statement != null) {
             try {
                 statement.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
-        if(connection != null){
+        if (connection != null) {
             try {
                 connection.close();
             } catch (SQLException e) {

@@ -13,7 +13,7 @@ public class DynamichouseAgent implements InvocationHandler {
         Class<?> clazz = iPerson.getClass();
         ClassLoader classLoader = clazz.getClassLoader();
         Class<?>[] interfaces = clazz.getInterfaces();
-        return (IPerson)Proxy.newProxyInstance(classLoader, interfaces, this);
+        return (IPerson) Proxy.newProxyInstance(classLoader, interfaces, this);
     }
 
 

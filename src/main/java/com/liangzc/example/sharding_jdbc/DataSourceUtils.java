@@ -15,7 +15,7 @@ public class DataSourceUtils {
     private static final String password = "lzc123456";
 
 
-    public static DataSource createDataSource(String schemaName){
+    public static DataSource createDataSource(String schemaName) {
         DruidDataSource dataSource = new DruidDataSource();
         dataSource.setUrl(String.format("jdbc:mysql://%s:%s/%s?serverTimezone=UTC&useSSL=false&useUnicode=true&characterEncoding=UTF-8", host, port, schemaName));
         dataSource.setUsername(userName);

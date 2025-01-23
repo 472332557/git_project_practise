@@ -15,7 +15,7 @@ public class CompletableFutureExample {
     }
 
 
-    public static void  runAsyncTest(){
+    public static void runAsyncTest() {
 
         CompletableFuture.runAsync(new Runnable() {
             @SneakyThrows
@@ -55,7 +55,6 @@ public class CompletableFutureExample {
         CompletableFuture<Void> thenRun = CompletableFuture.supplyAsync(() -> "aaaa").thenRun(() -> System.out.println("dsdsdsa"));
         System.out.println(thenRun.get());
     }
-
 
 
 }

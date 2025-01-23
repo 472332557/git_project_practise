@@ -26,7 +26,7 @@ public class ReflectTest {
              * 不允许通过反射创建枚举对象
              */
             Class<EnumSingleton> enumSingletonClass = EnumSingleton.class;
-            Constructor<EnumSingleton> declaredConstructor1 = enumSingletonClass.getDeclaredConstructor(String.class,int.class);
+            Constructor<EnumSingleton> declaredConstructor1 = enumSingletonClass.getDeclaredConstructor(String.class, int.class);
             declaredConstructor1.setAccessible(true);
             EnumSingleton enumSingleton = declaredConstructor1.newInstance();
             System.out.println(enumSingleton);

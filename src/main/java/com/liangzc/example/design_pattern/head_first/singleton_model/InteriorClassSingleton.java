@@ -10,12 +10,12 @@ public class InteriorClassSingleton {
     private InteriorClassSingleton() {
     }
 
-    public static InteriorClassSingleton getInstance(){
+    public static InteriorClassSingleton getInstance() {
         return InteriorClass.INTANCE;
     }
 
 
-    private static class InteriorClass{
+    private static class InteriorClass {
         private static final InteriorClassSingleton INTANCE = new InteriorClassSingleton();
 
     }

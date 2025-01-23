@@ -10,9 +10,9 @@ public class StringJoinerTest {
     public static void main(String[] args) {
 
 //        StringJoiner joiner = new StringJoiner("|");
-        StringJoiner joiner = new StringJoiner("|","{","}");
+        StringJoiner joiner = new StringJoiner("|", "{", "}");
 
-        String [] stringArry = {"1","2","3","4","5","dsdsfdsfds"};
+        String[] stringArry = {"1", "2", "3", "4", "5", "dsdsfdsfds"};
 
         for (String s : stringArry) {
             joiner.add(s);

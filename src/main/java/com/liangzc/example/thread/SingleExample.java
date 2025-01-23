@@ -13,19 +13,21 @@ public class SingleExample {
     private static SingleExample instance;
 
     private static final SingleExample instance1 = new SingleExample();
+
     private SingleExample() {
 
     }
-    private ExecutorService executor = new ThreadPoolExecutor(1, 2, 10, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(),new ThreadPoolExecutor.DiscardOldestPolicy());
 
-    public static SingleExample getInstance(){
-        if(SingleExample.instance == null){
+    private ExecutorService executor = new ThreadPoolExecutor(1, 2, 10, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(), new ThreadPoolExecutor.DiscardOldestPolicy());
+
+    public static SingleExample getInstance() {
+        if (SingleExample.instance == null) {
             SingleExample.instance = new SingleExample();
         }
         return SingleExample.instance;
     }
 
-    public ExecutorService getExecutor(){
+    public ExecutorService getExecutor() {
         return executor;
     }
 

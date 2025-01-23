@@ -19,7 +19,7 @@ import java.util.List;
 
 @Intercepts({@Signature(type = Executor.class,
         method = "query",
-        args = {MappedStatement.class,Object.class, RowBounds.class, ResultHandler.class})
+        args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class})
 })
 public class TableHeadInterceptor implements Interceptor {
     @Override
@@ -31,11 +31,11 @@ public class TableHeadInterceptor implements Interceptor {
 
 
         Map<String, String> tableNames = new HashMap<>();
-        tableNames.put("person","own_01.person");
+        tableNames.put("person", "own_01.person");
 
         Object object1 = args[1];
         Map<String, Object> paramMap = new HashMap<>();
-        if(object1 instanceof Map){
+        if (object1 instanceof Map) {
             paramMap = (Map<String, Object>) object1;
         }
         BoundSql boundSql = mappedStatement.getBoundSql(object1);
@@ -46,15 +46,17 @@ public class TableHeadInterceptor implements Interceptor {
 
         String sql = boundSql.getSql();
         List<ParameterMapping> parameterMappings = boundSql.getParameterMappings();
-        System.out.println("替换之前的sql："+sql);
-        if(paramMap.containsKey("name")){
+        System.out.println("替换之前的sql：" + sql);
+        if (paramMap.containsKey("name")) {
             //需要替换
             for (Map.Entry<String, String> entry : tableNames.entrySet()) {
-                if(!sql.contains(entry.getKey())){ continue; }
+                if (!sql.contains(entry.getKey())) {
+                    continue;
+                }
                 sql = sql.replace(entry.getKey(), entry.getValue());
             }
         }
-        System.out.println("替换之后的sql："+sql);
+        System.out.println("替换之后的sql：" + sql);
         args[0] = this.copyFromNewSql(mappedStatement, boundSql, sql);
 
         System.out.println("-------------拦截前----------------");
@@ -67,11 +69,11 @@ public class TableHeadInterceptor implements Interceptor {
         BoundSql newBoundSql = this.copyFromBoundSql(mappedStatement, boundSql, sql);
         StaticSqlSource staticSqlSource = new StaticSqlSource(mappedStatement.getConfiguration(), sql, newBoundSql.getParameterMappings());
         //构建新的MappedStatement对象
-        return copyFromMappedStatement(mappedStatement,staticSqlSource);
+        return copyFromMappedStatement(mappedStatement, staticSqlSource);
     }
 
     private Object copyFromMappedStatement(MappedStatement ms, StaticSqlSource staticSqlSource) {
-        MappedStatement.Builder builder = new MappedStatement.Builder(ms.getConfiguration(),ms.getId(),staticSqlSource, SqlCommandType.SELECT);
+        MappedStatement.Builder builder = new MappedStatement.Builder(ms.getConfiguration(), ms.getId(), staticSqlSource, SqlCommandType.SELECT);
         builder.resource(ms.getResource());
         builder.fetchSize(ms.getFetchSize());
         builder.statementType(ms.getStatementType());
@@ -116,7 +118,7 @@ public class TableHeadInterceptor implements Interceptor {
 
     @Override
     public Object plugin(Object target) {
-        return Plugin.wrap(target,this);
+        return Plugin.wrap(target, this);
     }
 
     @Override

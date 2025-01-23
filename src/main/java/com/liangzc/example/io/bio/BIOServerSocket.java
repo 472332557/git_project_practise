@@ -9,7 +9,7 @@ public class BIOServerSocket {
     public static void main(String[] args) {
 
 
-        ServerSocket serverSocket =null;
+        ServerSocket serverSocket = null;
 
         try {
             serverSocket = new ServerSocket(9999);
@@ -30,8 +30,8 @@ public class BIOServerSocket {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
-            if (serverSocket != null){
+        } finally {
+            if (serverSocket != null) {
                 try {
                     serverSocket.close();
                 } catch (IOException e) {

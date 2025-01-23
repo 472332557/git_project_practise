@@ -21,7 +21,7 @@ public class PersonTypeHandler extends BaseTypeHandler<List> {
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, List parameter, JdbcType jdbcType) throws SQLException {
         String toString = parameter.stream().collect(Collectors.joining()).toString();
-        ps.setString(i,toString);
+        ps.setString(i, toString);
     }
 
     @Override

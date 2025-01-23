@@ -8,10 +8,8 @@ import java.util.List;
 public class PetTest {
 
 
-
-
     @Test
-    public void getName(){
+    public void getName() {
 
         Pet pet = new Pet() {
             @Override
@@ -25,26 +23,26 @@ public class PetTest {
 
 
     @Test
-    public void lambdaTest(){
+    public void lambdaTest() {
         Pet pet = (e) -> System.out.printf(e);
         pet.getName("xixo");
     }
 
-    List<Integer> nums = Arrays.asList(1,2,310,15,25);
+    List<Integer> nums = Arrays.asList(1, 2, 310, 15, 25);
 
     @Test
-    public void streamTest(){
+    public void streamTest() {
         nums.stream().filter(e -> e > 10).forEach(System.out::println);
     }
 
 
     //处理字符串
-    public String strHandler(String str,StrExample example){
+    public String strHandler(String str, StrExample example) {
         return example.getValue(str);
     }
 
     @Test
-    public void getStr(){
+    public void getStr() {
         String strHandler = strHandler("abcdefg", new StrExample() {
             @Override
             public String getValue(String name) {
@@ -55,7 +53,7 @@ public class PetTest {
     }
 
     @Test
-    public void getStrByLambda(){
+    public void getStrByLambda() {
         String dd = strHandler("abdfsfg", e -> e.toUpperCase());
         System.out.println(dd);
     }

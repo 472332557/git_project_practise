@@ -24,7 +24,6 @@ public class Dom4jTest {
                 "</四大名著> ";
 
 
-
         Document document = DocumentHelper.parseText(xmlString);
         Element rootElement = document.getRootElement();
     }

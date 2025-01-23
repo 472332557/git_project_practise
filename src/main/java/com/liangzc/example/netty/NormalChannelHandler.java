@@ -33,9 +33,9 @@ public class NormalChannelHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         ByteBuf byteBuf = (ByteBuf) msg;
-        byte [] bytes = new byte[byteBuf.readableBytes()];
+        byte[] bytes = new byte[byteBuf.readableBytes()];
         byteBuf.readBytes(bytes);
-        System.out.println("服务端接收到的数据："+new String(bytes,"UTF-8"));
+        System.out.println("服务端接收到的数据：" + new String(bytes, "UTF-8"));
         super.channelRead(ctx, msg);
     }
 
@@ -44,7 +44,6 @@ public class NormalChannelHandler extends ChannelInboundHandlerAdapter {
 
         super.channelReadComplete(ctx);
     }
-
 
 
 }

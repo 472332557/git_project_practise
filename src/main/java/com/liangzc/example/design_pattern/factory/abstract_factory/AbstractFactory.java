@@ -5,7 +5,7 @@ package com.liangzc.example.design_pattern.factory.abstract_factory;
  */
 public abstract class AbstractFactory {
 
-    public void init(){
+    public void init() {
         System.out.println("抽象工厂初始化方法！");
     }
 

@@ -25,27 +25,27 @@ public class WebController {
 
     @RequestMapping("/start")
     @ResponseBody
-    public String start(@RequestParam("id") Integer id){
-        return "hello lzc start"+id;
+    public String start(@RequestParam("id") Integer id) {
+        return "hello lzc start" + id;
     }
 
 
     @RequestMapping("/filter")
     @ResponseBody
-    public String filter(@RequestParam("id") Integer id){
-        return "hello lzc"+id;
+    public String filter(@RequestParam("id") Integer id) {
+        return "hello lzc" + id;
     }
 
     @PostMapping("/postTest")
     @ResponseBody
-    public String postDemo(@RequestParam("id") Integer id){
-        return "post"+ id;
+    public String postDemo(@RequestParam("id") Integer id) {
+        return "post" + id;
     }
 
     @PostMapping("/postJsonTest")
     @ResponseBody
-    public String postDemo(@RequestBody User user){
-        return "post"+ user;
+    public String postDemo(@RequestBody User user) {
+        return "post" + user;
     }
 
 
@@ -60,12 +60,12 @@ public class WebController {
 
     @PostMapping("/singleTest")
     @ResponseBody
-    public String   singleTest() {
+    public String singleTest() {
         log.info("==================singleTest start");
 
-        SingleTest.instace.getExecutor().execute(()->{
+        SingleTest.instace.getExecutor().execute(() -> {
 
-            log.info("==================线程执行中========{}",Thread.currentThread().getName());
+            log.info("==================线程执行中========{}", Thread.currentThread().getName());
             ArrayBlockingQueue<String> transferQueue = SingleTest.transferQueue;
             ArrayBlockingQueue<String> transferQueue1 = SingleTest.transferQueue;
             ArrayBlockingQueue<String> transferQueue2 = SingleTest.instace.transferQueue;
@@ -94,7 +94,7 @@ public class WebController {
         List<DemoData> list = ListUtils.newArrayList();
         for (int i = 0; i < 100; i++) {
             DemoData data = new DemoData();
-            data.setName("列名"+i);
+            data.setName("列名" + i);
             data.setDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
             data.setNumber(2673);
             list.add(data);
@@ -107,8 +107,8 @@ public class WebController {
         list.add(Lists.newArrayList("字符串"));
         list.add(Lists.newArrayList("数字"));
         list.add(Lists.newArrayList("日期"));
-        list.add(Lists.newArrayList("复杂头","复杂头1"));
-        list.add(Lists.newArrayList("复杂头","复杂头2"));
+        list.add(Lists.newArrayList("复杂头", "复杂头1"));
+        list.add(Lists.newArrayList("复杂头", "复杂头2"));
         return list;
     }
 }

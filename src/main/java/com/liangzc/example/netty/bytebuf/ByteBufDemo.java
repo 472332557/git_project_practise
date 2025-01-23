@@ -35,7 +35,7 @@ public class ByteBufDemo {
 
         stringBuilder.append("ByteBuf容量：").append(byteBuf.capacity()).append(";");
 
-        ByteBufUtil.appendPrettyHexDump(stringBuilder,byteBuf);
+        ByteBufUtil.appendPrettyHexDump(stringBuilder, byteBuf);
 
         System.out.println(stringBuilder.toString());
 

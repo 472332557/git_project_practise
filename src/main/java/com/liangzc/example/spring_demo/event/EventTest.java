@@ -9,7 +9,7 @@ public class EventTest {
 
         ApplicationContext context = new ClassPathXmlApplicationContext("application.xml");
 
-        PersonEvent personEvent = new PersonEvent("","小丽","20");
+        PersonEvent personEvent = new PersonEvent("", "小丽", "20");
 
         context.publishEvent(personEvent);
 

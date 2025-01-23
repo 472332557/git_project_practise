@@ -142,7 +142,7 @@ public class QueryTest {
 
         List elements = element1.elements();
         Iterator iterator = elements.iterator();
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             Element element = (Element) iterator.next();
 
             System.out.println(element.getName());

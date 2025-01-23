@@ -4,6 +4,7 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -20,7 +21,7 @@ public class ExportWithThread {
 //        ExportWithThread.exportWithThread();
         System.out.println((int) Math.ceil((double) 45620 / (double) 10000));
 
-        List<String> lists = Arrays.asList("1","2","3","4","5","6","7","8","9","10");
+        List<String> lists = Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
         List<String> strings = lists.subList(0, 3);
         System.out.println(strings);
     }
@@ -28,16 +29,16 @@ public class ExportWithThread {
     public static String exportWithThread() throws IOException {
 
         int initNum = 2;
-        String name = "测试导出excel"+System.currentTimeMillis()+".xlsx";
+        String name = "测试导出excel" + System.currentTimeMillis() + ".xlsx";
         final FileOutputStream[] fileOutputStream = new FileOutputStream[1];
 
-        List<String> lists = Arrays.asList("1","2","3","4","5","6","7","8","9","10");
+        List<String> lists = Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
         List<String> collect = lists.stream().limit(2).collect(Collectors.toList());
         List<String> collect1 = lists.stream().limit(4).collect(Collectors.toList());
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet("测试导出shht页");
 
-        int count = (int)Math.ceil((double) lists.size() /  (double) initNum);
+        int count = (int) Math.ceil((double) lists.size() / (double) initNum);
         ExecutorService executorService = Executors.newFixedThreadPool(2);
         executorService.execute(new Runnable() {
             @Override

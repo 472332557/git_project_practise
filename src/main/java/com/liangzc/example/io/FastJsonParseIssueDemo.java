@@ -18,11 +18,11 @@ public class FastJsonParseIssueDemo {
 
         File file = new File(filePath);
 
-        System.out.println("File："+file.length());
+        System.out.println("File：" + file.length());
 
         FileSystemResource fileSystemResource = new FileSystemResource(filePath);
 
-        System.out.println("fileSystemResource："+fileSystemResource.getFile().length());
+        System.out.println("fileSystemResource：" + fileSystemResource.getFile().length());
 
         Map<String, Object> map = new HashMap<>();
         map.put("requestId", 1);
@@ -31,8 +31,7 @@ public class FastJsonParseIssueDemo {
         System.out.println(JSON.toJSONString(map));
 
 
-        System.out.println("json转义后的大小"+fileSystemResource.getFile().length());
-
+        System.out.println("json转义后的大小" + fileSystemResource.getFile().length());
 
 
     }

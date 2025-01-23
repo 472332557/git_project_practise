@@ -40,7 +40,7 @@ import java.util.Map;
 @RunWith(value = SpringJUnit4ClassRunner.class)
 public class ConnectionDemo {
 
-    public static final String getUrl = "http://localhost:8081/start?id="+666;
+    public static final String getUrl = "http://localhost:8081/start?id=" + 666;
 
     public static final String postUrl = "http://localhost:8081/postTest";
 
@@ -56,11 +56,11 @@ public class ConnectionDemo {
         connection.setRequestMethod("GET");
         connection.setDoOutput(false);
         connection.setDoInput(true);
-        connection.setRequestProperty("Content-Type","application/x-www-form-urlencoded");
+        connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
         connection.connect();
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream(),"UTF-8"));
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
         String line;
-        while ((line = bufferedReader.readLine()) != null){
+        while ((line = bufferedReader.readLine()) != null) {
             result.append(line);
         }
         bufferedReader.close();
@@ -75,13 +75,13 @@ public class ConnectionDemo {
         HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
         connection.setRequestMethod("POST");
         connection.setDoOutput(true);
-        connection.setRequestProperty("Content-Type","application/x-www-form-urlencoded");
+        connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
         connection.connect();
         Map<String, Object> requestMap = new HashMap<>();
         requestMap.put("id", 666);
         OutputStreamWriter outputStream = new OutputStreamWriter(connection.getOutputStream());
         for (String key : requestMap.keySet()) {
-            outputStream.write(key +"=" +requestMap.get(key));
+            outputStream.write(key + "=" + requestMap.get(key));
         }
 
         outputStream.flush();
@@ -89,28 +89,44 @@ public class ConnectionDemo {
 
         int responseCode = connection.getResponseCode();
         InputStream inputStream;
-        System.out.println("响应code="+responseCode);
-        if(responseCode == 200){
+        System.out.println("响应code=" + responseCode);
+        if (responseCode == 200) {
             inputStream = connection.getInputStream();
-        }else {
+        } else {
             inputStream = connection.getErrorStream();
         }
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"UTF-8"));
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
         String line;
-        while ((line = bufferedReader.readLine()) != null){
+        while ((line = bufferedReader.readLine()) != null) {
             result.append(line);
         }
         bufferedReader.close();
-        System.out.println("响应报文："+result.toString());
+        System.out.println("响应报文：" + result.toString());
     }
 
     //RestTemplate get
     @Test
-    public void RestTemplateGet(){
+    public void RestTemplateGet() {
         RestTemplate restTemplate = new RestTemplate();
-        String url = "http://localhost:8081/start?id="+1;
+        String url = "http://localhost:8081/start?id=" + 1;
         String result = restTemplate.getForObject(getUrl, String.class);
-        System.out.println("返回结果："+result);
+        System.out.println("返回结果：" + result);
+    }
+
+
+    @Test
+    public void RestTemplateGetForCookie() {
+        RestTemplate restTemplate = new RestTemplate();
+        String cookie = "JSESSIONID=A8E097EAE0B37DCC6F0DD4C79A5C5DAE; _segiupt_ts=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJleHBpcmVzX2luIjoyNDE5MjAwLCJpYXQiOjE2ODE3MTQ0NzYsInNhbHQiOiIhbWokVkNVXVZpRGhzUVJRIiwidHlwZSI6InNlc3Npb25fdG9rZW4iLCJ1c2VybmFtZSI6IlNFR0lfQl9BRE1JTjAwNSJ9.iazJzCydUSFcq6kFIkCuuYUrVPRvcP1icgUdQLdIRxnPvfrtaefK-nRW9imnP0x0VHZ4zRuR6R-G4U9huHq57w; _segiupt_as=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJjbGllbnRfaWQiOiJzZWdpIiwiZXhwaXJlc19pbiI6ODY0MDAsImlhdCI6MTY4MTcxNDQ3Niwic2FsdCI6IkhUeDJjazFOUStSVWFRQSEiLCJzY29wZSI6InNfYWRtaW4iLCJ0eXBlIjoiYWNjZXNzX3Rva2VuIiwidXNlcl9pZCI6IlNFR0lfQl8yNDI3OTM4IiwidXNlcm5hbWUiOiJTRUdJX0JfQURNSU4wMDUifQ._sHevIUgP8ken4BgUJMOyffrbc8oXSoessux6RYauiRT7FzETNUrd_hKTXFFWh1foGwPgdKYCEqnpnI2lYhcXg; _segiupt_ci=segi; _segiupt_ty=SEGI_B_; aid=2427938; oid=1000";
+        String url = "https://leasewx.cmsk1979.com/uhomecp-lease/admin/contract/settle/queryContractDetailForCommission?contractNo=ZGDX-2018-08-0013";
+        HttpHeaders httpHeaders = new HttpHeaders();
+        List<String> cookies = new ArrayList<>();
+        cookies.add(cookie);
+        httpHeaders.put(HttpHeaders.COOKIE, cookies);
+        HttpEntity httpEntity = new HttpEntity(httpHeaders);
+
+        ResponseEntity<String> result = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
+        System.out.println("返回结果：" + result);
     }
 
 
@@ -131,7 +147,7 @@ public class ConnectionDemo {
 
     //RestTemplate post  key-value
     @Test
-    public void RestTemplatePost(){
+    public void RestTemplatePost() {
         RestTemplate restTemplate = new RestTemplate();
         String url = "http://localhost:8081/postTest";
 
@@ -140,18 +156,18 @@ public class ConnectionDemo {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(type);
         //设置请求参数
-        MultiValueMap<String,Object> multiValueMap = new LinkedMultiValueMap();
-        multiValueMap.add("id","666");
+        MultiValueMap<String, Object> multiValueMap = new LinkedMultiValueMap();
+        multiValueMap.add("id", "666");
         HttpEntity<MultiValueMap<String, Object>> entity = new HttpEntity<>(multiValueMap, httpHeaders);
 
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(postUrl, entity, String.class);
         String body = responseEntity.getBody();
-        System.out.println("返回信息："+body);
+        System.out.println("返回信息：" + body);
     }
 
     //RestTemplate postJson
     @Test
-    public void RestTemplatePostJson(){
+    public void RestTemplatePostJson() {
         RestTemplate restTemplate = new RestTemplate();
         //设置请求头信息
         MediaType type = MediaType.parseMediaType("application/json; charset=UTF-8");
@@ -164,13 +180,13 @@ public class ConnectionDemo {
         user.setGender("女");
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(postUrlJson, user, String.class);
         String body = responseEntity.getBody();
-        System.out.println("返回信息："+body);
+        System.out.println("返回信息：" + body);
     }
 
     //httpClient get
     @Test
-    public void httpClientGet(){
-        String url = "http://localhost:8081/start?id="+1;
+    public void httpClientGet() {
+        String url = "http://localhost:8081/start?id=" + 1;
         //获得http客户端
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         //创建get请求
@@ -179,31 +195,31 @@ public class ConnectionDemo {
         try {
             //发送get请求
             response = httpClient.execute(httpGet);
-            System.out.println("响应状态为："+response.getStatusLine());
+            System.out.println("响应状态为：" + response.getStatusLine());
             org.apache.http.HttpEntity entity = response.getEntity();
-            if(entity != null){
-                System.out.println("响应长度为："+entity.getContentLength());
+            if (entity != null) {
+                System.out.println("响应长度为：" + entity.getContentLength());
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(entity.getContent()));
                 String line;
                 StringBuilder builder = new StringBuilder();
-                while ((line = bufferedReader.readLine()) != null){
+                while ((line = bufferedReader.readLine()) != null) {
                     builder.append(line);
                 }
-                System.out.println("返回信息为："+builder.toString());
-                System.out.println("响应内容为："+ JSONObject.toJSONString(entity));
+                System.out.println("返回信息为：" + builder.toString());
+                System.out.println("响应内容为：" + JSONObject.toJSONString(entity));
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             //释放资源
             try {
-                if(httpClient != null){
+                if (httpClient != null) {
                     httpClient.close();
                 }
-                if (response != null){
+                if (response != null) {
                     response.close();
                 }
-            }catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
@@ -211,12 +227,12 @@ public class ConnectionDemo {
 
     //httpClient post
     @Test
-    public void httpClientPost(){
+    public void httpClientPost() {
         //获得http客户端
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         //创建get请求
         HttpPost httpPost = new HttpPost(postUrl);
-        httpPost.setHeader("Content-Type","application/x-www-form-urlencoded");
+        httpPost.setHeader("Content-Type", "application/x-www-form-urlencoded");
 
         CloseableHttpResponse response = null;
         try {
@@ -224,34 +240,34 @@ public class ConnectionDemo {
             List<NameValuePair> paramList = Lists.newArrayList();
             paramList.add(new BasicNameValuePair("id", "666"));
             //设置请求参数，放入请求体
-            httpPost.setEntity(new UrlEncodedFormEntity(paramList,"UTF-8"));
+            httpPost.setEntity(new UrlEncodedFormEntity(paramList, "UTF-8"));
             //发送post请求
             response = httpClient.execute(httpPost);
-            System.out.println("响应状态为："+response.getStatusLine());
+            System.out.println("响应状态为：" + response.getStatusLine());
             org.apache.http.HttpEntity responseEntity = response.getEntity();
-            if(responseEntity != null){
-                System.out.println("响应长度为："+responseEntity.getContentLength());
+            if (responseEntity != null) {
+                System.out.println("响应长度为：" + responseEntity.getContentLength());
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(responseEntity.getContent()));
                 String line;
                 StringBuilder builder = new StringBuilder();
-                while ((line = bufferedReader.readLine()) != null){
+                while ((line = bufferedReader.readLine()) != null) {
                     builder.append(line);
                 }
-                System.out.println("返回信息为："+builder.toString());
-                System.out.println("响应内容为："+ JSONObject.toJSONString(responseEntity));
+                System.out.println("返回信息为：" + builder.toString());
+                System.out.println("响应内容为：" + JSONObject.toJSONString(responseEntity));
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             //释放资源
             try {
-                if(httpClient != null){
+                if (httpClient != null) {
                     httpClient.close();
                 }
-                if (response != null){
+                if (response != null) {
                     response.close();
                 }
-            }catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
@@ -259,12 +275,12 @@ public class ConnectionDemo {
 
     //httpClient post json格式请求
     @Test
-    public void httpClientPostOfJson(){
+    public void httpClientPostOfJson() {
         //获得http客户端
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         //创建get请求
         HttpPost httpPost = new HttpPost(postUrlJson);
-        httpPost.setHeader("Content-Type","application/json;charset=utf8");
+        httpPost.setHeader("Content-Type", "application/json;charset=utf8");
         //构建请求参数
         User user = new User();
         user.setName("lili");
@@ -277,31 +293,31 @@ public class ConnectionDemo {
         try {
             //发送post请求
             response = httpClient.execute(httpPost);
-            System.out.println("响应状态为："+response.getStatusLine());
+            System.out.println("响应状态为：" + response.getStatusLine());
             org.apache.http.HttpEntity responseEntity = response.getEntity();
-            if(responseEntity != null){
-                System.out.println("响应长度为："+responseEntity.getContentLength());
+            if (responseEntity != null) {
+                System.out.println("响应长度为：" + responseEntity.getContentLength());
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(responseEntity.getContent()));
                 String line;
                 StringBuilder builder = new StringBuilder();
-                while ((line = bufferedReader.readLine()) != null){
+                while ((line = bufferedReader.readLine()) != null) {
                     builder.append(line);
                 }
-                System.out.println("返回信息为："+builder.toString());
-                System.out.println("响应内容为："+ JSONObject.toJSONString(responseEntity));
+                System.out.println("返回信息为：" + builder.toString());
+                System.out.println("响应内容为：" + JSONObject.toJSONString(responseEntity));
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             //释放资源
             try {
-                if(httpClient != null){
+                if (httpClient != null) {
                     httpClient.close();
                 }
-                if (response != null){
+                if (response != null) {
                     response.close();
                 }
-            }catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
@@ -312,10 +328,10 @@ public class ConnectionDemo {
      * 不需要在上面的方法中，拿到输入流然后再去自己处理了，查看了源码，源码也是如此处理
      */
     @Test
-    public void httpClientPostOfJsonNew(){
+    public void httpClientPostOfJsonNew() {
         CloseableHttpClient httpClient = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost(postUrlJson);
-        httpPost.setHeader("Content-Type","application/json;charset=utf8");
+        httpPost.setHeader("Content-Type", "application/json;charset=utf8");
         //构建请求参数
         User user = new User();
         user.setName("lili");
@@ -329,26 +345,26 @@ public class ConnectionDemo {
             response = httpClient.execute(httpPost);
             StatusLine statusLine = response.getStatusLine();
             int statusCode = statusLine.getStatusCode();
-            System.out.println("请求返回状态码："+statusCode);
+            System.out.println("请求返回状态码：" + statusCode);
             org.apache.http.HttpEntity responseEntity = response.getEntity();
             String toString = EntityUtils.toString(responseEntity);
-            if(statusCode == HttpStatus.SC_OK){
-                System.out.println("请求返回："+toString);
-            }else {
-                System.out.println("请求返回："+toString);
+            if (statusCode == HttpStatus.SC_OK) {
+                System.out.println("请求返回：" + toString);
+            } else {
+                System.out.println("请求返回：" + toString);
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             //释放资源
             try {
-                if(httpClient != null){
+                if (httpClient != null) {
                     httpClient.close();
                 }
-                if (response != null){
+                if (response != null) {
                     response.close();
                 }
-            }catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
@@ -357,26 +373,26 @@ public class ConnectionDemo {
 
     // okHttp  get
     @Test
-    public void okHttpGet(){
+    public void okHttpGet() {
         OkHttpClient okHttpClient = new OkHttpClient();
         Request request = new Request.Builder().url(getUrl).build();
         Response response = null;
         try {
             response = okHttpClient.newCall(request).execute();
-            if(response.isSuccessful()){
+            if (response.isSuccessful()) {
 
                 ResponseBody responseBody = response.body();
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(responseBody.byteStream()));
                 String line;
                 StringBuilder builder = new StringBuilder();
-                while ((line = bufferedReader.readLine()) != null){
+                while ((line = bufferedReader.readLine()) != null) {
                     builder.append(line);
                 }
-                System.out.println("返回信息为："+builder.toString());
+                System.out.println("返回信息为：" + builder.toString());
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
 
         }
 
@@ -384,7 +400,7 @@ public class ConnectionDemo {
 
     // okHttp  post
     @Test
-    public void okHttpPost(){
+    public void okHttpPost() {
         OkHttpClient okHttpClient = new OkHttpClient();
         //构建请求参数
         User user = new User();
@@ -397,20 +413,20 @@ public class ConnectionDemo {
         Response response = null;
         try {
             response = okHttpClient.newCall(request).execute();
-            if(response.isSuccessful()){
+            if (response.isSuccessful()) {
 
                 ResponseBody responseBody = response.body();
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(responseBody.byteStream()));
                 String line;
                 StringBuilder builder = new StringBuilder();
-                while ((line = bufferedReader.readLine()) != null){
+                while ((line = bufferedReader.readLine()) != null) {
                     builder.append(line);
                 }
-                System.out.println("返回信息为："+builder.toString());
+                System.out.println("返回信息为：" + builder.toString());
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
 
         }
 

@@ -18,14 +18,14 @@ import java.util.Properties;
 public class ShardingDatabaseAndTableConfiguration {
 
 
-    private static Map<String, DataSource> createDataSource(){
+    private static Map<String, DataSource> createDataSource() {
         Map<String, DataSource> sourceMap = new HashMap<>();
         sourceMap.put("ds0", DataSourceUtils.createDataSource("shard_01"));
         sourceMap.put("ds1", DataSourceUtils.createDataSource("shard_02"));
         return sourceMap;
     }
 
-    private static ShardingRuleConfiguration createShardingRuleConfiguration(){
+    private static ShardingRuleConfiguration createShardingRuleConfiguration() {
 
         ShardingRuleConfiguration configuration = new ShardingRuleConfiguration();
 
@@ -67,7 +67,7 @@ public class ShardingDatabaseAndTableConfiguration {
     }
 
     //配置逻辑表及表的id策略
-    private static ShardingTableRuleConfiguration getOrderTableRuleConfiguration(){
+    private static ShardingTableRuleConfiguration getOrderTableRuleConfiguration() {
         ShardingTableRuleConfiguration ruleConfiguration =
                 new ShardingTableRuleConfiguration("t_order", "ds${0..1}.t_order_${0..1}");
         ruleConfiguration.setKeyGenerateStrategy(new KeyGenerateStrategyConfiguration("order_id", "snowflake"));

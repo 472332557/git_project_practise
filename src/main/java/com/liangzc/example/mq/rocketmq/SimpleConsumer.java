@@ -29,18 +29,18 @@ public class SimpleConsumer {
                                                             ConsumeConcurrentlyContext context) {
                 System.out.printf("%s Receive New Messages: %s %n", Thread.currentThread().getName(), msgs);
 
-                for(MessageExt msg : msgs){
+                for (MessageExt msg : msgs) {
                     String topic = msg.getTopic();
-                    String messageBody="";
+                    String messageBody = "";
                     try {
-                        messageBody = new String(msg.getBody(),"utf-8");
+                        messageBody = new String(msg.getBody(), "utf-8");
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                         // 重新消费
                         return ConsumeConcurrentlyStatus.RECONSUME_LATER;
                     }
                     String tags = msg.getTags();
-                    System.out.println("topic:"+topic+",tags:"+tags+",msg:"+messageBody);
+                    System.out.println("topic:" + topic + ",tags:" + tags + ",msg:" + messageBody);
                 }
 
                 // 消费成功

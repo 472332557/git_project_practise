@@ -23,8 +23,8 @@ public class ClientExample {
                     protected void initChannel(SocketChannel socketChannel) throws Exception {
                         socketChannel.pipeline()
                                 //服务端使用LengthFieldBasedFrameDecoder解码器，客户端需要指定报文length长度。表示传输消息的时候，在消息报文中增加4个字节的length。->发送的ByteBuf
-                                .addLast(new LengthFieldPrepender(4,0,false))
-                                .addLast(new ChannelInboundHandlerAdapter(){
+                                .addLast(new LengthFieldPrepender(4, 0, false))
+                                .addLast(new ChannelInboundHandlerAdapter() {
 
                                     @Override
                                     public void channelActive(ChannelHandlerContext ctx) throws Exception {
@@ -45,7 +45,7 @@ public class ClientExample {
                                         byte[] bytes = new byte[byteBuf.readableBytes()];
                                         byteBuf.readBytes(bytes);
                                         String readMsg = new String(bytes, "utf-8");
-                                        System.out.println("客户端接收到服务端返回信息："+readMsg);
+                                        System.out.println("客户端接收到服务端返回信息：" + readMsg);
                                         super.channelActive(ctx);
                                     }
                                 });
@@ -57,7 +57,7 @@ public class ClientExample {
             channelFuture.channel().closeFuture().sync();//同步等待客户端关闭
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
 
         }
 

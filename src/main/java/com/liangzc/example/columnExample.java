@@ -8,18 +8,17 @@ public class columnExample {
     public static void main(String[] args) {
 
 
-        List<Integer> rows = Arrays.asList(1,2,3,4,5);
+        List<Integer> rows = Arrays.asList(1, 2, 3, 4, 5);
         List<FeeItemType> column = new ArrayList<>();
 
         for (int i = 1000; i < 1002; i++) {
-            FeeItemType feeItemType1 = new FeeItemType(i+"","电费","实收本年");
-            FeeItemType feeItemType2 = new FeeItemType(i+"","电费","实收往年年");
-            FeeItemType feeItemType3 = new FeeItemType(i+"","电费","预收及以后");
+            FeeItemType feeItemType1 = new FeeItemType(i + "", "电费", "实收本年");
+            FeeItemType feeItemType2 = new FeeItemType(i + "", "电费", "实收往年年");
+            FeeItemType feeItemType3 = new FeeItemType(i + "", "电费", "预收及以后");
             column.add(feeItemType1);
             column.add(feeItemType2);
             column.add(feeItemType3);
         }
-
 
 
         List<Map<String, Object>> result = new ArrayList<>();

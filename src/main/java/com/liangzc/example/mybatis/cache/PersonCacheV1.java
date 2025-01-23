@@ -10,9 +10,11 @@ public class PersonCacheV1 implements Cache {
 
     private String id;
     private Connection connection = DbUtils.getConnection();
+
     public PersonCacheV1(String id) {
         this.id = id;
     }
+
     @Override
     public String getId() {
         return id;
@@ -26,15 +28,15 @@ public class PersonCacheV1 implements Cache {
         try {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setObject(1, key.toString());
-            preparedStatement.setObject(2,value.toString());
+            preparedStatement.setObject(2, value.toString());
             int i = preparedStatement.executeUpdate();
-            if(i > 0){
+            if (i > 0) {
                 System.out.println("cache add SCUUESS");
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        }finally {
-            DbUtils.close(connection,preparedStatement);
+        } finally {
+            DbUtils.close(connection, preparedStatement);
         }
     }
 
@@ -45,9 +47,9 @@ public class PersonCacheV1 implements Cache {
         String sql = "select * from person_cache where cache_key = ?";
         try {
             PreparedStatement pst = connection.prepareStatement(sql);
-            pst.setObject(1,key.toString());
+            pst.setObject(1, key.toString());
             ResultSet rst = pst.executeQuery();
-            while (rst.next()){
+            while (rst.next()) {
                 int id = rst.getInt("id");
                 String cache_key = rst.getString("cache_key");
                 String cache_value = rst.getString("cache_value");
@@ -72,13 +74,13 @@ public class PersonCacheV1 implements Cache {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setObject(1, key.toString());
             int i = preparedStatement.executeUpdate();
-            if(i > 0){
+            if (i > 0) {
                 System.out.println("cache delete SCUUESS");
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        }finally {
-            DbUtils.close(connection,preparedStatement);
+        } finally {
+            DbUtils.close(connection, preparedStatement);
         }
         return null;
     }
@@ -91,13 +93,13 @@ public class PersonCacheV1 implements Cache {
         try {
             statement = connection.createStatement();
             int i = statement.executeUpdate(sql);
-            if(i > 0){
+            if (i > 0) {
                 System.out.println("cache delete SCUUESS");
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        }finally {
-            DbUtils.close(connection,statement);
+        } finally {
+            DbUtils.close(connection, statement);
         }
     }
 

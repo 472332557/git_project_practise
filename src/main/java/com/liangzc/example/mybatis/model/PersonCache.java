@@ -1,4 +1,5 @@
 package com.liangzc.example.mybatis.model;
+
 import lombok.Data;
 
 public class PersonCache {

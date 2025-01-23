@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface PersonMapper{
+public interface PersonMapper {
     int countByExample(PersonCriteria example);
 
     int deleteByExample(PersonCriteria example);

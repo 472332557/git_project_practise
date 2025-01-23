@@ -21,7 +21,7 @@ public class ProtocolServer {
         EventLoopGroup boss = new NioEventLoopGroup();
         EventLoopGroup work = new NioEventLoopGroup(4);
         ServerBootstrap bootstrap = new ServerBootstrap();
-        bootstrap.group(boss,work)
+        bootstrap.group(boss, work)
                 .channel(NioServerSocketChannel.class)
                 .childHandler(new ChannelInitializer<SocketChannel>() {
                     //针对客户端连接来设置Pipeline
@@ -45,7 +45,7 @@ public class ProtocolServer {
             channelFuture.channel().closeFuture().sync();//同步等待关闭
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             work.shutdownGracefully();
             boss.shutdownGracefully();
         }

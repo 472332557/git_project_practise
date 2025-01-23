@@ -3,7 +3,7 @@ package com.liangzc.example.io.bio;
 import java.io.*;
 import java.net.Socket;
 
-public class SocketThread implements Runnable{
+public class SocketThread implements Runnable {
 
     private Socket socket;
 

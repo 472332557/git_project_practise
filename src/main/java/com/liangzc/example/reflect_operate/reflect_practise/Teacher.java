@@ -29,23 +29,31 @@ public class Teacher {
     }
 
 
-    public void method1(){
+    public void method1() {
         System.out.println("这是一个public访问类型的方法!");
     }
 
 
-    private void method2(String param){
-        System.out.println("这是一个private访问类型的方法!"+param);
+    private void method2(String param) {
+        System.out.println("这是一个private访问类型的方法!" + param);
     }
 
 
-    public String method3(){
+    public String method3() {
         System.out.println("带返回值的public访问类型的方法！");
         return "带返回值的public访问类型的方法！";
     }
 
-    void method4(){
+    void method4() {
         System.out.println("默认的访问类型的方法！");
+    }
+
+    void method5(boolean isCheck, Long num) {
+        if (isCheck) {
+            System.out.println("SUCCESS");
+        } else {
+            System.out.println("FALSE");
+        }
     }
 
     @Override

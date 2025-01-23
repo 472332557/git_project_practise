@@ -3,6 +3,7 @@ package com.liangzc.example.genericity;
 /**
  * 有时候，我们需要将泛型的类型指定一个范围，此时可以采用有界类型的方式，给该类型一个上界
  * 有界类型，形参使用extends指定类型的上界，类型实参必须是指定的超类或者该超类的子类对象
+ *
  * @param <T>
  */
 public class GeneDemo2<T extends Number> {
@@ -13,15 +14,16 @@ public class GeneDemo2<T extends Number> {
         this.objT = objT;
     }
 
-    public double method1(){
+    public double method1() {
         return 1 / objT.doubleValue();
     }
-    public double method2(){
+
+    public double method2() {
         return objT.doubleValue() - objT.intValue();
     }
 
-    public boolean mathEquals(GeneDemo2<T> obj){
-        if(Math.abs(objT.doubleValue()) == Math.abs(obj.objT.doubleValue())){
+    public boolean mathEquals(GeneDemo2<T> obj) {
+        if (Math.abs(objT.doubleValue()) == Math.abs(obj.objT.doubleValue())) {
             return true;
         }
         return false;

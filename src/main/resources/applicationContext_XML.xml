@@ -23,7 +23,8 @@ http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <aop:config>
         <!--定义切入点-->
-        <aop:pointcut id="myPointcut" expression="execution(* com.liangzc.example.spring_demo.aop.xml_way.basic.service.impl.*.*(..))"/>
+        <aop:pointcut id="myPointcut"
+                      expression="execution(* com.liangzc.example.spring_demo.aop.xml_way.basic.service.impl.*.*(..))"/>
         <!--申明为一个切面bean，引用一个普通的bean-->
         <aop:aspect id="aspectXmlDemo" ref="aspectXmlTest">
             <!--定义增强处理，并引入切入点-->
@@ -39,13 +40,13 @@ http://www.springframework.org/schema/tx/spring-tx.xsd">
         <property name="password" value="lzc123456"></property>
         <property name="url" value="jdbc:mysql://119.23.189.136:3306/own?characterEncoding=utf-8"></property>
         <!-- 配置初始化大小、最小、最大 -->
-        <property name="initialSize" value="1" />
-        <property name="minIdle" value="10" />
-        <property name="maxActive" value="20" />
+        <property name="initialSize" value="1"/>
+        <property name="minIdle" value="10"/>
+        <property name="maxActive" value="20"/>
         <!-- 配置获取连接等待超时的时间 -->
-        <property name="maxWait" value="60000" />
+        <property name="maxWait" value="60000"/>
         <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
-        <property name="timeBetweenEvictionRunsMillis" value="30000" />
+        <property name="timeBetweenEvictionRunsMillis" value="30000"/>
     </bean>
 
     <!--声明spring事物管理器-->
@@ -62,13 +63,15 @@ http://www.springframework.org/schema/tx/spring-tx.xsd">
     </tx:advice>
 
     <aop:config>
-        <aop:pointcut id="transactionPointcut" expression="execution(* com.liangzc.example.spring_demo.aop.xml_way.basic.service.impl.*.*(..))"/>
+        <aop:pointcut id="transactionPointcut"
+                      expression="execution(* com.liangzc.example.spring_demo.aop.xml_way.basic.service.impl.*.*(..))"/>
         <!--将切入点和txAdvice织入-->
         <aop:advisor advice-ref="txAdvice" pointcut-ref="transactionPointcut"/>
     </aop:config>
 
 
     <!--定义基础操作bean，用于测试事物配置-->
-    <bean id="commonService" class="com.liangzc.example.spring_demo.aop.xml_way.basic.service.impl.CommonServiceImpl"></bean>
+    <bean id="commonService"
+          class="com.liangzc.example.spring_demo.aop.xml_way.basic.service.impl.CommonServiceImpl"></bean>
 
 </beans>

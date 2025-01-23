@@ -23,8 +23,8 @@ public class BlockingQueueTest {
         });
 
 
-        Thread thread2 = new Thread(()->{
-            for (;;){
+        Thread thread2 = new Thread(() -> {
+            for (; ; ) {
                 bqe.take();
                 try {
                     Thread.sleep(random.nextInt(1000));
@@ -44,7 +44,6 @@ public class BlockingQueueTest {
         }
 
         thread2.start();
-
 
 
     }

@@ -1,6 +1,6 @@
 package com.liangzc.example.design_pattern.factory.abstract_factory;
 
-public class JavaAbstractFactory  extends AbstractFactory{
+public class JavaAbstractFactory extends AbstractFactory {
 
     @Override
     public INote createNote() {

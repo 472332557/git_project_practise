@@ -16,8 +16,6 @@ public class DateTest {
     }
 
 
-
-
     public static void OwesCycleAge(String statsMonth) {
         //参数statsMonth日期格式：yyyy-MM
         DateTime curDate = DateTimeUtils.parseDate(statsMonth + "-01");
@@ -35,18 +33,18 @@ public class DateTest {
         String tenYearMonth = DateTimeUtils.addDateMonth(curDate, 120, DateTimeUtils.YYMM);
 
 
-        System.out.println("curMonth:"+Integer.valueOf(curMonth));
-        System.out.println("oneMonth:"+Integer.valueOf(oneMonth));
-        System.out.println("twoMonth:"+Integer.valueOf(twoMonth));
-        System.out.println("threeMonth:"+Integer.valueOf(threeMonth));
-        System.out.println("sixMonth:"+Integer.valueOf(sixMonth));
-        System.out.println("oneYearMonth:"+Integer.valueOf(oneYearMonth));
-        System.out.println("twoYearMonth:"+Integer.valueOf(twoYearMonth));
-        System.out.println("threeYearMonth:"+Integer.valueOf(threeYearMonth));
-        System.out.println("fourYearMonth:"+Integer.valueOf(fourYearMonth));
-        System.out.println("fiveYearMonth:"+Integer.valueOf(fiveYearMonth));
-        System.out.println("sevenYearMonth:"+Integer.valueOf(sevenYearMonth));
-        System.out.println("tenYearMonth:"+Integer.valueOf(tenYearMonth));
+        System.out.println("curMonth:" + Integer.valueOf(curMonth));
+        System.out.println("oneMonth:" + Integer.valueOf(oneMonth));
+        System.out.println("twoMonth:" + Integer.valueOf(twoMonth));
+        System.out.println("threeMonth:" + Integer.valueOf(threeMonth));
+        System.out.println("sixMonth:" + Integer.valueOf(sixMonth));
+        System.out.println("oneYearMonth:" + Integer.valueOf(oneYearMonth));
+        System.out.println("twoYearMonth:" + Integer.valueOf(twoYearMonth));
+        System.out.println("threeYearMonth:" + Integer.valueOf(threeYearMonth));
+        System.out.println("fourYearMonth:" + Integer.valueOf(fourYearMonth));
+        System.out.println("fiveYearMonth:" + Integer.valueOf(fiveYearMonth));
+        System.out.println("sevenYearMonth:" + Integer.valueOf(sevenYearMonth));
+        System.out.println("tenYearMonth:" + Integer.valueOf(tenYearMonth));
     }
 
     public static final Date lastDayOfMonth(Date date) {
@@ -57,7 +55,7 @@ public class DateTest {
         return cal.getTime();
     }
 
-    public static void getDateStr(){
+    public static void getDateStr() {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         System.out.println(format.format(lastDayOfMonth(new Date())));
     }

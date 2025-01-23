@@ -20,7 +20,7 @@ public class NettyBasicServerExample {
         EventLoopGroup workGroup = new NioEventLoopGroup(4);
         //构建Netty Server的API
         ServerBootstrap bootstrap = new ServerBootstrap();
-        bootstrap.group(bossGroup,workGroup)
+        bootstrap.group(bossGroup, workGroup)
                 //指定epoll模型
                 .channel(NioServerSocketChannel.class)
                 //具体的工作处理类，负责处理相关SocketChannel的IO就绪事件，可以类比为reator模型中的handler
@@ -41,7 +41,7 @@ public class NettyBasicServerExample {
             channelFuture.channel().closeFuture().sync();//同步等到服务端监听端口关闭
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             bossGroup.shutdownGracefully();
             workGroup.shutdownGracefully();
         }

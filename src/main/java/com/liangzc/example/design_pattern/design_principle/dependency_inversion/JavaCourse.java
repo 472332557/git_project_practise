@@ -1,6 +1,6 @@
 package com.liangzc.example.design_pattern.design_principle.dependency_inversion;
 
-public class JavaCourse implements Course{
+public class JavaCourse implements Course {
 
     @Override
     public void explain() {

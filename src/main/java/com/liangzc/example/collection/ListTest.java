@@ -1,5 +1,6 @@
 package com.liangzc.example.collection;
 
+import com.google.common.collect.Lists;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -13,9 +14,9 @@ public class ListTest {
 
         List<BallSports> ballSports = new ArrayList<>();
         List<BallSports> ballSportsList = new LinkedList<>();
-        BallSports ballSports1 = new BallSports(1,"足球","1");
-        BallSports ballSports2 = new BallSports(2,"篮球","1");
-        BallSports ballSports3 = new BallSports(3,"羽毛球","2");
+        BallSports ballSports1 = new BallSports(1, "足球", "1");
+        BallSports ballSports2 = new BallSports(2, "篮球", "1");
+        BallSports ballSports3 = new BallSports(3, "羽毛球", "2");
 
         //ArrayList
         ballSports.add(ballSports1);
@@ -29,13 +30,12 @@ public class ListTest {
     }
 
 
-
     //arrayList中使用到的api
     @Test
-    public void listAddSummary(){
+    public void listAddSummary() {
         //返回两个数中的最大值
-        System.out.println("最大值："+Math.max(1, 2));
-        Object[] obgArray = {1,2,3,4,5};
+        System.out.println("最大值：" + Math.max(1, 2));
+        Object[] obgArray = {1, 2, 3, 4, 5};
         /**
          * Arrays.copyOf
          * 返回一个新的数组对象，新数组对象包含原数组数据;
@@ -47,5 +47,24 @@ public class ListTest {
         }
         System.out.println(objects.length);
 
+    }
+
+    @Test
+    public void arraysTest(){
+        String[] arrays = {"1","2","3"};
+        List<String> list = Arrays.asList(arrays);
+//        ArrayList<String> strings = Lists.newArrayList(arrays);
+        System.out.println(list);
+
+//        list.add("4");
+
+        System.out.println(list);
+
+
+        Long a = 123456L;
+
+        Long b = 123456L;
+
+        System.out.println(a.longValue() == b);
     }
 }

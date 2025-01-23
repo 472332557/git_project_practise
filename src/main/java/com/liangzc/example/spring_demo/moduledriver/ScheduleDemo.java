@@ -13,7 +13,7 @@ public class ScheduleDemo {
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
 
     @Scheduled(cron = "0/2 * * * * ?")
-    public void start(){
+    public void start() {
 
         System.out.println("current time:" + dateFormat.format(new Date()));
     }

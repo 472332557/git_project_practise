@@ -7,7 +7,7 @@ import java.nio.channels.*;
 import java.util.Iterator;
 import java.util.Set;
 
-public class NIOSelectorServerSocket implements Runnable{
+public class NIOSelectorServerSocket implements Runnable {
 
     Selector selector;
     ServerSocketChannel serverSocketChannel;
@@ -24,12 +24,12 @@ public class NIOSelectorServerSocket implements Runnable{
     @Override
     public void run() {
 
-        while (!Thread.interrupted()){
+        while (!Thread.interrupted()) {
             try {
                 selector.select();//阻塞，等待就绪事件（连接 | IO 事件（read、write））
                 Set<SelectionKey> selectionKeys = selector.selectedKeys();//事件列表
                 Iterator<SelectionKey> iterator = selectionKeys.iterator();
-                while (iterator.hasNext()){
+                while (iterator.hasNext()) {
                     //说明有连接进来
                     SelectionKey selectionKey = iterator.next();
                     dispatcher(selectionKey);
@@ -50,11 +50,11 @@ public class NIOSelectorServerSocket implements Runnable{
      * @throws IOException
      */
     private void dispatcher(SelectionKey selectionKey) throws IOException {
-        if (selectionKey.isAcceptable()){//连接事件
+        if (selectionKey.isAcceptable()) {//连接事件
             register(selectionKey);
-        }else if (selectionKey.isReadable()){//读事件
+        } else if (selectionKey.isReadable()) {//读事件
             read(selectionKey);
-        }else if (selectionKey.isWritable()){//写事件
+        } else if (selectionKey.isWritable()) {//写事件
 //            write(selectionKey);
         }
     }
@@ -64,7 +64,7 @@ public class NIOSelectorServerSocket implements Runnable{
         ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
         byteBuffer.put("dddddddd".getBytes());
         socketChannel.write(byteBuffer);
-        System.out.println("server send a message："+new String(byteBuffer.array()));
+        System.out.println("server send a message：" + new String(byteBuffer.array()));
     }
 
     private void read(SelectionKey selectionKey) throws IOException {
@@ -75,7 +75,7 @@ public class NIOSelectorServerSocket implements Runnable{
         //读取的数据放到缓冲区
         socketChannel.read(byteBuffer);
 
-        System.out.println("server receive a message："+new String(byteBuffer.array()));
+        System.out.println("server receive a message：" + new String(byteBuffer.array()));
 
         byteBuffer.flip();
         socketChannel.write(byteBuffer);

@@ -11,24 +11,24 @@ public class SortedTest {
 
         //创建一个集合
         List<String> list = new ArrayList<>();
-        list.add("a1");list.add("a2");list.add("a3");list.add("b1");list.add("b2");list.add("b3");
+        list.add("a1");
+        list.add("a2");
+        list.add("a3");
+        list.add("b1");
+        list.add("b2");
+        list.add("b3");
         streamSortedTest(list);
     }
 
-    private static void streamSortedTest(List<String> list){
+    private static void streamSortedTest(List<String> list) {
         //默认排序
         list.stream().filter(s -> s.startsWith("a")).forEach(System.out::println);
         System.out.println("- - - - - - - - -");
         //自定义排序 倒叙排序
-        list.stream().sorted((s, t1) -> t1.compareTo(s)).filter(s -> s.startsWith("a")).forEach(System.out::println);
+        list.stream().sorted((Comparator.reverseOrder())).filter(s -> s.startsWith("a")).forEach(System.out::println);
 
         System.out.println("- - - - - - - - -");
         //顺序排
-        list.stream().sorted((s, t1) -> s.compareTo(t1)).filter(s -> s.startsWith("a")).forEach(System.out::println);
-
-
-        System.out.println("- - - - - - - - -");
-        //顺序排
-        list.stream().sorted((s1, anotherString) -> s1.compareTo(anotherString)).filter(s -> s.startsWith("a")).forEach(System.out::println);
+        list.stream().sorted((String::compareTo)).filter(s -> s.startsWith("a")).forEach(System.out::println);
     }
 }

@@ -5,7 +5,7 @@ public class Test {
     public static void main(String[] args) {
 
         Drafts drafts = new Drafts();
-        Edit edit = new Edit("课程","java学习","localhost/java_study.com");
+        Edit edit = new Edit("课程", "java学习", "localhost/java_study.com");
         MemoRandum memoRandum = edit.addMemoRandum();
         drafts.addDrafts(memoRandum);
         System.out.println(edit);

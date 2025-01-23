@@ -2,10 +2,11 @@ package com.liangzc.example.genericity;
 
 /**
  * 两个类型形参的泛型
- * @param <T>  形参T
- * @param <V>  形参V
+ *
+ * @param <T> 形参T
+ * @param <V> 形参V
  */
-public class GeneDemo1<T,V> {
+public class GeneDemo1<T, V> {
 
     T objT;
     V objV;
@@ -16,23 +17,23 @@ public class GeneDemo1<T,V> {
     }
 
 
-    public T getT(){
+    public T getT() {
 
         return objT;
     }
 
-    public V getV(){
+    public V getV() {
         return objV;
     }
 
-    public void print(){
+    public void print() {
 
-        System.out.println("T is:"+objT+",and V is:"+objV);
+        System.out.println("T is:" + objT + ",and V is:" + objV);
     }
 
-    public void type(){
+    public void type() {
 
-        System.out.println("type of T is :"+objT.getClass().getName()+"\n"+"type of V is :"+objV.getClass().getName());
+        System.out.println("type of T is :" + objT.getClass().getName() + "\n" + "type of V is :" + objV.getClass().getName());
     }
 
     public static void main(String[] args) {

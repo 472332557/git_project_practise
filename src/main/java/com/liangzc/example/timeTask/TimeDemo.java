@@ -14,7 +14,7 @@ public class TimeDemo {
         String selectDate = "2020-11-08 11:13:00";
         Date date = simpleDateFormat.parse(selectDate);
         System.out.println(date);
-        timer.schedule(new OwenTimeTask(),1000,1000);
+        timer.schedule(new OwenTimeTask(), 1000, 1000);
 
         try {
             Thread.sleep(1000);

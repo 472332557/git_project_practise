@@ -12,16 +12,16 @@ public class LinkedBlockingQueueTest {
 
         try {
             for (int i = 0; i < 1000; i++) {
-                blockingQueue.put("--"+i);
+                blockingQueue.put("--" + i);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
 
-        System.out.println("size-------"+blockingQueue.size());
+        System.out.println("size-------" + blockingQueue.size());
 //        blockingQueue.put("-----11111");
-        System.out.println("capacity-----"+blockingQueue.remainingCapacity());
+        System.out.println("capacity-----" + blockingQueue.remainingCapacity());
     }
 
     //2147482647

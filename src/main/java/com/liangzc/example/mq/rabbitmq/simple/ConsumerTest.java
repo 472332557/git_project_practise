@@ -53,14 +53,14 @@ public class ConsumerTest {
         channel.queueBind(QUEUE_NAME_2, EXCHANGE_FANOUT, "");
 
         //创建消费者
-        Consumer consumer = new DefaultConsumer(channel){
+        Consumer consumer = new DefaultConsumer(channel) {
 
             @Override
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
-                String msg = new String(body,"UTF-8");
+                String msg = new String(body, "UTF-8");
                 System.out.println("Received message :" + msg);
                 System.out.println("consumerTag :" + consumerTag);
-                System.out.println("deliveryTag :" +envelope.getDeliveryTag());
+                System.out.println("deliveryTag :" + envelope.getDeliveryTag());
             }
         };
         channel.basicConsume(QUEUE_NAME_1, true, consumer);
@@ -97,14 +97,14 @@ public class ConsumerTest {
         channel.queueBind(QUEUE_NAME_4, EXCHANGE_DIRECT, "");
 
         //创建消费者
-        Consumer consumer = new DefaultConsumer(channel){
+        Consumer consumer = new DefaultConsumer(channel) {
 
             @Override
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
-                String msg = new String(body,"UTF-8");
+                String msg = new String(body, "UTF-8");
                 System.out.println("Received message :" + msg);
                 System.out.println("consumerTag :" + consumerTag);
-                System.out.println("deliveryTag :" +envelope.getDeliveryTag());
+                System.out.println("deliveryTag :" + envelope.getDeliveryTag());
             }
         };
         channel.basicConsume(QUEUE_NAME_3, true, consumer);
@@ -141,17 +141,17 @@ public class ConsumerTest {
         channel.queueBind(QUEUE_NAME_6, EXCHANGE_TOPIC, "com.*");
 
         //创建消费者
-        Consumer consumer = new DefaultConsumer(channel){
+        Consumer consumer = new DefaultConsumer(channel) {
 
             @Override
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
-                String msg = new String(body,"UTF-8");
+                String msg = new String(body, "UTF-8");
                 System.out.println("Received message :" + msg);
                 System.out.println("consumerTag :" + consumerTag);
-                System.out.println("deliveryTag :" +envelope.getDeliveryTag());
-                System.out.println("交换机是："+envelope.getExchange());
-                System.out.println("消费的路由键是："+envelope.getRoutingKey());
-                System.out.println("消费内容类型："+properties.getContentType());
+                System.out.println("deliveryTag :" + envelope.getDeliveryTag());
+                System.out.println("交换机是：" + envelope.getExchange());
+                System.out.println("消费的路由键是：" + envelope.getRoutingKey());
+                System.out.println("消费内容类型：" + properties.getContentType());
                 System.out.println("=============================================================================");
             }
         };

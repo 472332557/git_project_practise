@@ -1,23 +1,23 @@
 <!DOCTYPE web-app PUBLIC
- "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
- "http://java.sun.com/dtd/web-app_2_3.dtd" >
+        "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+        "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
-  <display-name>Archetype Created Web Application</display-name>
+    <display-name>Archetype Created Web Application</display-name>
 
-  <servlet>
-    <servlet-name>lzcmvc</servlet-name>
-    <servlet-class>com.liangzc.example.spring_demo.mvcframework.v1.servlet.DispatchServlet</servlet-class>
-    <init-param>
-      <param-name>contextConfig</param-name>
-      <param-value>config.properties</param-value>
-    </init-param>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>lzcmvc</servlet-name>
-  <!-- 请求该url时（/demo/*），则会交由该servlet处理，相当于指定了该servlet处理的url。
-      可以明确指定，也可以模糊指定，/*代表任何的请求，该servlet都会进行处理
-   -->
-    <url-pattern>/demo/*</url-pattern>
-  </servlet-mapping>
+    <servlet>
+        <servlet-name>lzcmvc</servlet-name>
+        <servlet-class>com.liangzc.example.spring_demo.mvcframework.v1.servlet.DispatchServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfig</param-name>
+            <param-value>config.properties</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>lzcmvc</servlet-name>
+        <!-- 请求该url时（/demo/*），则会交由该servlet处理，相当于指定了该servlet处理的url。
+            可以明确指定，也可以模糊指定，/*代表任何的请求，该servlet都会进行处理
+         -->
+        <url-pattern>/demo/*</url-pattern>
+    </servlet-mapping>
 </web-app>

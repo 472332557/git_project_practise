@@ -15,7 +15,7 @@ public class ConsumerSimpleKafka {
 
         Properties properties = new Properties();
         //Broker地址
-        properties.put("bootstrap.servers","106.55.227.209:9092");
+        properties.put("bootstrap.servers", "106.55.227.209:9092");
         //消费者组
         properties.put("group.id", "lzc-test-group");
         /**
@@ -33,24 +33,24 @@ public class ConsumerSimpleKafka {
          */
         properties.put("auto.offset.reset", "earliest");
         //key 和 value的序列化方式
-        properties.put("key.deserializer","org.apache.kafka.common.serialization.StringDeserializer");
-        properties.put("value.deserializer","org.apache.kafka.common.serialization.StringDeserializer");
+        properties.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+        properties.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         KafkaConsumer<String, String> consumer = new KafkaConsumer<String, String>(properties);
         //订阅topic
 //        consumer.subscribe(Arrays.asList("lzc-test-topic"));
         //指定分区（partition）去消费
-        consumer.assign(Arrays.asList(new TopicPartition("lzc-test-topic",0)));
+        consumer.assign(Arrays.asList(new TopicPartition("lzc-test-topic", 0)));
         try {
-            while (true){
-                ConsumerRecords<String,String> records=consumer.poll(Duration.ofMillis(1000));
-                for (ConsumerRecord<String,String> record:records){
+            while (true) {
+                ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(1000));
+                for (ConsumerRecord<String, String> record : records) {
                     record.timestampType();
-                    System.out.printf("offset = %d ,key =%s, value= %s, partition= %s,timestamp=%s,%n" ,record.offset(),record.key(),record.value(),record.partition(),record.timestamp());
+                    System.out.printf("offset = %d ,key =%s, value= %s, partition= %s,timestamp=%s,%n", record.offset(), record.key(), record.value(), record.partition(), record.timestamp());
                 }
                 //当设置enable.auto.commit为false时，这里可手动提交
                 consumer.commitSync();
             }
-        }finally {
+        } finally {
             consumer.close();
         }
     }

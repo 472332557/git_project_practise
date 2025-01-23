@@ -20,6 +20,7 @@ public class RecoedDecoder extends ByteToMessageDecoder {
 
     /**
      * sessionId | reqType | Content-length | Content
+     *
      * @param channelHandlerContext
      * @param in
      * @param out
@@ -34,7 +35,7 @@ public class RecoedDecoder extends ByteToMessageDecoder {
         header.setReqType(in.readByte());
         header.setContentLength(in.readInt());
         record.setHeader(header);
-        if(header.getContentLength() > 0){
+        if (header.getContentLength() > 0) {
             byte[] contents = new byte[header.getContentLength()];
             in.readBytes(contents);//读取消息到contents字节数组中
             /**
@@ -43,9 +44,9 @@ public class RecoedDecoder extends ByteToMessageDecoder {
             ByteArrayInputStream bis = new ByteArrayInputStream(contents);
             ObjectInputStream ois = new ObjectInputStream(bis);
             record.setContent(ois.readObject());
-            log.info("反序列化出来的结果：{}",record);
+            log.info("反序列化出来的结果：{}", record);
             out.add(record);
-        }else {
+        } else {
             log.info("消息为空！");
         }
     }

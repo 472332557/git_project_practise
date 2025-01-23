@@ -10,7 +10,7 @@ public class QuartzTest {
 
         //构建任务
         JobDetail jobDetail = JobBuilder.newJob(QuartzDemoJob.class).
-                withIdentity("job1","group1").build();
+                withIdentity("job1", "group1").build();
 
 
         //构建触发器
@@ -25,8 +25,6 @@ public class QuartzTest {
         Scheduler scheduler = factory.getScheduler();
         scheduler.scheduleJob(jobDetail, cronTrigger);
         scheduler.start();
-
-
 
 
     }

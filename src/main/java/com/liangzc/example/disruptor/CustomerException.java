@@ -10,7 +10,7 @@ public class CustomerException implements ExceptionHandler<MsgResult> {
         //打印异常，并不会中断程序
         ex.printStackTrace();
 
-        System.out.println("Exception processing: " + sequence + " " + event+ ex);
+        System.out.println("Exception processing: " + sequence + " " + event + ex);
     }
 
     @Override

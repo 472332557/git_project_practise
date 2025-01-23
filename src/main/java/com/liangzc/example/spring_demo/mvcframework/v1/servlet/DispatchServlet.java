@@ -29,17 +29,16 @@ public class DispatchServlet extends HttpServlet {
     private static final Map<String, Method> handlerMapping = new HashMap<>();
 
 
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        doPost(req,resp);
+        doPost(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         try {
-            doHandler(req,resp);
+            doHandler(req, resp);
         } catch (Exception e) {
             e.printStackTrace();
             resp.getWriter().write("request 500");
@@ -53,19 +52,19 @@ public class DispatchServlet extends HttpServlet {
 
         //cookie练习，cookie和session不同，cookie可以长期存在于客户端（浏览器）。只要不超过设定的时间，而session会随着浏览器的关闭而关闭。
         String name = req.getParameter("name");
-        if ("111".equals(name)){
+        if ("111".equals(name)) {
             Cookie cookie = new Cookie("name", name);
             cookie.setMaxAge(300);
             resp.addCookie(cookie);
-        }else {
+        } else {
             Cookie[] cookies = req.getCookies();
             for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("name")){
-                    System.out.println("第一次设置的cookie为："+cookie.getName() +"=" +cookie.getValue());
+                if (cookie.getName().equals("name")) {
+                    System.out.println("第一次设置的cookie为：" + cookie.getName() + "=" + cookie.getValue());
                 }
             }
         }
-        if(!handlerMapping.containsKey(requestURI)){
+        if (!handlerMapping.containsKey(requestURI)) {
             resp.getWriter().write("404 Not found");
             return;
         }
@@ -80,9 +79,9 @@ public class DispatchServlet extends HttpServlet {
         Annotation[][] pa = method.getParameterAnnotations();
         for (int i = 0; i < pa.length; i++) {
             for (Annotation annotation : pa[i]) {
-                if(annotation instanceof LzcRequestParam){
+                if (annotation instanceof LzcRequestParam) {
                     String paramName = ((LzcRequestParam) annotation).value();
-                    if(!"".equals(paramName.trim())){
+                    if (!"".equals(paramName.trim())) {
                         paramIndexMapping.put(paramName, i);
                     }
                 }
@@ -92,7 +91,7 @@ public class DispatchServlet extends HttpServlet {
         Class<?>[] parameterTypes = method.getParameterTypes();
         for (int i = 0; i < parameterTypes.length; i++) {
             Class<?> parameterType = parameterTypes[i];
-            if(parameterType == HttpServletRequest.class || parameterType == HttpServletResponse.class){
+            if (parameterType == HttpServletRequest.class || parameterType == HttpServletResponse.class) {
                 paramIndexMapping.put(parameterType.getName(), i);
             }
         }
@@ -105,23 +104,25 @@ public class DispatchServlet extends HttpServlet {
             String value = Arrays.toString(entry.getValue())
                     .replaceAll("\\[|\\]", "")
                     .replaceAll("\\s", "");//去除空格
-            if(!paramIndexMapping.containsKey(entry.getKey())){continue;}
+            if (!paramIndexMapping.containsKey(entry.getKey())) {
+                continue;
+            }
             Integer index = paramIndexMapping.get(entry.getKey());
             //涉及到类型强制转换
             paramsValues[index] = value;
         }
 
-        if (paramIndexMapping.containsKey(HttpServletRequest.class.getName())){
+        if (paramIndexMapping.containsKey(HttpServletRequest.class.getName())) {
             Integer index = paramIndexMapping.get(HttpServletRequest.class.getName());
             paramsValues[index] = req;
         }
 
-        if (paramIndexMapping.containsKey(HttpServletResponse.class.getName())){
+        if (paramIndexMapping.containsKey(HttpServletResponse.class.getName())) {
             Integer index = paramIndexMapping.get(HttpServletResponse.class.getName());
             paramsValues[index] = resp;
         }
         //此时是硬编码的方式处理的方法传参，需要修改为动态去匹配请求参数
-        method.invoke(ioc.get(beanName),new Object[]{req,resp,parameterMap.get("name")[0]});
+        method.invoke(ioc.get(beanName), new Object[]{req, resp, parameterMap.get("name")[0]});
     }
 
     @Override
@@ -144,14 +145,16 @@ public class DispatchServlet extends HttpServlet {
     }
 
     private void doDependencyInjection() {
-        if(ioc.isEmpty()){return;}
+        if (ioc.isEmpty()) {
+            return;
+        }
         for (Map.Entry<String, Object> entry : ioc.entrySet()) {
             Field[] declaredFields = entry.getValue().getClass().getDeclaredFields();
             for (Field declaredField : declaredFields) {
-                if(declaredField.isAnnotationPresent(LzcAutowired.class)){
+                if (declaredField.isAnnotationPresent(LzcAutowired.class)) {
                     LzcAutowired lzcAutowired = declaredField.getAnnotation(LzcAutowired.class);
                     String beanName = lzcAutowired.value();
-                    if("".equals(beanName)){
+                    if ("".equals(beanName)) {
                         beanName = declaredField.getName();
                     }
 
@@ -159,7 +162,7 @@ public class DispatchServlet extends HttpServlet {
 
                     try {
                         //给字段赋值
-                        declaredField.set(entry.getValue(),ioc.get(beanName));
+                        declaredField.set(entry.getValue(), ioc.get(beanName));
                     } catch (IllegalAccessException e) {
                         e.printStackTrace();
                     }
@@ -169,17 +172,19 @@ public class DispatchServlet extends HttpServlet {
     }
 
     private void doHandlerMapping() {
-        if(ioc.isEmpty()){return;}
+        if (ioc.isEmpty()) {
+            return;
+        }
         for (Map.Entry<String, Object> entry : ioc.entrySet()) {
             Class<?> clazz = entry.getValue().getClass();
-            if(clazz.isAnnotationPresent(LzcController.class)){
+            if (clazz.isAnnotationPresent(LzcController.class)) {
                 LzcRequestMapping annotation = clazz.getAnnotation(LzcRequestMapping.class);
                 String baseUrl = annotation.value();
                 Method[] methods = clazz.getMethods();
                 for (Method method : methods) {
-                    if(method.isAnnotationPresent(LzcRequestMapping.class)){
+                    if (method.isAnnotationPresent(LzcRequestMapping.class)) {
                         LzcRequestMapping lzcRequestMapping = method.getAnnotation(LzcRequestMapping.class);
-                        String url = ("/"+baseUrl + "/"+lzcRequestMapping.value()).replaceAll("/+","/");
+                        String url = ("/" + baseUrl + "/" + lzcRequestMapping.value()).replaceAll("/+", "/");
                         handlerMapping.put(url, method);
                     }
                 }
@@ -191,19 +196,21 @@ public class DispatchServlet extends HttpServlet {
      * 只有添加了注解LzcController、LzcService、LzcRepository等的才添加进IoC容器
      */
     private void doInstance() {
-        if(classNames.isEmpty()){return;}
+        if (classNames.isEmpty()) {
+            return;
+        }
         for (String className : classNames) {
             try {
                 Class<?> clazz = Class.forName(className);
-                if(clazz.isAnnotationPresent(LzcController.class)){
+                if (clazz.isAnnotationPresent(LzcController.class)) {
                     //需要将类名首字母小写
                     String beanName = toLowerNameFirst(clazz.getSimpleName());
                     Object instance = clazz.newInstance();
                     ioc.put(beanName, instance);
-                }else if (clazz.isAnnotationPresent(LzcService.class)){
+                } else if (clazz.isAnnotationPresent(LzcService.class)) {
                     LzcService lzcService = clazz.getAnnotation(LzcService.class);
                     String beanName = toLowerNameFirst(clazz.getSimpleName());
-                    if(!"".equals(lzcService.value())){
+                    if (!"".equals(lzcService.value())) {
                         beanName = lzcService.value();
                     }
                     Object instance = clazz.newInstance();
@@ -211,12 +218,12 @@ public class DispatchServlet extends HttpServlet {
 
                     //依赖注入时，controller中一般是service接口，所以需要将service添加进IoC容器，value是实现
                     for (Class<?> clazzInterface : clazz.getInterfaces()) {
-                        if(ioc.containsKey(clazzInterface.getName())){
+                        if (ioc.containsKey(clazzInterface.getName())) {
                             throw new Exception("接口已存在！");
                         }
                         ioc.put(clazzInterface.getName(), instance);
                     }
-                }else {
+                } else {
                     continue;
                 }
             } catch (Exception e) {
@@ -234,15 +241,17 @@ public class DispatchServlet extends HttpServlet {
 
     private void scanClasses(String basePackage) {
         //读取该路径下的class文件,将.替换成为文件路径
-        URL url = this.getClass().getClassLoader().getResource("/"+basePackage.replaceAll("\\.", "/"));
+        URL url = this.getClass().getClassLoader().getResource("/" + basePackage.replaceAll("\\.", "/"));
         File file = new File(url.getFile());
         for (File listFile : file.listFiles()) {
-            if(listFile.isDirectory()){
-                scanClasses(basePackage + "." +listFile.getName());
-            }else {
+            if (listFile.isDirectory()) {
+                scanClasses(basePackage + "." + listFile.getName());
+            } else {
                 String className = listFile.getName();
-                if(!className.endsWith(".class")){continue;}
-                className = basePackage + "."+ className.replace(".class", "");
+                if (!className.endsWith(".class")) {
+                    continue;
+                }
+                className = basePackage + "." + className.replace(".class", "");
                 classNames.add(className);
             }
         }

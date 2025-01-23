@@ -37,7 +37,7 @@ public class ProduceKafka {
         Producer<String, String> producer = new KafkaProducer<>(properties);
 
         for (int i = 0; i < 10; i++) {
-            producer.send(new ProducerRecord<String, String>("gptest",String.valueOf(i),String.valueOf(i)));
+            producer.send(new ProducerRecord<String, String>("gptest", String.valueOf(i), String.valueOf(i)));
         }
 
         producer.close();

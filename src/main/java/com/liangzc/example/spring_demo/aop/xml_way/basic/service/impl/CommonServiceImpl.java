@@ -17,7 +17,7 @@ public class CommonServiceImpl implements CommonService {
         jdbcTemplate.setDataSource(dataSource);
 
         int update = jdbcTemplate.update("insert into person(id,name,age,gender) values (default ,'aop',20,'女')");
-        if(update > 0){
+        if (update > 0) {
             System.out.println("SUCCESS-------------------------");
         }
         return update;

@@ -12,9 +12,9 @@ import java.util.Map;
 public class WebServiceDemo {
 
     @WebMethod(operationName = "nameTest")
-    public String getName(@WebParam(name = "param") String id){
+    public String getName(@WebParam(name = "param") String id) {
         Map<String, Object> result = new HashMap<>();
-        if(id.equals("1")){
+        if (id.equals("1")) {
             result.put("code", "ok");
             result.put("msg", "这是webservice例子！");
             return JSONObject.toJSONString(result);

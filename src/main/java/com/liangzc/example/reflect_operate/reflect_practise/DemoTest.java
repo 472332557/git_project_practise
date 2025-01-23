@@ -1,5 +1,6 @@
 package com.liangzc.example.reflect_operate.reflect_practise;
 
+import com.liangzc.example.spring_demo.applicationAware.ApplicationAwareDemo;
 import org.junit.Test;
 
 import java.lang.reflect.Constructor;
@@ -13,6 +14,7 @@ public class DemoTest {
 
     /**
      * 构造对象操作
+     *
      * @throws ClassNotFoundException
      * @throws NoSuchMethodException
      * @throws InvocationTargetException
@@ -44,19 +46,19 @@ public class DemoTest {
 
         //无参public类型的构造函数
         Constructor<?> constructor = aClass.getConstructor();
-        System.out.println("public类型无参的构造对象："+constructor);
+        System.out.println("public类型无参的构造对象：" + constructor);
         Object obj = constructor.newInstance();
         System.out.println(obj);
 
         //一个参数的public类型的构造对象
         Constructor<?> constructor1 = aClass.getConstructor(String.class);
-        System.out.println("public类型一个有参的构造对象：:"+constructor1);
+        System.out.println("public类型一个有参的构造对象：:" + constructor1);
         Object obj2 = constructor1.newInstance("Marry");
         System.out.println(obj2);
 
         //两个参数的public类型的构造对象
         Constructor<?> constructor2 = aClass.getConstructor(String.class, int.class);
-        System.out.println("public类型两个有参的构造对象：:"+constructor1);
+        System.out.println("public类型两个有参的构造对象：:" + constructor1);
         Object obj3 = constructor2.newInstance("Marry", 20);
         System.out.println(obj3);
 
@@ -65,7 +67,7 @@ public class DemoTest {
          */
         //私有的构造函数，使用DeclaredConstructor获取
         Constructor<?> constructor3 = aClass.getDeclaredConstructor(String.class, int.class, String.class);
-        System.out.println("private类型三个有参的构造对象：:"+constructor3);
+        System.out.println("private类型三个有参的构造对象：:" + constructor3);
 
         //暴力访问
         constructor3.setAccessible(true);
@@ -75,7 +77,7 @@ public class DemoTest {
 
 
     /**
-     *  成员变量的操作
+     * 成员变量的操作
      */
     @Test
     public void fieldTest() throws ClassNotFoundException, NoSuchFieldException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
@@ -105,19 +107,19 @@ public class DemoTest {
          */
         Field adress = aClass.getField("adress");
         //给变量赋值,变量.set(当前的对象，要赋的值);
-        adress.set(obj,"成都");
+        adress.set(obj, "成都");
         System.out.println(obj);
 
         //私有类型变量name使用:getDeclaredField
         Field name = aClass.getDeclaredField("name");
         //暴力访问
         name.setAccessible(true);
-        name.set(obj,"Aiden");
+        name.set(obj, "Aiden");
         System.out.println(obj);
 
         //默认变量：age，默认类型变量不需要暴力访问
         Field age = aClass.getDeclaredField("age");
-        age.set(obj,25);
+        age.set(obj, 25);
         System.out.println(obj);
     }
 
@@ -153,15 +155,20 @@ public class DemoTest {
         Method method2 = aClass.getDeclaredMethod("method2", String.class);
         //暴力访问
         method2.setAccessible(true);
-        method2.invoke(obj, "private method");
+        Object invoke2 = method2.invoke(obj, "private method");
+        String invoke2String = (String) invoke2;
 
         Method method3 = aClass.getMethod("method3");
         Object invoke1 = method3.invoke(obj);
-        System.out.println("方法返回信息："+invoke1);
+        System.out.println("方法返回信息：" + invoke1);
 
         //获取默认方法：getDeclaredMethod，默认方法不需要暴力破解
         Method method4 = aClass.getDeclaredMethod("method4");
         method4.invoke(obj);
+
+        System.out.println("-------------------------method5--------------------------------");
+        Method method5 = aClass.getDeclaredMethod("method5", boolean.class, Long.class);
+        method5.invoke(obj, false, null);
     }
 
 
@@ -179,7 +186,7 @@ public class DemoTest {
 //        list.add("111");
 
         Class<? extends List> aClass = list.getClass();
-        Method add = aClass.getMethod("add",Object.class);
+        Method add = aClass.getMethod("add", Object.class);
         add.invoke(list, "添加字符类型");
         System.out.println(list);
     }

@@ -15,7 +15,7 @@ public class HungerSingletonModelV2 {
 
     }
 
-    public static HungerSingletonModelV2 getInstance(){
+    public static HungerSingletonModelV2 getInstance() {
         return instance;
     }
 

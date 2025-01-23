@@ -2,8 +2,8 @@ package com.liangzc.example.design_pattern.head_first.factory_model.simple_facto
 
 public class SimplePizzaFactory {
 
-    public Pizza createPizza(Class<? extends Pizza> pizzaClass){
-        if(pizzaClass != null){
+    public Pizza createPizza(Class<? extends Pizza> pizzaClass) {
+        if (pizzaClass != null) {
             try {
                 return pizzaClass.newInstance();
             } catch (Exception e) {
