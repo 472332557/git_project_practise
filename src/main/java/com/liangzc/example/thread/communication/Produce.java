@@ -29,6 +29,7 @@ public class Produce implements Runnable {
                 i++;
                 while (queueMsg.size() == maxSize) {
                     try {
+                        System.out.println("队列满了，生产者阻塞！");
                         queueMsg.wait();//一定会释放锁。sleep并不会释放锁，只是释放cpu资源
                     } catch (InterruptedException e) {
                         e.printStackTrace();

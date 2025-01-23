@@ -1200,4 +1200,59 @@ public class DemoTest {
         System.out.println("Relation Order IDs: " + JSON.toJSONString(relationOrderIds));
     }
 
+
+    class A {
+        int id;
+        int aField; // 用于关联 B 表
+
+        public A(int id, int aField) {
+            this.id = id;
+            this.aField = aField;
+        }
+
+        @Override
+        public String toString() {
+            return "A{id=" + id + ", aField=" + aField + "}";
+        }
+    }
+
+    class B {
+        int id;
+        int bField; // 用于排序
+
+        public B(int id, int bField) {
+            this.id = id;
+            this.bField = bField;
+        }
+    }
+
+    @Test
+    public void sortedTest(){
+        // 假设 A 表的数据
+        List<A> aList = Arrays.asList(
+                new A(1, 100),
+                new A(2, 200),
+                new A(3, 300)
+        );
+
+        // 假设 B 表的数据
+        List<B> bList = Arrays.asList(
+                new B(100, 3),
+                new B(200, 1),
+                new B(300, 2)
+        );
+
+        // 创建一个 Map 来存储 B 表的排序依据
+        Map<Integer, Integer> bFieldMap = bList.stream()
+                .collect(Collectors.toMap(b -> b.id, b -> b.bField));
+
+        // 对 A 表进行排序，依据是 B 表中 bField 的值
+        List<A> sortedAList = aList.stream()
+                .sorted(Comparator.comparingInt(a -> bFieldMap.getOrDefault(a.aField, Integer.MAX_VALUE)))
+                .collect(Collectors.toList());
+
+        // 打印排序后的 A 表
+        sortedAList.forEach(System.out::println);
+    }
+
 }

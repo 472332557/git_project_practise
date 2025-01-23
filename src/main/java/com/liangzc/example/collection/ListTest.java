@@ -1,5 +1,6 @@
 package com.liangzc.example.collection;
 
+import com.google.common.collect.Lists;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -46,5 +47,24 @@ public class ListTest {
         }
         System.out.println(objects.length);
 
+    }
+
+    @Test
+    public void arraysTest(){
+        String[] arrays = {"1","2","3"};
+        List<String> list = Arrays.asList(arrays);
+//        ArrayList<String> strings = Lists.newArrayList(arrays);
+        System.out.println(list);
+
+//        list.add("4");
+
+        System.out.println(list);
+
+
+        Long a = 123456L;
+
+        Long b = 123456L;
+
+        System.out.println(a.longValue() == b);
     }
 }

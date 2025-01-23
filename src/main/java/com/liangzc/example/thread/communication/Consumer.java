@@ -21,13 +21,14 @@ public class Consumer implements Runnable {
             synchronized (queueMsg) {
                 while (queueMsg.isEmpty()) {
                     try {
+                        System.out.println("队列空了，消费者阻塞！");
                         queueMsg.wait();//一定会释放锁。sleep并不会释放锁，只是释放cpu资源
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
                 try {
-                    TimeUnit.SECONDS.sleep(1);
+                    TimeUnit.MILLISECONDS.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
