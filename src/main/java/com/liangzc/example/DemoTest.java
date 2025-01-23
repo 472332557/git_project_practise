@@ -14,8 +14,6 @@ import com.liangzc.example.em.PayChannelEnum;
 import com.liangzc.example.jdk8.lambda.Student;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.DateUtils;
-import org.apache.poi.ss.usermodel.DateUtil;
-import org.joda.time.DateTime;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -228,7 +226,7 @@ public class DemoTest {
     @Test
     public void dateTest() throws ParseException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
-        String date = "20230330";
+        String date = "20230615";
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(dateFormat.parse(date));
 //        calendar.add(Calendar.DATE,1);
@@ -236,12 +234,13 @@ public class DemoTest {
 
         calendar.add(Calendar.MONTH, 0);
         calendar.set(Calendar.DAY_OF_MONTH, 1);
-
-        System.out.println(dateFormat.format(calendar.getTime()));
+        String start = dateFormat.format(calendar.getTime());
+        System.out.println(start);
 
         calendar.add(Calendar.MONTH, 1);
         calendar.set(Calendar.DAY_OF_MONTH, 0);
-        System.out.println(dateFormat.format(calendar.getTime()));
+        String end = dateFormat.format(calendar.getTime());
+        System.out.println(end);
 
 
 //        System.out.println(calendar.get(Calendar.YEAR));
@@ -258,7 +257,6 @@ public class DemoTest {
 
         System.out.println(beginStr.substring(0, 8).equals(start));
         System.out.println(endStr.substring(0, 8).equals(end));
-
     }
 
     @Test
