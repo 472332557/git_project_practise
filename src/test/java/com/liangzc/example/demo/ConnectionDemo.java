@@ -3,6 +3,7 @@ package com.liangzc.example.demo;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
 import com.liangzc.example.web_start.User;
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
@@ -38,6 +39,7 @@ import java.util.Map;
 
 @ContextConfiguration(locations = {"classpath:spring/application-context.xml"})
 @RunWith(value = SpringJUnit4ClassRunner.class)
+@Slf4j
 public class ConnectionDemo {
 
     public static final String getUrl = "http://localhost:8081/start?id=" + 666;
@@ -424,7 +426,7 @@ public class ConnectionDemo {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         okhttp3.MediaType mediaType = okhttp3.MediaType.parse("application/json;charset=utf-8");
-        String req = "{\n  \"messages\": [\n    {\n      \"content\": \"You are a helpful assistant\",\n      \"role\": \"system\"\n    },\n    {\n      \"content\": \"Hi\",\n      \"role\": \"user\"\n    }\n  ],\n  \"model\": \"deepseek-chat\",\n  \"frequency_penalty\": 0,\n  \"max_tokens\": 2048,\n  \"presence_penalty\": 0,\n  \"response_format\": {\n    \"type\": \"text\"\n  },\n  \"stop\": null,\n  \"stream\": false,\n  \"stream_options\": null,\n  \"temperature\": 1,\n  \"top_p\": 1,\n  \"tools\": null,\n  \"tool_choice\": \"none\",\n  \"logprobs\": false,\n  \"top_logprobs\": null\n}";
+        String req = "{\n  \"messages\": [\n    {\n      \"content\": \"你好，你是谁？可以协助编程java方面的吗\",\n      \"role\": \"user\"\n    }\n  ],\n  \"model\": \"deepseek-chat\",\n  \"frequency_penalty\": 0,\n  \"max_tokens\": 2048,\n  \"presence_penalty\": 0,\n  \"response_format\": {\n    \"type\": \"text\"\n  },\n  \"stop\": null,\n  \"stream\": false,\n  \"stream_options\": null,\n  \"temperature\": 1,\n  \"top_p\": 1,\n  \"tools\": null,\n  \"tool_choice\": \"none\",\n  \"logprobs\": false,\n  \"top_logprobs\": null\n}";
         RequestBody body = RequestBody.create(req,mediaType);
         Request request = new Request.Builder()
                 .url("https://api.deepseek.com/chat/completions")
