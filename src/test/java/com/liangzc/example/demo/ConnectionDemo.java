@@ -130,21 +130,6 @@ public class ConnectionDemo {
     }
 
 
-    @Test
-    public void RestTemplateGetForCookie(){
-        RestTemplate restTemplate = new RestTemplate();
-        String cookie = "JSESSIONID=A8E097EAE0B37DCC6F0DD4C79A5C5DAE; _segiupt_ts=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJleHBpcmVzX2luIjoyNDE5MjAwLCJpYXQiOjE2ODE3MTQ0NzYsInNhbHQiOiIhbWokVkNVXVZpRGhzUVJRIiwidHlwZSI6InNlc3Npb25fdG9rZW4iLCJ1c2VybmFtZSI6IlNFR0lfQl9BRE1JTjAwNSJ9.iazJzCydUSFcq6kFIkCuuYUrVPRvcP1icgUdQLdIRxnPvfrtaefK-nRW9imnP0x0VHZ4zRuR6R-G4U9huHq57w; _segiupt_as=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJjbGllbnRfaWQiOiJzZWdpIiwiZXhwaXJlc19pbiI6ODY0MDAsImlhdCI6MTY4MTcxNDQ3Niwic2FsdCI6IkhUeDJjazFOUStSVWFRQSEiLCJzY29wZSI6InNfYWRtaW4iLCJ0eXBlIjoiYWNjZXNzX3Rva2VuIiwidXNlcl9pZCI6IlNFR0lfQl8yNDI3OTM4IiwidXNlcm5hbWUiOiJTRUdJX0JfQURNSU4wMDUifQ._sHevIUgP8ken4BgUJMOyffrbc8oXSoessux6RYauiRT7FzETNUrd_hKTXFFWh1foGwPgdKYCEqnpnI2lYhcXg; _segiupt_ci=segi; _segiupt_ty=SEGI_B_; aid=2427938; oid=1000";
-        String url = "https://leasewx.cmsk1979.com/uhomecp-lease/admin/contract/settle/queryContractDetailForCommission?contractNo=ZGDX-2018-08-0013";
-        HttpHeaders httpHeaders = new HttpHeaders();
-        List<String> cookies = new ArrayList<>();
-        cookies.add(cookie);
-        httpHeaders.put(HttpHeaders.COOKIE, cookies);
-        HttpEntity httpEntity = new HttpEntity(httpHeaders);
-
-        ResponseEntity<String> result = restTemplate.exchange(url, HttpMethod.GET,httpEntity, String.class);
-        System.out.println("返回结果："+result);
-    }
-
     //RestTemplate post  key-value
     @Test
     public void RestTemplatePost() {
@@ -430,6 +415,43 @@ public class ConnectionDemo {
 
         }
 
+    }
+
+
+    //调用DeepSeek
+    @Test
+    public void okHttpPostDeepSeek() {
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+        okhttp3.MediaType mediaType = okhttp3.MediaType.parse("application/json;charset=utf-8");
+        String req = "{\n  \"messages\": [\n    {\n      \"content\": \"You are a helpful assistant\",\n      \"role\": \"system\"\n    },\n    {\n      \"content\": \"Hi\",\n      \"role\": \"user\"\n    }\n  ],\n  \"model\": \"deepseek-chat\",\n  \"frequency_penalty\": 0,\n  \"max_tokens\": 2048,\n  \"presence_penalty\": 0,\n  \"response_format\": {\n    \"type\": \"text\"\n  },\n  \"stop\": null,\n  \"stream\": false,\n  \"stream_options\": null,\n  \"temperature\": 1,\n  \"top_p\": 1,\n  \"tools\": null,\n  \"tool_choice\": \"none\",\n  \"logprobs\": false,\n  \"top_logprobs\": null\n}";
+        RequestBody body = RequestBody.create(req,mediaType);
+        Request request = new Request.Builder()
+                .url("https://api.deepseek.com/chat/completions")
+                .method("POST", body)
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
+                .addHeader("Authorization", "Bearer sk-315b921a5bc24bca96248f8c4a1aa7e9")
+                .build();
+        Response response = null;
+        try {
+            response = client.newCall(request).execute();
+            if (response.isSuccessful()) {
+
+                ResponseBody responseBody = response.body();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(responseBody.byteStream()));
+                String line;
+                StringBuilder builder = new StringBuilder();
+                while ((line = bufferedReader.readLine()) != null) {
+                    builder.append(line);
+                }
+                System.out.println("返回信息为：" + builder.toString());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+
+        }
     }
 
 }
