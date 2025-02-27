@@ -1260,12 +1260,21 @@ public class DemoTest {
     }
 
     @Test
+    /**
+     * 排序测试方法
+     * 该方法使用冒泡排序算法对一个整数数组进行降序排序，并打印排序后的结果
+     */
     public void soretdTest(){
+        // 初始化待排序的数组
         int[] nums = {5,4,8,10,25,100,54,66,12,88,9};
 
+        // 外层循环控制排序的轮数
         for (int i = 0; i < nums.length; i++) {
+            // 内层循环控制每轮排序的比较和交换操作
             for (int j = 0; j < nums.length - 1 -i; j++) {
                 int temp;
+                // 如果当前元素小于下一个元素，则交换它们的位置
+                // 这里进行降序排序，因此交换条件为当前元素小于下一个元素
                 if(nums[j] < nums[j+1]){
                     temp = nums[j+1];
                     nums[j+1] = nums[j];
@@ -1273,6 +1282,7 @@ public class DemoTest {
                 }
             }
         }
+        // 遍历并打印排序后的数组
         for (int num : nums) {
             System.out.print(num+"\t");
         }
