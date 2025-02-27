@@ -1248,4 +1248,33 @@ public class DemoTest {
         sortedAList.forEach(System.out::println);
     }
 
+    @Test
+    public void lineFeed(){
+        StringJoiner joiner  = new StringJoiner(",");
+
+        joiner.add("常规：ddddd").add("\n");
+
+        joiner.add("合同：aaaaa").add("ccccc").add("\n");
+
+        System.out.printf(joiner.toString());
+    }
+
+    @Test
+    public void soretdTest(){
+        int[] nums = {5,4,8,10,25,100,54,66,12,88,9};
+
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = 0; j < nums.length - 1 -i; j++) {
+                int temp;
+                if(nums[j] < nums[j+1]){
+                    temp = nums[j+1];
+                    nums[j+1] = nums[j];
+                    nums[j] = temp;
+                }
+            }
+        }
+        for (int num : nums) {
+            System.out.print(num+"\t");
+        }
+    }
 }
