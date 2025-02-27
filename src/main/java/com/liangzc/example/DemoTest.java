@@ -1287,4 +1287,19 @@ public class DemoTest {
             System.out.print(num+"\t");
         }
     }
+
+    /**
+     * 给你一个 非严格递增排列 的数组 nums ，请你 原地 删除重复出现的元素，使每个元素 只出现一次 ，返回删除后数组的新长度。元素的 相对顺序 应该保持 一致 。然后返回 nums 中唯一元素的个数。
+     *
+     * 作者：LeetCode
+     * 链接：https://leetcode.cn/leetbook/read/top-interview-questions-easy/x2gy9m/
+     * 来源：力扣（LeetCode）
+     */
+    @Test
+    public void removeDuplicates() {
+        int[] nums = {1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 21, 21, 22, 22, 23, 23, 24, 24, 25, 25, 26, 26, 27, 27, 28, 28, 29, 29, 30, 30, 31, 31, 32, 32, 33, 33, 34, 34};
+        for (int i = 0; i < nums.length; i++) {
+
+        }
+    }
 }
