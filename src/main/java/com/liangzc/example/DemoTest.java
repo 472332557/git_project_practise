@@ -1298,19 +1298,30 @@ public class DemoTest {
     @Test
     public void removeDuplicates() {
         int[] nums = {2,6,5,1,23,6,66,41,11};
-        int[] newNums = new int[nums.length];
-        int unique = 0;
+        int[] tempNums = new int[nums.length];
+        int count = 0;
         for (int i = 0; i < nums.length; i++){
-            unique++;
             for (int j = i+1; j <= nums.length -1; j++) {
                 int compare = nums[i];
                 if(compare == nums[j]){
-                    unique --;
+                    count++;
                     System.out.println("有相同的值："+compare+",index:"+j);
+                    tempNums[j] = nums[j];
                 }
             }
         }
-        System.out.println(Arrays.toString(newNums));
-        System.out.println("唯一的个数："+unique);
+        System.out.println(Arrays.toString(tempNums));
+        System.out.println("count:"+count);
+        int[] newNums = new int[nums.length - count];
+        int index =0;
+        for (int i = 0; i < nums.length; i++) {
+           if(nums[i] != tempNums[i]){
+               newNums[index] = nums[i];
+               index++;
+           }
+        }
+        System.out.println("newNums:"+Arrays.toString(newNums));
+
+
     }
 }
