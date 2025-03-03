@@ -1336,4 +1336,44 @@ public class DemoTest {
         System.out.println("newNums:"+Arrays.toString(newNums));
         System.out.println("唯一元素个数："+(nums.length- count*2));
     }
+
+    @Test
+    public void arraysTest(){
+        //多维数组
+        /*
+        *   二维数组，下边的相当于3行2列
+        *   1  2
+        *   2  3
+        *   3  4
+        * */
+        int[][] arr = {{1,2},{2,3},{3,4}};
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[i].length; j++) {
+                System.out.print(arr[i][j]+"\t");
+            }
+            System.out.println();
+        }
+        System.out.println("------------------------------------------------------");
+        for (int[] ints : arr) {
+            for (int anInt : ints) {
+                System.out.print(anInt+"\t");
+            }
+            System.out.println();
+        }
+        System.out.println("-------------------------------------------------------------------");
+        //2行3列
+        int[][] arrays = new int[2][3];
+        for (int i = 0; i < arrays.length; i++) {
+            for (int j = 0; j < arrays[i].length; j++) {
+                arrays[i][j] = i+j;
+            }
+        }
+        for (int[] ints : arrays) {
+            for (int anInt : ints) {
+                System.out.print(anInt+"\t");
+            }
+            System.out.println();
+        }
+
+    }
 }
