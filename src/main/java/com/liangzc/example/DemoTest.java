@@ -1269,7 +1269,19 @@ public class DemoTest {
         int[] nums = {5,4,8,10,25,100,54,66,12,88,9};
 
         // 外层循环控制排序的轮数
-        for (int i = 0; i < nums.length; i++) {
+        /**
+         *
+         * 外层循环控制排序的轮数。每一轮排序都会将当前未排序部分的最大值移动到未排序部分的末尾。因此，在第 i 轮排序后，最后 i 个元素已经是有序的，无需再参与比较。
+         *
+         * (1) 减少不必要的循环
+             使用 nums.length - 1 可以避免最后一轮的外层循环，因为此时数组已经完全排序完成。
+             使用 nums.length 会导致多进行一次无意义的外层循环，增加代码运行的时间复杂度。
+         (2) 逻辑清晰
+         冒泡排序的核心思想是通过 n-1 轮操作将数组排序完成。
+         使用 nums.length - 1 更符合冒泡排序的逻辑，代码意图更加清晰。
+
+         */
+        for (int i = 0; i < nums.length - 1; i++) {
             // 内层循环控制每轮排序的比较和交换操作
             for (int j = 0; j < nums.length - 1 -i; j++) {
                 int temp;
@@ -1289,7 +1301,8 @@ public class DemoTest {
     }
 
     /**
-     * 给你一个 非严格递增排列 的数组 nums ，请你 原地 删除重复出现的元素，使每个元素 只出现一次 ，返回删除后数组的新长度。元素的 相对顺序 应该保持 一致 。然后返回 nums 中唯一元素的个数。
+     * 给你一个 非严格递增排列 的数组 nums ，请你 原地 删除重复出现的元素，使每个元素 只出现一次 ，
+     * 返回删除后数组的新长度。元素的 相对顺序 应该保持 一致 。然后返回 nums 中唯一元素的个数。
      *
      * 作者：LeetCode
      * 链接：https://leetcode.cn/leetbook/read/top-interview-questions-easy/x2gy9m/
@@ -1321,7 +1334,6 @@ public class DemoTest {
            }
         }
         System.out.println("newNums:"+Arrays.toString(newNums));
-
-
+        System.out.println("唯一元素个数："+(nums.length- count*2));
     }
 }
