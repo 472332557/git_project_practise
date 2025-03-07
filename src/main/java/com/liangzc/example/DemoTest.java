@@ -1311,6 +1311,7 @@ public class DemoTest {
     @Test
     public void removeDuplicates() {
 //        0,0,1,1,1,2,2,3,3,4
+        // TODO 2025/3/7 问题，将重复值的设置为-1，后续通过-1来判断，但是当数组中有-1时，就有问题，设置为啥值，数组中出现这个值，都会有问题，如何解决？
         int[] nums = {0,0,1,1,1,2,2,3,3,4};
         int[] tempNums = new int[nums.length];
         for (int i = 0; i < nums.length; i++) {
