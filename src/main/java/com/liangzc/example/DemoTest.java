@@ -1310,16 +1310,21 @@ public class DemoTest {
      */
     @Test
     public void removeDuplicates() {
-        int[] nums = {2,6,5,1,23,6,66,41,11};
+//        0,0,1,1,1,2,2,3,3,4
+        int[] nums = {0,0,1,1,1,2,2,3,3,4};
         int[] tempNums = new int[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            tempNums[i] = nums[i];
+        }
         int count = 0;
         for (int i = 0; i < nums.length; i++){
             for (int j = i+1; j <= nums.length -1; j++) {
                 int compare = nums[i];
                 if(compare == nums[j]){
+                    if(tempNums[j] == -1){continue;}
                     count++;
                     System.out.println("有相同的值："+compare+",index:"+j);
-                    tempNums[j] = nums[j];
+                    tempNums[j] = -1;
                 }
             }
         }
@@ -1327,14 +1332,20 @@ public class DemoTest {
         System.out.println("count:"+count);
         int[] newNums = new int[nums.length - count];
         int index =0;
-        for (int i = 0; i < nums.length; i++) {
-           if(nums[i] != tempNums[i]){
+        for (int i = 0; i < tempNums.length; i++) {
+           if(tempNums[i] != -1){
                newNums[index] = nums[i];
                index++;
            }
         }
         System.out.println("newNums:"+Arrays.toString(newNums));
-        System.out.println("唯一元素个数："+(nums.length- count*2));
+
+        for (int i = 0; i < nums.length-1; i++) {
+            if(i < newNums.length){
+                nums[i] = newNums[i];
+            }
+        }
+        System.out.println(Arrays.toString(nums));
     }
 
     @Test
