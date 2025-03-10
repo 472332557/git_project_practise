@@ -1,7 +1,7 @@
 package com.liangzc.example.web_start;
 
-import com.alibaba.excel.EasyExcel;
-import com.alibaba.excel.util.ListUtils;
+import cn.idev.excel.EasyExcel;
+import cn.idev.excel.util.ListUtils;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.liangzc.example.easyexcel.DemoData;

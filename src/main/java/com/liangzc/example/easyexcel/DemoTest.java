@@ -1,16 +1,15 @@
 package com.liangzc.example.easyexcel;
 
-import com.alibaba.excel.EasyExcel;
-import com.alibaba.excel.ExcelWriter;
-import com.alibaba.excel.util.ListUtils;
-import com.alibaba.excel.write.merge.LoopMergeStrategy;
-import com.alibaba.excel.write.merge.OnceAbsoluteMergeStrategy;
-import com.alibaba.excel.write.metadata.WriteSheet;
-import com.alibaba.excel.write.metadata.style.WriteCellStyle;
-import com.alibaba.excel.write.metadata.style.WriteFont;
-import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
-import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
-import com.alibaba.excel.write.style.row.SimpleRowHeightStyleStrategy;
+import cn.idev.excel.*;
+import cn.idev.excel.util.ListUtils;
+import cn.idev.excel.write.merge.LoopMergeStrategy;
+import cn.idev.excel.write.merge.OnceAbsoluteMergeStrategy;
+import cn.idev.excel.write.metadata.WriteSheet;
+import cn.idev.excel.write.metadata.style.WriteCellStyle;
+import cn.idev.excel.write.metadata.style.WriteFont;
+import cn.idev.excel.write.style.HorizontalCellStyleStrategy;
+import cn.idev.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
+import cn.idev.excel.write.style.row.SimpleRowHeightStyleStrategy;
 import com.google.common.collect.Lists;
 import org.apache.poi.ss.usermodel.*;
 import org.junit.Test;
