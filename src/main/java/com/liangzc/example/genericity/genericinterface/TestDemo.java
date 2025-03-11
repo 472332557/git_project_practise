@@ -13,6 +13,7 @@ public class TestDemo {
 
         GenericBenz genericBenz2 = new GenericBenz();
         genericBenz2.call("奔驰（并未指定泛型）");
+        genericBenz2.call(10);
 
         GenericAudi genericAudi = new GenericAudi();
         genericAudi.call("奥迪");

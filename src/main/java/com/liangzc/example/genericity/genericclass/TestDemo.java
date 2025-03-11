@@ -19,10 +19,14 @@ public class TestDemo {
 
         GenericPerson<String> person = new GenericPerson<>();
         person.setParam("lilili");
+        String param = person.getParam();
+        System.out.println(param);
         person.print();
 
         GenericPerson<Integer> person1 = new GenericPerson<>();
         person1.setParam(20);
+        Integer param1 = person1.getParam();
+        System.out.println(param1);
         person1.print();
 
     }
