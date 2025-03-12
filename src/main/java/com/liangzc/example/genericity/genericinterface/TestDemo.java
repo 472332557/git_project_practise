@@ -11,6 +11,7 @@ public class TestDemo {
         GenericCar<Integer> genericBenz1 = new GenericBenz();
         genericBenz1.call(10);
 
+        //这个是一个没有指定泛型的实现类，也可当做泛型类
         GenericBenz genericBenz2 = new GenericBenz();
         genericBenz2.call("奔驰（并未指定泛型）");
         genericBenz2.call(10);
