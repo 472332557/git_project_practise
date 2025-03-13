@@ -19,7 +19,7 @@ public class GenericsTest {
         // TODO 2025/3/12 通过集合使用，确切感受泛型带来的优点
         System.out.println("-------------------集合未确定类型------------------------");
 
-        //集合，未确定类型
+        //集合，未确定类型，都是Object类型
         Collection list = new ArrayList();
         list.add("hello");
         list.add("Aiden");
