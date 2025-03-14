@@ -1,8 +1,11 @@
 package com.liangzc.example.reflect_operate.reflect_practise;
 
+import com.liangzc.example.reflect_operate.AnnotationDemo;
+import com.liangzc.example.reflect_operate.MyAnnotation;
 import com.liangzc.example.spring_demo.applicationAware.ApplicationAwareDemo;
 import org.junit.Test;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -191,5 +194,39 @@ public class DemoTest {
         System.out.println(list);
     }
 
+    @Test
+    public void annotationTest() throws ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException {
+        /**
+         * Class类的获取方式
+         */
+        Class<?> c1 = Class.forName("com.liangzc.example.reflect_operate.AnnotationDemo");
+        System.out.println(c1.hashCode());
 
+        Class<AnnotationDemo> c2 = AnnotationDemo.class;
+        System.out.println(c2.hashCode());
+
+        AnnotationDemo annotationDemo = new AnnotationDemo();
+        Class<? extends AnnotationDemo> c3 = annotationDemo.getClass();
+        System.out.println(c3.hashCode());
+
+        Method[] methods = c3.getMethods();
+        for (Method method : methods) {
+            System.out.println(method);
+            if (method.isAnnotationPresent(MyAnnotation.class)) {
+                MyAnnotation myAnnotation = method.getAnnotation(MyAnnotation.class);
+                System.out.println(myAnnotation);
+                int id = myAnnotation.id();
+                String name = myAnnotation.name();
+                System.out.println(id);
+                System.out.println(name);
+                for (Class<?> parameterType : method.getParameterTypes()) {
+                    System.out.println("Parameter type: "+parameterType.getName());
+                }
+                //如果方法有MyAnnotation注解，则调用该方法
+                method.invoke(annotationDemo, name);
+            }
+        }
+    }
 }
+
+
