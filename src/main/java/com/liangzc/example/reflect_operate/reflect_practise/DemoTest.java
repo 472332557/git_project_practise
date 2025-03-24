@@ -211,7 +211,7 @@ public class DemoTest {
 
         Method[] methods = c3.getMethods();
         for (Method method : methods) {
-            System.out.println(method);
+//            System.out.println(method);
             if (method.isAnnotationPresent(MyAnnotation.class)) {
                 MyAnnotation myAnnotation = method.getAnnotation(MyAnnotation.class);
                 System.out.println(myAnnotation);
@@ -227,6 +227,8 @@ public class DemoTest {
             }
         }
     }
+
+
 }
 
 

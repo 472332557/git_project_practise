@@ -1388,4 +1388,28 @@ public class DemoTest {
         }
 
     }
+
+    @Test
+    public void stringTest(){
+        String s = "";
+        String str = "hello world";
+
+        System.out.println(s.equals(str));
+        System.out.println(s.length());
+        System.out.println(s.isEmpty());
+
+        String url = "https://bz-idc-all.oss-cn-shenzhen.aliyuncs.com/130/default/de1cb76df4404315a477c947d599b0b520230705.png";
+
+        // Regular expression to match the desired pattern
+        String regex = ".*/([a-zA-Z0-9]+)\\.(png|pdf)$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(url);
+
+        if (matcher.find()) {
+            String extracted = matcher.group(1);
+            System.out.println("Extracted part: " + extracted);
+        } else {
+            System.out.println("No match found.");
+        }
+    }
 }
