@@ -1,6 +1,6 @@
 package com.liangzc.study25.thread.base;
 
-import org.junit.Test;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Auther: liangzc
@@ -12,7 +12,8 @@ public class Panda implements Runnable{
     public void run() {
         try {
             //睡眠1秒
-            Thread.sleep(1000);
+//            Thread.sleep(1000);
+            TimeUnit.SECONDS.sleep(2);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
