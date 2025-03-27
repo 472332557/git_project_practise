@@ -19,8 +19,10 @@ public class RunTest {
         Thread thread = new Thread(new Panda());
         thread.start();
         try {
-            //阻塞主线程，直到thread线程执行完毕
-            //thread线程的执行结果对主线程可见，也就是阻塞当前主线程，等待thread线程执行完毕
+            /**
+             * 阻塞主线程，直到thread线程执行完毕
+             * thread线程的执行结果对主线程可见，也就是阻塞当前主线程，等待thread线程执行完毕
+             */
             thread.join();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
