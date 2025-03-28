@@ -58,6 +58,7 @@ public class ThreadStatusExample {
 
         @Override
         public void run() {
+            //锁的对象是当前类，所用范围是这个类，所以就算是不同对象实例，也只有一个线程能够执行，另一个被阻塞
             synchronized (BlockDemo.class){
                 while (true){
                     try {
@@ -67,6 +68,17 @@ public class ThreadStatusExample {
                     }
                 }
             }
+
+            // 锁的对象是this，所以两个线程可以同时执行，不同的对象实例，互不干扰
+/*            synchronized (this){
+                while (true){
+                    try {
+                        TimeUnit.SECONDS.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }*/
         }
     }
 }
