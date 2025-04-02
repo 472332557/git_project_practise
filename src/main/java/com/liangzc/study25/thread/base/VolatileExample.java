@@ -3,7 +3,8 @@ package com.liangzc.study25.thread.base;
 /**
  * @Auther: liangzc
  * @Date: 2025/4/1 11:28
- * @Description: 线程的可见性问题：多个线程加载了同一个共享变量，其中一个线程修改了变量的值，其他线程并没有感知到这个修改，还是使用原来的值。
+ * @Description: 线程的可见性问题：在多线程环境下，多个线程加载了同一个共享变量，其中一个线程修改了变量的值，
+ *               但修改结果对其他线程不可见，也就是其他线程并没有感知到这个修改，还是使用原来的值。
  */
 public class VolatileExample {
     // volatile关键字，可以解决线程的可见性和有序性问题
