@@ -1412,4 +1412,33 @@ public class DemoTest {
             System.out.println("No match found.");
         }
     }
+
+    // 均分
+    @Test
+    public void downTest(){
+        BigDecimal[] result = new BigDecimal[3];
+        BigDecimal total = new BigDecimal("11.00");
+        BigDecimal count = new BigDecimal(3);
+        //平均值
+        BigDecimal average = total.divide(count, 2, RoundingMode.DOWN);
+        System.out.println("average:"+average);
+        //剩余金额
+        BigDecimal  remainder = total.subtract(average.multiply(count));
+        System.out.println("remainder:"+remainder);
+
+        Arrays.fill(result, average);
+
+        System.out.println(Arrays.toString(result));
+
+        for (int i = 0; i < result.length; i++) {
+            if (i == result.length - 1){
+                result[i] = average.add(remainder);
+            }
+        }
+
+        System.out.println(Arrays.toString(result));
+
+        BigDecimal sum = Arrays.stream(result).reduce(BigDecimal.ZERO, BigDecimal::add);
+        System.out.println("sum:"+sum);
+    }
 }
