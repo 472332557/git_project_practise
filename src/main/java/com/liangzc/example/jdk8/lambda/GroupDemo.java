@@ -40,7 +40,7 @@ public class GroupDemo {
 
         Map<Integer, List<Student>> collect = list.stream().collect(Collectors.groupingBy(Student::getGrade));
         Map<Integer, List<Student>> collect1 = Maps.newHashMap();
-        System.out.println("按班级汇总了：" + collect);
+        System.out.println("按班级汇总了：" + collect.size());
         for (Map.Entry<Integer, List<Student>> listEntry : collect.entrySet()) {
             List<Student> value = listEntry.getValue();
             Integer key = listEntry.getKey();

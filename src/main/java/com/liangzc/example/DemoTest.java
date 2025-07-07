@@ -1441,4 +1441,64 @@ public class DemoTest {
         BigDecimal sum = Arrays.stream(result).reduce(BigDecimal.ZERO, BigDecimal::add);
         System.out.println("sum:"+sum);
     }
+
+    @Test
+    public void averageTest(){
+        //总的手续费
+        BigDecimal total = new BigDecimal("11.00");
+        Map<String, BigDecimal> map = new HashMap<>();
+        map.put("1", new BigDecimal("1.00"));
+        map.put("2", new BigDecimal("2.00"));
+        map.put("3", new BigDecimal("3.00"));
+        map.put("4", new BigDecimal("4.00"));
+        map.put("5", new BigDecimal("5.00"));
+
+        // 计算map中所有值的总和
+        BigDecimal sum = map.values().stream()
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        // 用于存储分配后的结果
+        Map<String, BigDecimal> result = new HashMap<>();
+
+        // 总余数，用于后续调整
+        BigDecimal remainder = BigDecimal.ZERO;
+
+        // 根据比例分配手续费
+        for (Map.Entry<String, BigDecimal> entry : map.entrySet()) {
+            // 计算当前项占比：当前值 / 总金额
+            BigDecimal ratio = entry.getValue().divide(sum, 10, RoundingMode.DOWN); // 保留10位小数，避免除不尽问题
+
+            // 分配手续费：总手续费 * 占比
+            BigDecimal allocated = total.multiply(ratio).setScale(2, RoundingMode.DOWN);
+
+            // 存储分配结果
+            result.put(entry.getKey(), allocated);
+
+            // 累加实际分配金额，用于后续计算误差
+            remainder = remainder.add(allocated);
+        }
+
+        // 计算分配后产生的误差（总手续费 - 实际分配总额）
+        BigDecimal diff = total.subtract(remainder);
+
+        // 调整最大一项的分配值，使得最终分配总额等于总手续费
+        if (diff.compareTo(BigDecimal.ZERO) != 0) {
+            // 找出当前分配中最大的一项
+            Map.Entry<String, BigDecimal> maxEntry = result.entrySet()
+                    .stream()
+                    .max(Map.Entry.comparingByValue())
+                    .get();
+
+            // 将最大项的分配金额加上差额，确保总手续费分配正确
+            result.put(maxEntry.getKey(), maxEntry.getValue().add(diff));
+        }
+
+        // 打印分配结果
+        result.forEach((k, v) -> System.out.println("Key: " + k + ", Allocated: " + v));
+
+        // 验证总和是否一致
+        BigDecimal finalSum = result.values().stream()
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        System.out.println("Final sum: " + finalSum); // 应该等于 total
+    }
 }
