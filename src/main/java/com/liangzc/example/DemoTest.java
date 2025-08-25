@@ -78,8 +78,9 @@ public class DemoTest {
 
     @Test
     public void subStringTest(){
-        String date = "20220908000000";
-        System.out.println(date.substring(0,8));
+        String date = "EV001";
+        System.out.println(date.substring(2));
+        System.out.println(Integer.parseInt(date.substring(2)));
     }
 
     @Test
@@ -314,6 +315,8 @@ public class DemoTest {
         String ids = "1002";
 
         System.out.println(s.equals(ids));
+        while (true) {
+        }
 
     }
 
@@ -1500,5 +1503,109 @@ public class DemoTest {
         BigDecimal finalSum = result.values().stream()
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
         System.out.println("Final sum: " + finalSum); // 应该等于 total
+    }
+
+    @Test
+    public void EncryptionTest(){
+        /**
+         * 1)将明文按 utf-8 编码转换为字节数组，进行加密；
+         * 2) 将加密后的字节数组转换为 Base64 形式的字符串；
+         * 3) 将结果中的特殊字符进行替换（‘+’替换为’*’，’/’替换为’-‘，’=’替换为’_’）。
+         * 4) 去掉结果中的回车换行符。
+         * 5) 加密算法为 DES/ECB/pkcs5padding
+         */
+        
+        try {
+            // Original plaintext
+            String plainText = "Hello World! Test String.";
+            // DES key (8 bytes)
+            String secretKey = "12345678";
+            
+            System.out.println("Original Text: " + plainText);
+            System.out.println("Secret Key: " + secretKey);
+            
+            // Call encryption method
+            String encryptedText = desEncrypt(plainText, secretKey);
+            System.out.println("Encrypted Text: " + encryptedText);
+            
+            // Verify decryption
+            String decryptedText = desDecrypt(encryptedText, secretKey);
+            System.out.println("Decrypted Text: " + decryptedText);
+            
+            // Verify encryption/decryption is correct
+            System.out.println("Verification: " + plainText.equals(decryptedText));
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    /**
+     * DES Encryption method
+     * @param plainText plaintext
+     * @param secretKey secret key (8 bytes)
+     * @return encrypted string
+     */
+    private String desEncrypt(String plainText, String secretKey) throws Exception {
+        // 1) Convert plaintext to byte array using UTF-8
+        byte[] plainTextBytes = plainText.getBytes(StandardCharsets.UTF_8);
+        
+        // Create DES key
+        javax.crypto.spec.DESKeySpec desKeySpec = new javax.crypto.spec.DESKeySpec(secretKey.getBytes());
+        javax.crypto.SecretKeyFactory keyFactory = javax.crypto.SecretKeyFactory.getInstance("DES");
+        javax.crypto.SecretKey desKey = keyFactory.generateSecret(desKeySpec);
+        
+        // 5) Use DES/ECB/PKCS5Padding algorithm
+        javax.crypto.Cipher cipher = javax.crypto.Cipher.getInstance("DES/ECB/PKCS5Padding");
+        cipher.init(javax.crypto.Cipher.ENCRYPT_MODE, desKey);
+        
+        // Perform encryption
+        byte[] encryptedBytes = cipher.doFinal(plainTextBytes);
+        
+        // 2) Convert encrypted bytes to Base64 string
+        String base64Encoded = java.util.Base64.getEncoder().encodeToString(encryptedBytes);
+        
+        // 3) Replace special characters ('+' to '*', '/' to '-', '=' to '_')
+        String replacedString = base64Encoded
+                .replace('+', '*')
+                .replace('/', '-')
+                .replace('=', '_');
+        
+        // 4) Remove line breaks
+        String finalResult = replacedString.replaceAll("\\r\\n|\\r|\\n", "");
+        
+        return finalResult;
+    }
+    
+    /**
+     * DES Decryption method (for verification)
+     * @param encryptedText encrypted text
+     * @param secretKey secret key (8 bytes)
+     * @return decrypted plaintext
+     */
+    private String desDecrypt(String encryptedText, String secretKey) throws Exception {
+        // Restore special character replacement
+        String base64String = encryptedText
+                .replace('*', '+')
+                .replace('-', '/')
+                .replace('_', '=');
+        
+        // Base64 decode
+        byte[] encryptedBytes = java.util.Base64.getDecoder().decode(base64String);
+        
+        // Create DES key
+        javax.crypto.spec.DESKeySpec desKeySpec = new javax.crypto.spec.DESKeySpec(secretKey.getBytes());
+        javax.crypto.SecretKeyFactory keyFactory = javax.crypto.SecretKeyFactory.getInstance("DES");
+        javax.crypto.SecretKey desKey = keyFactory.generateSecret(desKeySpec);
+        
+        // Create decryptor
+        javax.crypto.Cipher cipher = javax.crypto.Cipher.getInstance("DES/ECB/PKCS5Padding");
+        cipher.init(javax.crypto.Cipher.DECRYPT_MODE, desKey);
+        
+        // Perform decryption
+        byte[] decryptedBytes = cipher.doFinal(encryptedBytes);
+        
+        // Convert to string
+        return new String(decryptedBytes, StandardCharsets.UTF_8);
     }
 }
