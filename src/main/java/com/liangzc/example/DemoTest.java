@@ -1516,24 +1516,24 @@ public class DemoTest {
          */
         
         try {
-            // Original plaintext
+            // 原始明文
             String plainText = "Hello World! Test String.";
-            // DES key (8 bytes)
+            // DES密钥（8字节）
             String secretKey = "12345678";
             
-            System.out.println("Original Text: " + plainText);
-            System.out.println("Secret Key: " + secretKey);
+            System.out.println("原始明文: " + plainText);
+            System.out.println("密钥: " + secretKey);
             
-            // Call encryption method
+            // 调用加密方法
             String encryptedText = desEncrypt(plainText, secretKey);
-            System.out.println("Encrypted Text: " + encryptedText);
+            System.out.println("加密结果: " + encryptedText);
             
-            // Verify decryption
+            // 验证解密
             String decryptedText = desDecrypt(encryptedText, secretKey);
-            System.out.println("Decrypted Text: " + decryptedText);
+            System.out.println("解密结果: " + decryptedText);
             
-            // Verify encryption/decryption is correct
-            System.out.println("Verification: " + plainText.equals(decryptedText));
+            // 验证加密解密是否正确
+            System.out.println("验证结果: " + plainText.equals(decryptedText));
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -1541,71 +1541,71 @@ public class DemoTest {
     }
     
     /**
-     * DES Encryption method
-     * @param plainText plaintext
-     * @param secretKey secret key (8 bytes)
-     * @return encrypted string
+     * DES加密方法
+     * @param plainText 明文
+     * @param secretKey 密钥（8字节）
+     * @return 加密后的字符串
      */
     private String desEncrypt(String plainText, String secretKey) throws Exception {
-        // 1) Convert plaintext to byte array using UTF-8
+        // 1) 将明文按 utf-8 编码转换为字节数组
         byte[] plainTextBytes = plainText.getBytes(StandardCharsets.UTF_8);
         
-        // Create DES key
+        // 创建DES密钥
         javax.crypto.spec.DESKeySpec desKeySpec = new javax.crypto.spec.DESKeySpec(secretKey.getBytes());
         javax.crypto.SecretKeyFactory keyFactory = javax.crypto.SecretKeyFactory.getInstance("DES");
         javax.crypto.SecretKey desKey = keyFactory.generateSecret(desKeySpec);
         
-        // 5) Use DES/ECB/PKCS5Padding algorithm
+        // 5) 使用 DES/ECB/PKCS5Padding 算法
         javax.crypto.Cipher cipher = javax.crypto.Cipher.getInstance("DES/ECB/PKCS5Padding");
         cipher.init(javax.crypto.Cipher.ENCRYPT_MODE, desKey);
         
-        // Perform encryption
+        // 执行加密
         byte[] encryptedBytes = cipher.doFinal(plainTextBytes);
         
-        // 2) Convert encrypted bytes to Base64 string
+        // 2) 将加密后的字节数组转换为 Base64 字符串
         String base64Encoded = java.util.Base64.getEncoder().encodeToString(encryptedBytes);
         
-        // 3) Replace special characters ('+' to '*', '/' to '-', '=' to '_')
+        // 3) 替换特殊字符（'+' 替换为 '*'，'/' 替换为 '-'，'=' 替换为 '_'）
         String replacedString = base64Encoded
                 .replace('+', '*')
                 .replace('/', '-')
                 .replace('=', '_');
         
-        // 4) Remove line breaks
+        // 4) 去掉回车换行符
         String finalResult = replacedString.replaceAll("\\r\\n|\\r|\\n", "");
         
         return finalResult;
     }
     
     /**
-     * DES Decryption method (for verification)
-     * @param encryptedText encrypted text
-     * @param secretKey secret key (8 bytes)
-     * @return decrypted plaintext
+     * DES解密方法（用于验证）
+     * @param encryptedText 加密后的文本
+     * @param secretKey 密钥（8字节）
+     * @return 解密后的明文
      */
     private String desDecrypt(String encryptedText, String secretKey) throws Exception {
-        // Restore special character replacement
+        // 还原特殊字符替换
         String base64String = encryptedText
                 .replace('*', '+')
                 .replace('-', '/')
                 .replace('_', '=');
         
-        // Base64 decode
+        // Base64解码
         byte[] encryptedBytes = java.util.Base64.getDecoder().decode(base64String);
         
-        // Create DES key
+        // 创建DES密钥
         javax.crypto.spec.DESKeySpec desKeySpec = new javax.crypto.spec.DESKeySpec(secretKey.getBytes());
         javax.crypto.SecretKeyFactory keyFactory = javax.crypto.SecretKeyFactory.getInstance("DES");
         javax.crypto.SecretKey desKey = keyFactory.generateSecret(desKeySpec);
         
-        // Create decryptor
+        // 创建解密器
         javax.crypto.Cipher cipher = javax.crypto.Cipher.getInstance("DES/ECB/PKCS5Padding");
         cipher.init(javax.crypto.Cipher.DECRYPT_MODE, desKey);
         
-        // Perform decryption
+        // 执行解密
         byte[] decryptedBytes = cipher.doFinal(encryptedBytes);
         
-        // Convert to string
+        // 转换为字符串
         return new String(decryptedBytes, StandardCharsets.UTF_8);
     }
 }
