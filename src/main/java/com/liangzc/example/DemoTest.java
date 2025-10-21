@@ -70,6 +70,16 @@ public class DemoTest {
         String temp = "dsfdsfds#{organName},都是佛挡杀佛的#{resInstName}";
         System.out.println(tempReplace(temp));
 
+        System.out.println("--------------------------------------");
+        Calendar calendar1 = Calendar.getInstance();
+        Date time = calendar1.getTime();
+        calendar1.setTime(time);
+        calendar1.add(Calendar.MONTH, -1);
+        Date time1 = calendar1.getTime();
+        DateTime dateTime = DateUtil.beginOfMonth(time1);
+        System.out.println(dateTime);
+
+
     }
 
     public static String tempReplace(String temp){
