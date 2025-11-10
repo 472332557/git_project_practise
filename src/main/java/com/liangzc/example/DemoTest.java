@@ -1616,6 +1616,8 @@ public class DemoTest {
         byte[] decryptedBytes = cipher.doFinal(encryptedBytes);
 
         System.out.println("解密结果: " + decryptedBytes);
+
+        System.out.println("解密结果+: " + decryptedBytes);
         
         // 转换为字符串
         return new String(decryptedBytes, StandardCharsets.UTF_8);
