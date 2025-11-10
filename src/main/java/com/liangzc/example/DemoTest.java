@@ -1459,7 +1459,7 @@ public class DemoTest {
     public void averageTest(){
         //总的手续费
         BigDecimal total = new BigDecimal("11.00");
-        Map<String, BigDecimal> map = new HashMap<>();
+        Map<String, BigDecimal> map = new HashMap<>(90);
         map.put("1", new BigDecimal("1.00"));
         map.put("2", new BigDecimal("2.00"));
         map.put("3", new BigDecimal("3.00"));
