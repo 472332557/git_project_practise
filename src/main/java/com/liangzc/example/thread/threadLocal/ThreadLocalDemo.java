@@ -24,6 +24,8 @@ public class ThreadLocalDemo {
         }
     };
 
+    public  static ThreadLocal<DateFormat> dateFormatThreadLocal = new ThreadLocal<>();
+
     @Test
     public void baseTest() {
         Thread[] threads = new Thread[5];
@@ -53,14 +55,16 @@ public class ThreadLocalDemo {
         }
     }
 
-    @Test
-    public void dateFormatTest() throws InterruptedException {
-        ThreadLocal<DateFormat> threadLocal = new ThreadLocal<>();
-        DateFormat dateFormat = threadLocal.get();
+    public void parse(){
+        DateFormat dateFormat = dateFormatThreadLocal.get();
         if (dateFormat == null){
             dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         }
-        threadLocal.set(dateFormat);
+        dateFormatThreadLocal.set(dateFormat);
+    }
+    @Test
+    public void dateFormatTest() throws InterruptedException {
+
 //        DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Thread.sleep(1000);
         for (int i = 0; i < 20; i++){
@@ -68,8 +72,8 @@ public class ThreadLocalDemo {
                 @Override
                 public void run() {
                     try {
-                        DateFormat dateFormat1 = threadLocal.get();
-                        System.out.println(dateFormat1.parse("2021-01-01 00:00:00"));
+                        parse();
+                        System.out.println(dateFormatThreadLocal.get().parse("2021-01-01 00:00:00"));
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
