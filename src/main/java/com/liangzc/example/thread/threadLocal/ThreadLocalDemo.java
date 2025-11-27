@@ -4,8 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
@@ -23,6 +25,9 @@ public class ThreadLocalDemo {
             return 0;
         }
     };
+
+    // 非线程安全的，多线程环境下会发生异常
+    private static  SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public  static ThreadLocal<DateFormat> dateFormatThreadLocal = new ThreadLocal<>();
 
@@ -55,30 +60,34 @@ public class ThreadLocalDemo {
         }
     }
 
-    public void parse(){
+    // 使用ThreadLocal线程隔离维护DateFormat，保证线程安全
+    public static DateFormat getFormat(){
         DateFormat dateFormat = dateFormatThreadLocal.get();
         if (dateFormat == null){
             dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         }
         dateFormatThreadLocal.set(dateFormat);
+        return dateFormatThreadLocal.get();
+    }
+    public static void parse(){
+        try {
+//            System.out.println(getFormat().parse("2021-01-01 23:23:18"));
+            System.out.println(dateFormat.parse("2021-01-01 23:23:18"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
     @Test
     public void dateFormatTest() throws InterruptedException {
-
-//        DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Thread.sleep(1000);
-        for (int i = 0; i < 20; i++){
-            new Thread(new Runnable() {
+        ExecutorService executorService = Executors.newFixedThreadPool(10);
+        for (int i = 0; i < 20; i++) {
+            executorService.execute(new Runnable() {
                 @Override
                 public void run() {
-                    try {
-                        parse();
-                        System.out.println(dateFormatThreadLocal.get().parse("2021-01-01 00:00:00"));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    parse();
                 }
-            }).start();
+            });
         }
     }
 
