@@ -19,7 +19,9 @@ public class CountDownLatchExample {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            System.out.println(Thread.currentThread().getName() +":countDown");
             countDownLatch.countDown();
+
         }
     }
 
@@ -32,7 +34,9 @@ public class CountDownLatchExample {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            System.out.println(Thread.currentThread().getName() +":countDown");
             countDownLatch.countDown();
+
         }
     }
 
@@ -45,6 +49,7 @@ public class CountDownLatchExample {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            System.out.println(Thread.currentThread().getName() +":countDown");
             countDownLatch.countDown();
         }
     }

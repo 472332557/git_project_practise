@@ -22,7 +22,7 @@ public class InterruptDemo {
                     try {
                         TimeUnit.SECONDS.sleep(10);
                     } catch (InterruptedException e) {//让线程复位，置为false，可以去响应中断请求
-//                        e.printStackTrace();
+                        e.printStackTrace();
                         Thread.currentThread().interrupt();//再次中断,设置为true
                     }
                     System.out.println("当前执行次数：" + i);

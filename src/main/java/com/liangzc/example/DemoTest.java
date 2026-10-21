@@ -70,6 +70,16 @@ public class DemoTest {
         String temp = "dsfdsfds#{organName},都是佛挡杀佛的#{resInstName}";
         System.out.println(tempReplace(temp));
 
+        System.out.println("--------------------------------------");
+        Calendar calendar1 = Calendar.getInstance();
+        Date time = calendar1.getTime();
+        calendar1.setTime(time);
+        calendar1.add(Calendar.MONTH, -1);
+        Date time1 = calendar1.getTime();
+        DateTime dateTime = DateUtil.beginOfMonth(time1);
+        System.out.println(dateTime);
+
+
     }
 
     public static String tempReplace(String temp){
@@ -78,8 +88,9 @@ public class DemoTest {
 
     @Test
     public void subStringTest(){
-        String date = "20220908000000";
-        System.out.println(date.substring(0,8));
+        String date = "EV001";
+        System.out.println(date.substring(2));
+        System.out.println(Integer.parseInt(date.substring(2)));
     }
 
     @Test
@@ -314,6 +325,8 @@ public class DemoTest {
         String ids = "1002";
 
         System.out.println(s.equals(ids));
+        while (true) {
+        }
 
     }
 
@@ -1446,7 +1459,7 @@ public class DemoTest {
     public void averageTest(){
         //总的手续费
         BigDecimal total = new BigDecimal("11.00");
-        Map<String, BigDecimal> map = new HashMap<>();
+        Map<String, BigDecimal> map = new HashMap<>(90);
         map.put("1", new BigDecimal("1.00"));
         map.put("2", new BigDecimal("2.00"));
         map.put("3", new BigDecimal("3.00"));
@@ -1500,5 +1513,113 @@ public class DemoTest {
         BigDecimal finalSum = result.values().stream()
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
         System.out.println("Final sum: " + finalSum); // 应该等于 total
+    }
+
+    @Test
+    public void EncryptionTest(){
+        /**
+         * 1)将明文按 utf-8 编码转换为字节数组，进行加密；
+         * 2) 将加密后的字节数组转换为 Base64 形式的字符串；
+         * 3) 将结果中的特殊字符进行替换（‘+’替换为’*’，’/’替换为’-‘，’=’替换为’_’）。
+         * 4) 去掉结果中的回车换行符。
+         * 5) 加密算法为 DES/ECB/pkcs5padding
+         */
+        
+        try {
+            // 原始明文
+            String plainText = "Hello World! Test String.";
+            // DES密钥（8字节）
+            String secretKey = "12345678";
+            
+            System.out.println("原始明文: " + plainText);
+            System.out.println("密钥: " + secretKey);
+            
+            // 调用加密方法
+            String encryptedText = desEncrypt(plainText, secretKey);
+            System.out.println("加密结果: " + encryptedText);
+            
+            // 验证解密
+            String decryptedText = desDecrypt(encryptedText, secretKey);
+            System.out.println("解密结果: " + decryptedText);
+            
+            // 验证加密解密是否正确
+            System.out.println("验证结果: " + plainText.equals(decryptedText));
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    /**
+     * DES加密方法
+     * @param plainText 明文
+     * @param secretKey 密钥（8字节）
+     * @return 加密后的字符串
+     */
+    private String desEncrypt(String plainText, String secretKey) throws Exception {
+        // 1) 将明文按 utf-8 编码转换为字节数组
+        byte[] plainTextBytes = plainText.getBytes(StandardCharsets.UTF_8);
+        
+        // 创建DES密钥
+        javax.crypto.spec.DESKeySpec desKeySpec = new javax.crypto.spec.DESKeySpec(secretKey.getBytes());
+        javax.crypto.SecretKeyFactory keyFactory = javax.crypto.SecretKeyFactory.getInstance("DES");
+        javax.crypto.SecretKey desKey = keyFactory.generateSecret(desKeySpec);
+        
+        // 5) 使用 DES/ECB/PKCS5Padding 算法
+        javax.crypto.Cipher cipher = javax.crypto.Cipher.getInstance("DES/ECB/PKCS5Padding");
+        cipher.init(javax.crypto.Cipher.ENCRYPT_MODE, desKey);
+        
+        // 执行加密
+        byte[] encryptedBytes = cipher.doFinal(plainTextBytes);
+        
+        // 2) 将加密后的字节数组转换为 Base64 字符串
+        String base64Encoded = java.util.Base64.getEncoder().encodeToString(encryptedBytes);
+        
+        // 3) 替换特殊字符（'+' 替换为 '*'，'/' 替换为 '-'，'=' 替换为 '_'）
+        String replacedString = base64Encoded
+                .replace('+', '*')
+                .replace('/', '-')
+                .replace('=', '_');
+        
+        // 4) 去掉回车换行符
+        String finalResult = replacedString.replaceAll("\\r\\n|\\r|\\n", "");
+        
+        return finalResult;
+    }
+    
+    /**
+     * DES解密方法（用于验证）
+     * @param encryptedText 加密后的文本
+     * @param secretKey 密钥（8字节）
+     * @return 解密后的明文
+     */
+    private String desDecrypt(String encryptedText, String secretKey) throws Exception {
+        // 还原特殊字符替换
+        String base64String = encryptedText
+                .replace('*', '+')
+                .replace('-', '/')
+                .replace('_', '=');
+        
+        // Base64解码
+        byte[] encryptedBytes = java.util.Base64.getDecoder().decode(base64String);
+        
+        // 创建DES密钥
+        javax.crypto.spec.DESKeySpec desKeySpec = new javax.crypto.spec.DESKeySpec(secretKey.getBytes());
+        javax.crypto.SecretKeyFactory keyFactory = javax.crypto.SecretKeyFactory.getInstance("DES");
+        javax.crypto.SecretKey desKey = keyFactory.generateSecret(desKeySpec);
+        
+        // 创建解密器
+        javax.crypto.Cipher cipher = javax.crypto.Cipher.getInstance("DES/ECB/PKCS5Padding");
+        cipher.init(javax.crypto.Cipher.DECRYPT_MODE, desKey);
+        
+        // 执行解密
+        byte[] decryptedBytes = cipher.doFinal(encryptedBytes);
+
+        System.out.println("解密结果: " + decryptedBytes);
+
+        System.out.println("解密结果+: " + decryptedBytes);
+        
+        // 转换为字符串
+        return new String(decryptedBytes, StandardCharsets.UTF_8);
     }
 }
